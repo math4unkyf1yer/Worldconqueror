@@ -1,0 +1,104 @@
+# =============== #
+# Unity generated #
+# =============== #
+
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Mm]emoryCaptures/
+UserSettings/
+
+# Asset meta data should only be ignored when the corresponding asset is also ignored
+!*.meta
+
+# Uncomment this if you want to ignore asset store tools
+# [Aa]ssets/AssetStoreTools*
+
+# =============== #
+# Visual Studio   #
+# =============== #
+
+.vs/
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+
+# =============== #
+# Rider / JetBrains
+# =============== #
+
+.idea/
+*.sln.iml
+
+# =============== #
+# OS generated    #
+# =============== #
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# macOS
+.DS_Store
+
+# Linux
+*~
+
+# =============== #
+# Unity Cloud Build
+# =============== #
+
+/[Uu]serSettings/EditorUserSettings.asset
+
+# =============== #
+# Crash Reports   #
+# =============== #
+
+sysinfo.txt
+
+# =============== #
+# Builds          #
+# =============== #
+
+*.apk
+*.aab
+*.unitypackage
+
+# =============== #
+# Addressables    #
+# =============== #
+
+/[Aa]ssets/AddressableAssetsData/*/*.bin*
+/[Aa]ssets/AddressableAssetsData/*/*.hash
+/[Aa]ssets/AddressableAssetsData/*/*.json
+/[Aa]ssets/AddressableAssetsData/*/*.link.xml
+/[Aa]ssets/AddressableAssetsData/*/*.map
+/[Aa]ssets/AddressableAssetsData/*/*.catalog
+/[Aa]ssets/AddressableAssetsData/*/*.bundle
+/[Aa]ssets/AddressableAssetsData/*/*.info
+/[Aa]ssets/AddressableAssetsData/*/*.data
+/[Aa]ssets/AddressableAssetsData/*/*.res
+/[Aa]ssets/AddressableAssetsData/*/*.resource
+/[Aa]ssets/AddressableAssetsData/*/*.unityweb
+/[Aa]ssets/AddressableAssetsData/*/*.hash
+/[Aa]ssets/AddressableAssetsData/*/*.json
+
+# =============== #
+# TextMesh Pro    #
+# =============== #
+
+[Aa]ssets/TextMesh Pro/Resources/Font Assets/*.asset
