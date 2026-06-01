@@ -1,0 +1,103 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ee972ba3cfb08e48a58e3b0b5f586d6, type: 3}
+  m_Name: Level_01
+  m_EditorClassIdentifier: 
+  levelIndex: 1
+  enemyCount: 3
+  hasHazard: 1
+  Zones:
+  - Type: 1
+    Position: {x: 0, y: 0}
+    intensity: 0.5
+    terretory: 1
+  - Type: 1
+    Position: {x: 0, y: 0}
+    intensity: 0.5
+    terretory: 6
+  - Type: 1
+    Position: {x: 0, y: 0}
+    intensity: 0.5
+    terretory: 8
+  - Type: 0
+    Position: {x: 0, y: 0}
+    intensity: 0.8
+    terretory: 4
+  terretories:
+  - TerretoryID: 0
+    Type: 0
+    Owner: 1
+    StartingUnits: 0
+    factoryType: 0
+    unitTier: 1
+    position: {x: -3, y: 3}
+  - TerretoryID: 1
+    Type: 0
+    Owner: 0
+    StartingUnits: 0
+    factoryType: 0
+    unitTier: 1
+    position: {x: 0, y: 3}
+  - TerretoryID: 2
+    Type: 0
+    Owner: 3
+    StartingUnits: 0
+    factoryType: 0
+    unitTier: 1
+    position: {x: 3, y: 3}
+  - TerretoryID: 3
+    Type: 0
+    Owner: 0
+    StartingUnits: 0
+    factoryType: 0
+    unitTier: 1
+    position: {x: -3, y: 0}
+  - TerretoryID: 4
+    Type: 0
+    Owner: 0
+    StartingUnits: 0
+    factoryType: 0
+    unitTier: 1
+    position: {x: 0, y: 0}
+  - TerretoryID: 5
+    Type: 0
+    Owner: 0
+    StartingUnits: 0
+    factoryType: 0
+    unitTier: 1
+    position: {x: 3, y: 0}
+  - TerretoryID: 6
+    Type: 0
+    Owner: 2
+    StartingUnits: 0
+    factoryType: 0
+    unitTier: 1
+    position: {x: -3, y: -3}
+  - TerretoryID: 7
+    Type: 0
+    Owner: 0
+    StartingUnits: 0
+    factoryType: 0
+    unitTier: 1
+    position: {x: 0, y: -3}
+  - TerretoryID: 8
+    Type: 0
+    Owner: 4
+    StartingUnits: 0
+    factoryType: 0
+    unitTier: 1
+    position: {x: 3, y: -3}
+  DifficultyConfiguration:
+    setting: 1
+    levelDifficulty: 0
+  coinReward: 10
+  Cost: 1

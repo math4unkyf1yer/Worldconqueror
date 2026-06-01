@@ -24,6 +24,6 @@ public class DifficultyConfiguration
 
 
         // Clamp between 1 and 5 so enemies are never below minimum or above maximum
-        return Mathf.Clamp(playerTier + offset, 1, 5);
+        return Mathf.Clamp(playerTier + offset, 0, 5);
     }
 }

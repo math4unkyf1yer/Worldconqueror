@@ -25,8 +25,6 @@ public class LevelData : ScriptableObject
     [Tooltip("All territories on this map. Positions are set by MapGenerator at runtime.")]
     public List<TerretoryData> terretories = new List<TerretoryData>();
 
-    [Header("Location of terretories")]
-    public List<EdgePair> edges = new List<EdgePair>();
 
     [Header("Difficulty")]
     public DifficultyConfiguration DifficultyConfiguration;
@@ -36,20 +34,5 @@ public class LevelData : ScriptableObject
 
     public int Cost = 1;
 
-    [System.Serializable]
-    public class EdgePair
-    {
-        [Tooltip("ID of the first territory.")]
-        public int fromID;
 
-        [Tooltip("ID of the second territory.")]
-        public int toID;
-
-        public EdgePair(int from, int to)
-        {
-            fromID = from;
-            toID = to;
-        }
-
-    }
 }

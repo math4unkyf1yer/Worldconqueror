@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4702991559386867186
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8413431960562219314}
+  - component: {fileID: 6130451786556364686}
+  m_Layer: 0
+  m_Name: Ai1Controller(Agressive)
+  m_TagString: AIController
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8413431960562219314
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4702991559386867186}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.670573, y: -1.3999112, z: -0.0036413455}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6130451786556364686
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4702991559386867186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 116f200604c9e7b419edd541532276a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aiOwner: 0
+  aiPersonality:
+    neutralBonus: 2
+    Range: 6
+    inRangeButFar: 3
+    playerTargetBonus: 3
+    decisionInterval: 7
+    minimumToAdvantage: 1
+    rivalAiBonus: 3
+    defensiveTroopThreshold: 5
+    threatProximityRange: 15
+    desperationThreshold: 0
+  aipersonalityType: 0
+  ownedTerritories: []

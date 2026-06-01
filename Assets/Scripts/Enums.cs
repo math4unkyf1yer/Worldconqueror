@@ -6,7 +6,8 @@ public enum TerritoryType
 {
     Production,
     Fort,
-    Mine,
+    scoutProd,
+    HeavyProd,
     Fog
 }
 public enum FactoryType

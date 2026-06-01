@@ -9,22 +9,21 @@ public class HazardZone
 
     public Vector2 Position;
 
-    public float intensity = 0.5f;
+    public float intensity = 1f;
 
-    [Tooltip("Indices of the map edges this zone covers. Edges are stored as index pairs in LevelDataSO.")]
-    public List<int> affectedEdgeIndices = new List<int>();
+    [Tooltip("position of the terretory")]
+    public int terretory;
 
-    public float DamagePerSecound()
+    public void Damage(UnitTroop troop)
     {
-        if(Type != HazardType.Damage) { return 0; }
-        return Mathf.Lerp(0f, 3f, intensity); // 0–3 units/sec
+        troop.TakeDamage(2);
     }
 
     public float speedChange()
     {
         switch(Type)
         {
-            case HazardType.Slow: return Mathf.Lerp(1f, 0.3f, intensity); // slows to 30% at full intensity
+            case HazardType.Slow: return Mathf.Lerp(1f, 0.7f, intensity); // slows to 30% at full intensity
             case HazardType.Speed: return Mathf.Lerp(1f, 2f, intensity); // speeds up to 2x
             default: return 1f;
         }
