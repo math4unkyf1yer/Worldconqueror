@@ -4,6 +4,13 @@ using UnityEngine;
 
 
 [System.Serializable]
+public struct EnemyTierSet
+{
+    public int capacityTier;
+    public int moveSpeedTier;
+    public int productionTier;
+}
+[System.Serializable]
 public class DifficultyConfiguration
 {
     public Difficulty setting = Difficulty.Normal;
@@ -15,15 +22,31 @@ public class DifficultyConfiguration
     public int levelDifficulty;
 
 
-    public int GetEnemyTier(int playerTier)
+    public EnemyTierSet GetEnemyTier(int playerProduction,int playerCapacity,int playerMoveSpeed)
     {
         int offset = setting == Difficulty.easy ? EasyOffset :
                      setting == Difficulty.Hard ? HardOffset :
                                                    NormalOffset;
+        if (setting == Difficulty.custom)
+        {
+            offset = levelDifficulty;
+        }
 
+        return new EnemyTierSet
+        {
+            capacityTier = Mathf.Clamp(playerCapacity + offset, -1, 10),
+            moveSpeedTier = Mathf.Clamp(playerMoveSpeed + offset, -1, 10),
+            productionTier = Mathf.Clamp(playerProduction + offset, -1, 10)
+        };
+    }
 
-
-        // Clamp between 1 and 5 so enemies are never below minimum or above maximum
-        return Mathf.Clamp(playerTier + offset, 0, 5);
+    //get specific tier for each 
+    public int GetEnemyTierCapacity(int playerTier)
+    {
+        return 0;
+    }
+    public int GetEnemyTierMoveSpeed(int playerTier)
+    {
+        return 0;
     }
 }

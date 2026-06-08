@@ -33,9 +33,6 @@ public class HazardController : MonoBehaviour
             case HazardType.Speed:
                 hazardImage.color = speedColor;
                 break;
-            case HazardType.Fog:
-                hazardImage.color = FogColor;
-                break;
             case HazardType.Damage:
                 hazardImage.color = damageColor;
                 break;
@@ -74,9 +71,6 @@ public class HazardController : MonoBehaviour
                     float speed = zone.speedChange();
                     troop.speed *= speed;
                     break;
-                case HazardType.Fog:
-                    //will need more
-                    break;
                 case HazardType.Damage:
                     //chance to damage
                     troopsInDamage.Add(troop);
@@ -101,9 +95,6 @@ public class HazardController : MonoBehaviour
                 case HazardType.Speed:
                     troop.speed = oldSpeed;
 
-                    break;
-                case HazardType.Fog:
-                    //will need more
                     break;
                 case HazardType.Damage:
                     troopsInDamage.Remove(troop);

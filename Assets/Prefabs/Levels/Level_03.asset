@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4ee972ba3cfb08e48a58e3b0b5f586d6, type: 3}
-  m_Name: Level_01
+  m_Name: Level_03
   m_EditorClassIdentifier: 
-  levelIndex: 0
+  levelIndex: 2
   enemyCount: 1
   hasHazard: 0
   Zones: []
@@ -22,19 +22,31 @@ MonoBehaviour:
     Owner: 1
     StartingUnits: 0
     scale: 1
-    position: {x: 0, y: 3}
+    position: {x: -2, y: 3}
   - TerretoryID: 1
     Type: 0
     Owner: 0
     StartingUnits: 0
     scale: 1
-    position: {x: 0, y: 0}
+    position: {x: 2, y: 3}
   - TerretoryID: 2
     Type: 0
-    Owner: 2
+    Owner: 0
     StartingUnits: 0
     scale: 1
-    position: {x: 0, y: -3}
+    position: {x: 0, y: 0}
+  - TerretoryID: 3
+    Type: 0
+    Owner: 0
+    StartingUnits: 0
+    scale: 1
+    position: {x: -2, y: -3}
+  - TerretoryID: 4
+    Type: 0
+    Owner: 4
+    StartingUnits: 0
+    scale: 1
+    position: {x: 2, y: -3}
   DifficultyConfiguration:
     setting: 3
     levelDifficulty: 1

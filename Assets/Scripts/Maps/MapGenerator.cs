@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MapGenerator : MonoBehaviour
 {
@@ -18,10 +19,39 @@ public class MapGenerator : MonoBehaviour
     Dictionary<Owner, TerretoryController> aiStartTerritories = new Dictionary<Owner, TerretoryController>();
     Dictionary<Owner, AIController> aiControllers = new Dictionary<Owner, AIController>();
 
+    [Header("UI")]
+    [SerializeField] GameObject terBar;
+    [SerializeField] Transform barParent;
+    private List<TerritorySlider> sliders = new List<TerritorySlider>();
 
-    // Start is called before the first frame update
+    //Winnning
+    [SerializeField] GameObject winPage;
+    [SerializeField] GameObject losePage;
+    private bool playerWin;
+
     void Start()
     {
+        if(AssignLevel.Instance != null)
+        {
+            levelData = AssignLevel.Instance.WhichLevel();
+            SetUp();
+        }
+    }
+
+    void SetUp()
+    {
+        foreach (TerretoryData data in levelData.terretories)
+        {
+            if (data.Owner != Owner.Neutral)
+            {
+                GameObject slider = Instantiate(terBar, barParent);
+                TerritorySlider sliderScript = slider.GetComponent<TerritorySlider>();
+                sliderScript.InitializedBar(levelData);
+                sliderScript.SetSliderOwner(data.Owner);
+                sliders.Add(sliderScript);
+            }
+        }
+
         foreach (TerretoryData data in levelData.terretories)
         {
             if (data == null)
@@ -32,10 +62,10 @@ public class MapGenerator : MonoBehaviour
             GameObject terClone = Instantiate(terretoryPrefab, this.transform);
             terClone.transform.position = position;
             TerretoryController terCloneController = terClone.GetComponent<TerretoryController>();
-            terCloneController.GetData(data,levelData.DifficultyConfiguration, this);
+            terCloneController.GetData(data, levelData.DifficultyConfiguration, this,sliders);
             spawnedTerretories.Add(terCloneController);
 
-            if(data.Owner == Owner.AI1 || data.Owner == Owner.AI2 || data.Owner == Owner.AI3)
+            if (data.Owner == Owner.AI1 || data.Owner == Owner.AI2 || data.Owner == Owner.AI3)
             {
                 aiStartTerritories[data.Owner] = terCloneController;
             }
@@ -55,13 +85,13 @@ public class MapGenerator : MonoBehaviour
 
             switch (owner)
             {
-                case Owner.AI1 :
+                case Owner.AI1:
                     aiClone = Instantiate(AiControllers[0], this.transform);
                     break;
-                case Owner.AI2 :
+                case Owner.AI2:
                     aiClone = Instantiate(AiControllers[1], this.transform);
                     break;
-                case Owner.AI3 :
+                case Owner.AI3:
                     aiClone = Instantiate(AiControllers[2], this.transform);
                     break;
             }
@@ -76,18 +106,18 @@ public class MapGenerator : MonoBehaviour
             foreach (TerretoryController t in spawnedTerretories)
                 t.aiControllers = aiControllers;
         }
+
+        if (AssignLevel.Instance.customGame)
+        {
+            levelData.terretories.Clear();
+            levelData.Zones.Clear();
+        }
     }
 
     void PlaceHazards(List<TerretoryController> territories)
     {
         List<TerretoryController> shuffled = new List<TerretoryController>(territories);
 
-        /*for (int i = shuffled.Count - 1; i > 0; i--)
-        {
-            int j = Random.Range(0, i + 1);
-            (shuffled[i], shuffled[j]) = (shuffled[j], shuffled[i]);
-        }
-        */
         int hazardCount = Mathf.Min(levelData.Zones.Count, shuffled.Count);
 
         for(int i = 0; i < hazardCount; i++)
@@ -110,7 +140,7 @@ public class MapGenerator : MonoBehaviour
         hazardCtrl.SetUp(zone);
     }
 
-    bool IsLevelOver()
+    bool PlayerAsAll()
     {
         if (spawnedTerretories.Count == 0)
             return false;
@@ -128,28 +158,62 @@ public class MapGenerator : MonoBehaviour
         return true; // All owners match → level over
     }
 
+    bool PlayerIsGone()
+    {
+        foreach (TerretoryController controller in spawnedTerretories)
+        {
+            if (controller.owner == Owner.Player)
+            {
+                return false; // Found a different owner → not over
+            }
+        }
+
+        return true;
+    }
+
     public void CheckIfGameOver()
     {
-        if (IsLevelOver())
+        if (PlayerAsAll())
         {
             if(firstOwner == Owner.Player)
             {
                 Win();
             }
-            else
-            {
-                Lose();
-            }
         }
+        if (PlayerIsGone())
+        {
+            Lose();
+        }
+
     }
 
     void Win()
     {
         Debug.Log("Win");
+        // win page
+        winPage.SetActive(true);
+        playerWin = true;
     }
     void Lose()
     {
         Debug.Log("Lose");
+        //lose page 
+        losePage.SetActive(true);
+        playerWin = false;
+    }
+
+    public void Continue()
+    {
+        if (playerWin)
+        {
+            //gives coin
+
+            //change level
+            AssignLevel.Instance.NewLevel();
+        }
+
+        SceneManager.LoadScene(0);
+
     }
 
 }

@@ -12,11 +12,11 @@ public class TerretoryController : MonoBehaviour, IPointerDownHandler, IDragHand
     [SerializeField] public TerretoryData TerretoryData;
     [SerializeField] private DifficultyConfiguration Difficulty;
     public float amountOfTroops;
-    private float StandardProductionRate = 2;
-    private int goldProduction = 1;
+    private float StandardProductionRate = 3;
     public int terretoryIndex;
     public Owner owner;
-    [SerializeField] private int goldRecieved;
+    Owner previousOwner;
+   [SerializeField] private int goldRecieved;
     [SerializeField] private TextMeshProUGUI amountText;
     [SerializeField] private UnitStats troopsStatsPlayer;
     [SerializeField] private UnitStats troopsStatsEnemy;
@@ -26,6 +26,7 @@ public class TerretoryController : MonoBehaviour, IPointerDownHandler, IDragHand
     //Looks
     [SerializeField] SpriteRenderer troopsMiddleSprite;
     [SerializeField] SpriteRenderer terretoryImage;
+    private SpriteRenderer middleOuterSprite;
     [SerializeField] GameObject[] troopsUnit;
     private int troopIndex;
     UnitType unitType = UnitType.Basic;
@@ -42,21 +43,25 @@ public class TerretoryController : MonoBehaviour, IPointerDownHandler, IDragHand
     //MapGenerator
     MapGenerator mapGenerator;
     public Dictionary<Owner, AIController> aiControllers;
+    [SerializeField]private List<TerritorySlider> sliderList = new List<TerritorySlider>();
 
     void Awake()
     {
         mainCamera = Camera.main;
     }
 
-    //start of it and it will keep increasing 
-    public void GetData(TerretoryData data, DifficultyConfiguration difficulty, MapGenerator gameMode)
+    //start of it and it will keep increasing-- getting the data that the territory will need(should have got a territory manager)
+    public void GetData(TerretoryData data, DifficultyConfiguration difficulty, MapGenerator gameMode, List<TerritorySlider> sliders)
     {
+        transform.localScale = new Vector3(data.scale, data.scale, data.scale);
+
         TerretoryData = data;
         Difficulty = difficulty;
         terretoryIndex = TerretoryData.TerretoryID;
         owner = TerretoryData.Owner;
         amountOfTroops = TerretoryData.StartingUnits;
         mapGenerator = gameMode;
+        sliderList = sliders;
 
         SetTerretoryLook();
         StandardProductionRate = ProductionRate();
@@ -96,7 +101,7 @@ public class TerretoryController : MonoBehaviour, IPointerDownHandler, IDragHand
 
         if (amountOfTroops < 0)
         {
-            Owner previousOwner = owner;
+            previousOwner = owner;
             if (previousOwner == Owner.AI1 || previousOwner == Owner.AI2 || previousOwner == Owner.AI3)
             {
                 aiControllers[previousOwner].OnTerritoryLost(this, previousOwner);
@@ -108,6 +113,11 @@ public class TerretoryController : MonoBehaviour, IPointerDownHandler, IDragHand
                 aiControllers[owner].OnTerritoryGain(this, owner);
             }
 
+            //Slider Update
+            foreach(TerritorySlider data in sliderList)
+            {
+                data.SetOwnerTerritories(owner, previousOwner);
+            }
             CancelInvoke("OnUnitCountUp");
             StandardProductionRate = ProductionRate();
             InvokeRepeating("OnUnitCountUp", 0, StandardProductionRate);
@@ -146,20 +156,20 @@ public class TerretoryController : MonoBehaviour, IPointerDownHandler, IDragHand
         if (owner== Owner.Player)
         {
             //give its production rate == something different
-            troopsStatsPlayer = troopsStatsPlayer.WithTier(1, unitType);
+            troopsStatsPlayer = troopsStatsPlayer.WithTier(AssignLevel.Instance.GetUnitStrenght(0), AssignLevel.Instance.GetUnitStrenght(2), AssignLevel.Instance.GetUnitStrenght(1), unitType);
             StandardProductionRate = troopsStatsPlayer.productionRate;
         }
         else if (owner != Owner.Neutral)
         {
-          
-            int enemyTier = Difficulty.GetEnemyTier(1);
-            troopsStatsEnemy = troopsStatsEnemy.WithTier(enemyTier, unitType);
+       
+            EnemyTierSet enemyTier = Difficulty.GetEnemyTier(AssignLevel.Instance.GetUnitStrenght(0), AssignLevel.Instance.GetUnitStrenght(2), AssignLevel.Instance.GetUnitStrenght(1));
+            troopsStatsEnemy = troopsStatsEnemy.WithTier(enemyTier.productionTier, enemyTier.capacityTier, enemyTier.productionTier, unitType);
             StandardProductionRate = troopsStatsEnemy.productionRate;
 
         }else
         {
-            neutralStats = neutralStats.WithTier(-10, unitType);
-            StandardProductionRate = neutralStats.productionRate;
+            neutralStats = neutralStats.WithTier(-10,-10,-10, unitType);
+            StandardProductionRate = 3;
         }
 
         if (TerretoryData.Type == TerritoryType.Fort)
@@ -177,18 +187,22 @@ public class TerretoryController : MonoBehaviour, IPointerDownHandler, IDragHand
             case Owner.Player:
                 troopsMiddleSprite.color = Color.blue;
                 terretoryImage.color = new Color(0f, 0f, 1f, 0.3f);
+                middleOuterSprite.color = new Color(0f, 0f, 1f, 0.3f);
                 break;
             case Owner.AI1:
                 troopsMiddleSprite.color = Color.red;
                 terretoryImage.color = new Color(1f, 0f, 0f, 0.3f);
+                middleOuterSprite.color = new Color(1f, 0f, 0f, 0.3f);
                 break;
             case Owner.AI2:
                 troopsMiddleSprite.color = Color.yellow;
                 terretoryImage.color = new Color(1f, 1f, 0f, 0.3f);
+                middleOuterSprite.color = new Color(1f, 1f, 0f, 0.3f);
                 break;
             case Owner.AI3:
                 troopsMiddleSprite.color = Color.green;
                 terretoryImage.color = new Color(0f, 1f, 0f, 0.3f);
+                middleOuterSprite.color = new Color(0f, 1f, 0f, 0.3f);
                 break;
         }
     }
@@ -222,6 +236,7 @@ public class TerretoryController : MonoBehaviour, IPointerDownHandler, IDragHand
                 unitType = UnitType.Heavy;
                 break;
         }
+        middleOuterSprite = troopsMiddleSprite.GetComponentInChildren<SpriteRenderer>();
     }
 
     //on mouse down 

@@ -20,22 +20,41 @@ public class UnitStats
     public float productionRate = 1f;
 
 
-    public UnitStats WithTier(int tier, UnitType newType)
+    public UnitStats WithTier(int tierProduction,int tierCapacity,int tierMoveSpeed, UnitType newType)
     {
-        float t = tier - 1; // tier 1 = no bonus, tier 5 = full bonus
+        float tProduction = tierProduction - 1;
+        float tMoveSpeed = tierMoveSpeed - 1;
+        float tCapacity = tierCapacity - 1;
 
-        unitType = newType;
+        // Start from BASE values, not mutated ones
+        float baseMoveSpeed = moveSpeed;
+        float baseProduction = productionRate;
+        float baseStrength = strenght;
+        int baseCapacity = maxCapacity;
 
-        if (unitType == UnitType.Heavy) { productionRate = 1.3f; moveSpeed = 1.5f; strenght = 2; }
-        else if (unitType == UnitType.Scout) { productionRate = 0.7f; moveSpeed = 3f; strenght = 0.5f; }
+        // Apply unit type overrides
+        if (newType == UnitType.Heavy)
+        {
+            baseProduction = 1.3f;
+            baseMoveSpeed = 1.5f;
+            baseStrength = 2;
+        }
+        else if (newType == UnitType.Scout)
+        {
+            baseProduction = 0.7f;
+            baseMoveSpeed = 3f;
+            baseStrength = 0.5f;
+        }
+
         return new UnitStats
         {
-            unitType = unitType,
-            strenght = strenght,
-            moveSpeed = moveSpeed * (1f + t * 0.05f),  // +5% per tier
-            maxCapacity = Mathf.RoundToInt(maxCapacity + t * 10f), // +10 per tier
-            productionRate = productionRate * (1f + t * -0.10f),  // +10% per tier
+            unitType = newType,
+            strenght = baseStrength,
+            moveSpeed = baseMoveSpeed * (1f + tMoveSpeed * 0.05f),
+            maxCapacity = Mathf.RoundToInt(baseCapacity + tCapacity * 5f),
+            productionRate = baseProduction * (1f + tProduction * -0.05f),
         };
     }
+
 
 }

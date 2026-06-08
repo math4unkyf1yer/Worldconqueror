@@ -21,8 +21,7 @@ public enum HazardType
 {
     Slow,
     Speed,
-    Damage,
-    Fog
+    Damage
 }
 
 public enum Owner
@@ -47,4 +46,11 @@ public enum UnitType
     Basic,
     Scout,
     Heavy
+}
+public enum MapSize
+{
+    small,
+    medium,
+    large,
+    super
 }

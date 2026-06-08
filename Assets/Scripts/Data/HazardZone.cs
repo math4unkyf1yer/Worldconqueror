@@ -29,6 +29,4 @@ public class HazardZone
         }
     }
 
-    public bool HidesUnits => Type == HazardType.Fog;
-
 }

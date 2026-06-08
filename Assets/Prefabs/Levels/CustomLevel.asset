@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4ee972ba3cfb08e48a58e3b0b5f586d6, type: 3}
-  m_Name: TestingLevel
+  m_Name: CustomLevel
   m_EditorClassIdentifier: 
   levelIndex: 0
   enemyCount: 1
