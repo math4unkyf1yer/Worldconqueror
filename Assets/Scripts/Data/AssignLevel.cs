@@ -46,12 +46,12 @@ public class AssignLevel : MonoBehaviour
         cost[2] = 10;
     }
 
-    public void NewLevel()
+    public void NewLevel(int amountGain)
     {
         if (!customGame)
         {
             levelCount++;
-            coin += 10;
+            coin += amountGain;
         }
     }
     public LevelData WhichLevel()

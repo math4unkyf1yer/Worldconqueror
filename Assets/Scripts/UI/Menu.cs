@@ -13,6 +13,7 @@ public class Menu : MonoBehaviour
     [SerializeField] private GameObject upgradePage;
     [SerializeField] private GameObject customGamePage;
     [SerializeField] private GameObject playButton;
+    [SerializeField] private TextMeshProUGUI levelText; 
 
     public static Menu Instance { get; private set; }
 
@@ -28,8 +29,10 @@ public class Menu : MonoBehaviour
 
     public void SetCoinText()
     {
+        int currentLevel = AssignLevel.Instance.levelCount + 1;
         int coin = AssignLevel.Instance.GetCoin();
         coinText.text = "Coin:" + coin.ToString();
+        levelText.text = "Level " + currentLevel.ToString();
     }
     public void PlayButton()
     {

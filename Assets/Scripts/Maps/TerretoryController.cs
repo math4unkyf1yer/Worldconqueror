@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
@@ -15,6 +15,7 @@ public class TerretoryController : MonoBehaviour, IPointerDownHandler, IDragHand
     private float StandardProductionRate = 3;
     public int terretoryIndex;
     public Owner owner;
+    private Owner CombatOwner;
     Owner previousOwner;
    [SerializeField] private int goldRecieved;
     [SerializeField] private TextMeshProUGUI amountText;
@@ -27,8 +28,9 @@ public class TerretoryController : MonoBehaviour, IPointerDownHandler, IDragHand
     [SerializeField] SpriteRenderer troopsMiddleSprite;
     [SerializeField] SpriteRenderer terretoryImage;
     private SpriteRenderer middleOuterSprite;
-    [SerializeField] GameObject[] troopsUnit;
-    private int troopIndex;
+    [SerializeField] GameObject troopsUnit;
+    [SerializeField] Sprite[] troopSprites;
+    private Sprite unitSprite;
     UnitType unitType = UnitType.Basic;
 
     [Header("UI/Dragging")]
@@ -212,26 +214,26 @@ public class TerretoryController : MonoBehaviour, IPointerDownHandler, IDragHand
         {
             case TerritoryType.Production:
                 sprites[0].SetActive(true);
-                troopIndex = 0;
+                unitSprite = troopSprites[0];
                 troopsMiddleSprite = sprites[0].GetComponent<SpriteRenderer>();
                 break;
 
             case TerritoryType.Fort:
                 sprites[1].SetActive(true);
-                troopIndex = 0;
+                unitSprite = troopSprites[0];
                 troopsMiddleSprite = sprites[1].GetComponent<SpriteRenderer>();
                 break;
 
             case TerritoryType.scoutProd:
                 sprites[2].SetActive(true);
-                troopIndex = 2;
+                unitSprite = troopSprites[2];
                 troopsMiddleSprite = sprites[2].GetComponent<SpriteRenderer>();
                 unitType = UnitType.Scout;
                 break;
 
             case TerritoryType.HeavyProd:
                 sprites[3].SetActive(true);
-                troopIndex = 1;
+                unitSprite = troopSprites[1];
                 troopsMiddleSprite = sprites[3].GetComponent<SpriteRenderer>();
                 unitType = UnitType.Heavy;
                 break;
@@ -296,36 +298,47 @@ public class TerretoryController : MonoBehaviour, IPointerDownHandler, IDragHand
                 TerretoryController terretoryScript = hit.GetComponentInParent< TerretoryController>();
                 if( terretoryScript == null) { return; }
 
-                SpawnTroops(hit.transform, terretoryScript.terretoryIndex);
+                StartSpawn(hit.transform, terretoryScript.terretoryIndex);
             }
         }
     }
-    public void SpawnTroops(Transform targetPosition, int targetIndex)
+
+    public void StartSpawn(Transform targetPosition, int targetIndex)
     {
-        float spawnRadius = 0.3f;
+        CombatOwner = owner;
+        StartCoroutine(SpawnTroops(targetPosition, targetIndex));
+    }
+     IEnumerator SpawnTroops(Transform targetPosition, int targetIndex)
+    {
         float troopsSave = amountOfTroops;
-        //spawn all the troops and remove the amount of troops 
-        for (int i = 0; i < troopsSave; i++)
-        {
-            // Spread evenly in a circle + small random offset
-            float angle = (360f / troopsSave) * i * Mathf.Deg2Rad;
-            Vector2 offset = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * spawnRadius;
-            // small random jitter so they don't look too rigid
-            offset += UnityEngine.Random.insideUnitCircle * 0.1f;
-
-            Vector3 spawnPos = this.transform.position + new Vector3(offset.x, offset.y, 0);
-
-            GameObject spawnedTroops = Instantiate(troopsUnit[troopIndex], spawnPos, Quaternion.identity);
-            UnitTroop unitScript = spawnedTroops.GetComponent<UnitTroop>();
-
-            if (unitScript != null)
-            {
-                if(owner == Owner.Player) { unitScript.SetUp(troopsStatsPlayer, targetPosition, targetIndex, owner); }
-                else { unitScript.SetUp(troopsStatsEnemy, targetPosition, targetIndex, owner); }
-            }
-        }
-
         amountOfTroops = 0;
         amountText.text = amountOfTroops.ToString();
+        int spawned = 0;
+        while (spawned < troopsSave)
+        {
+            float canSpawnNb = Mathf.Min(5,troopsSave-spawned);
+            Vector2 dir = ((Vector2)targetPosition.position - (Vector2)transform.position).normalized;
+            Vector2 perpendicular = new Vector2(-dir.y, dir.x);
+            //spawn all the troops and remove the amount of troops 
+            for (int i = 0; i < canSpawnNb; i++)
+            {
+                float offsetX = (i - (canSpawnNb - 1) / 2f) * 0.3f;
+                Vector3 spawnPos = this.transform.position + (Vector3)(perpendicular * offsetX);
+
+                GameObject troopClone = BulletPool.Instance.GetTroop();
+                UnitTroop unitScript = troopClone.GetComponent<UnitTroop>();
+                troopClone.transform.position = spawnPos;
+
+                if (unitScript != null)
+                {
+                    if (CombatOwner == Owner.Player) { unitScript.SetUp(troopsStatsPlayer, targetPosition, targetIndex, CombatOwner, unitSprite); }
+                    else { unitScript.SetUp(troopsStatsEnemy, targetPosition, targetIndex, CombatOwner, unitSprite); }
+                }
+                spawned++;
+            }
+            yield return new WaitForSeconds(0.3f);
+        }
+
+       
     }
 }

@@ -9,6 +9,7 @@ public class MapGenerator : MonoBehaviour
     [SerializeField] LevelData levelData;
     [SerializeField] GameObject terretoryPrefab;
     [SerializeField] GameObject[] AiControllers;
+    public BulletPool bulletPool;
 
     GameObject aiClone;
     [SerializeField] private GameObject hazardPrefab;
@@ -29,6 +30,7 @@ public class MapGenerator : MonoBehaviour
     [SerializeField] GameObject losePage;
     private bool playerWin;
 
+
     void Start()
     {
         if(AssignLevel.Instance != null)
@@ -36,10 +38,12 @@ public class MapGenerator : MonoBehaviour
             levelData = AssignLevel.Instance.WhichLevel();
             SetUp();
         }
+        
     }
 
     void SetUp()
     {
+
         foreach (TerretoryData data in levelData.terretories)
         {
             if (data.Owner != Owner.Neutral)
@@ -51,6 +55,8 @@ public class MapGenerator : MonoBehaviour
                 sliders.Add(sliderScript);
             }
         }
+
+
 
         foreach (TerretoryData data in levelData.terretories)
         {
@@ -113,7 +119,6 @@ public class MapGenerator : MonoBehaviour
             levelData.Zones.Clear();
         }
     }
-
     void PlaceHazards(List<TerretoryController> territories)
     {
         List<TerretoryController> shuffled = new List<TerretoryController>(territories);
@@ -209,7 +214,7 @@ public class MapGenerator : MonoBehaviour
             //gives coin
 
             //change level
-            AssignLevel.Instance.NewLevel();
+            AssignLevel.Instance.NewLevel(levelData.coinReward);
         }
 
         SceneManager.LoadScene(0);

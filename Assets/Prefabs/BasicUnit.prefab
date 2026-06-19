@@ -101,7 +101,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 0
   hasFought: 0
-  cobatCooldown: 0.5
+  cobatCooldown: 0.2
   spriteRenderer: {fileID: 5696815016522014535}
 --- !u!58 &3872843452764306814
 CircleCollider2D:

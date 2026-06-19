@@ -10,18 +10,26 @@ public class UnitTroop : MonoBehaviour
     Owner ownercl;
     Transform location;
     public bool hasFought = false;
-    [SerializeField] float cobatCooldown = 0.5f;
+    [SerializeField] float cobatCooldown = 0.2f;
 
     [SerializeField] SpriteRenderer spriteRenderer;
     Rigidbody2D rb;
+    bool isReturned = false;
 
-    public void SetUp(UnitStats stats,Transform targetLocation,int ID,Owner owner)
+
+    public void SetUp(UnitStats stats,Transform targetLocation,int ID,Owner owner,Sprite unitSprite)
     {
+        isReturned = false;
+        hasFought = false;
+        StopAllCoroutines();
+
+
         speed = stats.moveSpeed;
         strenght = stats.strenght;
         location = targetLocation;
         index = ID;
         ownercl = owner;
+        spriteRenderer.sprite = unitSprite;
 
         if (ownercl == Owner.Player)
         {
@@ -40,6 +48,11 @@ public class UnitTroop : MonoBehaviour
         }
 
             rb = GetComponent<Rigidbody2D>();
+        if (rb != null)
+        {
+            rb.velocity = Vector2.zero;
+            rb.angularVelocity = 0f;
+        }
         StartCoroutine(MoveToTarget());
     }
 
@@ -61,10 +74,24 @@ public class UnitTroop : MonoBehaviour
         strenght -= damage;
         if( strenght <= 0)
         {
-            Destroy(gameObject);
+            StopAllCoroutines();
+            gameObject.transform.position = new Vector3(0, 0, 0);
+            ReturnToPool();
+            return;
         }
-        StartCoroutine(ReadyToFight());
 
+        if (gameObject.activeInHierarchy)
+        {
+            StartCoroutine(ReadyToFight());
+        }
+
+    }
+    public void ReturnToPool()
+    {
+        if (isReturned) return;
+        isReturned = true;
+        StopAllCoroutines();
+        BulletPool.Instance.ReceiveTroop(gameObject);
     }
     IEnumerator ReadyToFight()
     {

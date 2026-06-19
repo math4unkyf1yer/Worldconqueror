@@ -22,19 +22,19 @@ MonoBehaviour:
     Owner: 1
     StartingUnits: 0
     scale: 1
-    position: {x: 0, y: 3}
+    position: {x: -2, y: 2}
   - TerretoryID: 1
     Type: 0
     Owner: 0
     StartingUnits: 0
     scale: 1
-    position: {x: 0, y: 0}
+    position: {x: 1, y: 0}
   - TerretoryID: 2
     Type: 0
     Owner: 2
     StartingUnits: 0
     scale: 1
-    position: {x: 0, y: -3}
+    position: {x: -1, y: -3}
   DifficultyConfiguration:
     setting: 3
     levelDifficulty: 1

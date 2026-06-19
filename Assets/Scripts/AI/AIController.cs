@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 
 public enum AIPersonalityType { Aggressive, Defensive, Neutral }
@@ -15,6 +16,7 @@ public class AIController : MonoBehaviour
     
 
     private List<TerretoryController> allTerritories;
+    Dictionary<TerretoryController, (TerretoryController target, float score)> workingTerritory = new Dictionary<TerretoryController, (TerretoryController, float)>();
 
     private int consecutiveNoGoodOption = 0; // tracks desperation for Aggressive AI
     float ourTroops;
@@ -66,27 +68,6 @@ public class AIController : MonoBehaviour
                     break;
             }
         }
-    }
-    TerretoryController FindBestTarget(TerretoryController from)
-    {
-        TerretoryController best = null;
-        float bestScore = -1f;
-
-        foreach (TerretoryController target in allTerritories)
-        {
-            // Don't attack your own territories
-            if (target.owner == aiOwner) continue;
-
-            float score = ScoreTarget(from, target);
-            if (score > bestScore)
-            {
-                bestScore = score;
-                best = target;
-            }
-        }
-
-        if(bestScore!= 0) { return best; }
-        return null;
     }
 
     float ScoreTarget(TerretoryController from, TerretoryController target)
@@ -149,13 +130,38 @@ public class AIController : MonoBehaviour
     public void RunDefensiveTurn()
     {
         ReinforceWeakTerritories();
-
+        workingTerritory.Clear();
         foreach (TerretoryController owned in ownedTerritories.ToList())
         {
-            TerretoryController bestTarget = FindBestTarget(owned);
-            if (bestTarget != null)
-                owned.SpawnTroops(bestTarget.transform, bestTarget.terretoryIndex);
+            TerretoryController bestTarget = null;
+            float bestScore = -1f;
+
+            foreach (TerretoryController target in allTerritories)
+            {
+                if (target.owner == aiOwner) continue;
+
+                float score = ScoreTarget(owned, target);
+                if (score > bestScore)
+                {
+                    bestScore = score;
+                    bestTarget = target;
+                }
+            }
+
+            if (bestTarget != null && bestScore > 0)
+            {
+                workingTerritory[owned] = (bestTarget, bestScore);
+            }
         }
+
+        if (workingTerritory.Count != 0)
+        {
+            var bestOverall = workingTerritory.OrderByDescending(x => x.Value.score).FirstOrDefault();
+            TerretoryController from = bestOverall.Key;
+            TerretoryController targets = bestOverall.Value.target;
+            Attack(from, targets);
+        }
+
     }
     void ReinforceWeakTerritories()
     {
@@ -172,7 +178,7 @@ public class AIController : MonoBehaviour
 
             if (reinforcer != null)
             {
-                reinforcer.SpawnTroops(weakOwned.transform, weakOwned.terretoryIndex);
+                reinforcer.StartSpawn(weakOwned.transform, weakOwned.terretoryIndex);
             }
         }
     }
@@ -181,15 +187,38 @@ public class AIController : MonoBehaviour
     void RunAggressiveTurn()
     {
         bool foundAnyGoodOption = false;
+        workingTerritory.Clear();
 
         foreach (TerretoryController owned in ownedTerritories.ToList())
         {
-            TerretoryController bestTarget = FindBestTarget(owned);
-            if (bestTarget != null)
-            {
-                owned.SpawnTroops(bestTarget.transform, bestTarget.terretoryIndex);
-                foundAnyGoodOption = true;
-            }
+             TerretoryController bestTarget = null;
+              float bestScore = -1f;
+
+              foreach (TerretoryController target in allTerritories)
+              {
+                  if (target.owner == aiOwner) continue;
+
+                     float score = ScoreTarget(owned, target);
+                     if (score > bestScore)
+                     {
+                         bestScore = score;
+                        bestTarget = target;
+                     }
+              }
+
+                 if (bestTarget != null && bestScore > 0)
+                 {
+                       workingTerritory[owned] = (bestTarget,bestScore);
+                       foundAnyGoodOption = true;
+                 }
+        }
+
+        if(workingTerritory.Count != 0)
+        {
+            var bestOverall = workingTerritory.OrderByDescending(x => x.Value.score).FirstOrDefault();
+            TerretoryController from = bestOverall.Key;
+            TerretoryController targets = bestOverall.Value.target;
+            Attack(from, targets);
         }
 
         if (!foundAnyGoodOption)
@@ -216,7 +245,7 @@ public class AIController : MonoBehaviour
 
         if(target != null)
         {
-            target.SpawnTroops(strongest.transform, strongest.terretoryIndex);
+            target.StartSpawn(strongest.transform, strongest.terretoryIndex);
         }
     }
 
@@ -224,13 +253,42 @@ public class AIController : MonoBehaviour
     //neutral 
     void RunNeutralTurn()
     {
+        workingTerritory.Clear();
         foreach (TerretoryController owned in ownedTerritories.ToList())
         {
-            TerretoryController bestTarget = FindBestTarget(owned);
-            if (bestTarget != null)
+            TerretoryController bestTarget = null;
+            float bestScore = -1f;
+
+            foreach (TerretoryController target in allTerritories)
             {
-                owned.SpawnTroops(bestTarget.transform, bestTarget.terretoryIndex);
+                if (target.owner == aiOwner) continue;
+
+                float score = ScoreTarget(owned, target);
+                if (score > bestScore)
+                {
+                    bestScore = score;
+                    bestTarget = target;
+                }
+            }
+
+            if (bestTarget != null && bestScore > 0)
+            {
+                workingTerritory[owned] = (bestTarget, bestScore);
             }
         }
+
+        if (workingTerritory.Count != 0)
+        {
+            var bestOverall = workingTerritory.OrderByDescending(x => x.Value.score).FirstOrDefault();
+            TerretoryController from = bestOverall.Key;
+            TerretoryController targets = bestOverall.Value.target;
+            Attack(from, targets);
+        }
     }
+
+    void Attack(TerretoryController from, TerretoryController target)
+    {
+        from.StartSpawn(target.transform, target.terretoryIndex);
+    }
+
 }

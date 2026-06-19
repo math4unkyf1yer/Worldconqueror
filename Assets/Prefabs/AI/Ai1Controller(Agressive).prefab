@@ -47,11 +47,11 @@ MonoBehaviour:
   aiOwner: 0
   aiPersonality:
     neutralBonus: 2
-    Range: 6
+    Range: 4
     inRangeButFar: 4
     playerTargetBonus: 3
-    decisionInterval: 6
-    minimumToAdvantage: 1
+    decisionInterval: 3
+    minimumToAdvantage: 2
     rivalAiBonus: 3
     defensiveTroopThreshold: 5
     threatProximityRange: 15

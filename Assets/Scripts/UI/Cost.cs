@@ -26,4 +26,9 @@ public class Cost : MonoBehaviour
         }
         else { Debug.Log("not enough coins"); }
     }
+
+    public void IncreaseAmountTextChange()
+    {
+        Debug.Log("This will Increase by this much");
+    }
 }
