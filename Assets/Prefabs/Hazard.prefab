@@ -27,7 +27,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.0192077, y: 1.7307, z: 1.7307}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3955002161674237003}
@@ -73,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: d85209a733ea8124e9da839d63bcf882, type: 3}
+  m_Sprite: {fileID: 0}
   m_Color: {r: 0.14465404, g: 0.1423796, b: 0.1423796, a: 0.7372549}
   m_FlipX: 0
   m_FlipY: 0
@@ -81,7 +81,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &6840743546077665726
@@ -233,3 +233,8 @@ MonoBehaviour:
   speedColor: {r: 0.32156864, g: 0.69803923, b: 0.3019608, a: 0.8392157}
   damageColor: {r: 0.9056604, g: 0.19081506, b: 0.22561327, a: 0.8392157}
   FogColor: {r: 1, g: 1, b: 1, a: 1}
+  imageSprite: {fileID: 3995996649835111086}
+  hazardSprites:
+  - {fileID: 21300000, guid: 6c7250a698d29384db19a936b2b56250, type: 3}
+  - {fileID: 21300000, guid: ddd0f5795048148489b901a169e153d4, type: 3}
+  - {fileID: 21300000, guid: a8af1ce53c4c7524a86273d7adbdf178, type: 3}

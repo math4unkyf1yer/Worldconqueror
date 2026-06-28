@@ -15,6 +15,9 @@ public class HazardController : MonoBehaviour
     [SerializeField] Color damageColor;
     [SerializeField] Color FogColor;
 
+    [SerializeField] SpriteRenderer imageSprite;
+    [SerializeField] Sprite[] hazardSprites;
+
     private List<UnitTroop> troopsInDamage = new List<UnitTroop>();
     bool isrepeating;
 
@@ -23,24 +26,28 @@ public class HazardController : MonoBehaviour
     {
         zone = hazardZone;
 
-        HazardType type = zone.Type;
 
+        HazardType type = zone.Type;
         switch (type)
         {
             case HazardType.Slow:
                 hazardImage.color = slowColor;
+                imageSprite.sprite = hazardSprites[0];
                 break;
             case HazardType.Speed:
                 hazardImage.color = speedColor;
+                imageSprite.sprite = hazardSprites[1];
                 break;
             case HazardType.Damage:
                 hazardImage.color = damageColor;
+                imageSprite.sprite = hazardSprites[2];
                 break;
 
         }
         
         // Optionally scale the visual size based on intensity
         transform.localScale = Vector3.one * Mathf.Lerp(0.3f, 2f, zone.intensity);
+        imageSprite.size = new Vector2(1, 1);
     }
 
     public void DamageHazardActivated()

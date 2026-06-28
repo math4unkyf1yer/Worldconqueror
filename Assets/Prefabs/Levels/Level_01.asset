@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelIndex: 0
   enemyCount: 1
-  hasHazard: 0
+  hasHazard: 1
   Zones: []
   terretories:
   - TerretoryID: 0
