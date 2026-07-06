@@ -30,6 +30,9 @@ public class DifficultyConfiguration
         if (setting == Difficulty.custom)
         {
             offset = levelDifficulty;
+            playerCapacity = 0;
+            playerMoveSpeed = 0;
+            playerProduction = 0;
         }
 
         return new EnemyTierSet

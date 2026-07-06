@@ -42,7 +42,7 @@ public class BulletPool : MonoBehaviour
         troopsList.Add(bullet);
     }
 
-    public GameObject GetTroop()
+    public GameObject GetTroop()//get troops from the lest
     {
         if(troopsList.Count > 0)
         {

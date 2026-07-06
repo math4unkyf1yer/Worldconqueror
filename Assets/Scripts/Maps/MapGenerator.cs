@@ -8,6 +8,9 @@ public class MapGenerator : MonoBehaviour
 
     [SerializeField] LevelData levelData;
     [SerializeField] GameObject terretoryPrefab;
+    [SerializeField] Transform projectileParent;
+    [SerializeField] GameObject fireBallObject;
+    int mageProjectileMax = 30;
     [SerializeField] GameObject[] AiControllers;
     public BulletPool bulletPool;
 
@@ -43,7 +46,7 @@ public class MapGenerator : MonoBehaviour
 
     void SetUp()
     {
-
+        //Slider ui look for better eye
         foreach (TerretoryData data in levelData.terretories)
         {
             if (data.Owner != Owner.Neutral)
@@ -55,9 +58,7 @@ public class MapGenerator : MonoBehaviour
                 sliders.Add(sliderScript);
             }
         }
-
-
-
+        
         foreach (TerretoryData data in levelData.terretories)
         {
             if (data == null)
@@ -74,6 +75,14 @@ public class MapGenerator : MonoBehaviour
             if (data.Owner == Owner.AI1 || data.Owner == Owner.AI2 || data.Owner == Owner.AI3)
             {
                 aiStartTerritories[data.Owner] = terCloneController;
+            }
+            if(data.Type == TerritoryType.MageProd)
+            {
+                for(int i = 0; i < mageProjectileMax; i++)
+                {
+                    GameObject fireBallProjectile = Instantiate(fireBallObject, projectileParent);
+                    FireBallPool.Instance.AddFireBall(fireBallProjectile);
+                }
             }
         }
 

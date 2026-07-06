@@ -4,11 +4,19 @@ using UnityEngine;
 
 public enum TerritoryType
 {
-    Production,
+    SoldierProd,
     Fort,
-    scoutProd,
-    HeavyProd,
+    AssassinProd,
+    DwarfProd,
+    RangerProd,
+    MageProd,
     Fog
+}
+public enum TroopState
+{
+    Objective,
+    Chasing,
+    Attacking
 }
 public enum FactoryType
 {
@@ -43,9 +51,11 @@ public enum Difficulty
 
 public enum UnitType
 {
-    Basic,
-    Scout,
-    Heavy
+    Soldier,
+    Assassin,
+    Dwarf,
+    Ranger,
+    Mage
 }
 public enum MapSize
 {

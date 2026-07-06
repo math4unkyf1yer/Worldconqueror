@@ -9,7 +9,7 @@ using Unity.Mathematics;
 public class TerretoryController : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
 {
     [Header("TerretoryStats")]
-    [SerializeField] public TerretoryData TerretoryData;
+    [SerializeField] public TerretoryData terretoryData;
     [SerializeField] private DifficultyConfiguration Difficulty;
     public float amountOfTroops;
     private float StandardProductionRate = 3;
@@ -28,10 +28,9 @@ public class TerretoryController : MonoBehaviour, IPointerDownHandler, IDragHand
     [SerializeField] SpriteRenderer troopsMiddleSprite;
     [SerializeField] SpriteRenderer terretoryImage;
     private SpriteRenderer middleOuterSprite;
-    [SerializeField] GameObject troopsUnit;
-    [SerializeField] Sprite[] troopSprites;
-    private Sprite unitSprite;
-    UnitType unitType = UnitType.Basic;
+    UnitType unitType = UnitType.Soldier;
+    [SerializeField] GameObject mageProjectile;
+
 
     [Header("UI/Dragging")]
     //Dragging
@@ -57,11 +56,11 @@ public class TerretoryController : MonoBehaviour, IPointerDownHandler, IDragHand
     {
         transform.localScale = new Vector3(data.scale, data.scale, data.scale);
 
-        TerretoryData = data;
+        terretoryData = data;
         Difficulty = difficulty;
-        terretoryIndex = TerretoryData.TerretoryID;
-        owner = TerretoryData.Owner;
-        amountOfTroops = TerretoryData.StartingUnits;
+        terretoryIndex = terretoryData.TerretoryID;
+        owner = terretoryData.Owner;
+        amountOfTroops = terretoryData.StartingUnits;
         mapGenerator = gameMode;
         sliderList = sliders;
 
@@ -72,9 +71,7 @@ public class TerretoryController : MonoBehaviour, IPointerDownHandler, IDragHand
     }
     void OnUnitCountUp()
     {
-        int cap = TerretoryData.Owner == Owner.Player
-        ? troopsStatsPlayer.maxCapacity
-        : troopsStatsEnemy.maxCapacity;
+        int cap = terretoryData.maxCapacity;
 
         if (amountOfTroops >= cap) return;
         //increase the number of troops
@@ -84,14 +81,13 @@ public class TerretoryController : MonoBehaviour, IPointerDownHandler, IDragHand
 
     public void TakeDamage(float damage,Owner ownercl)
     {
-
         //reduce the amounts of trrops
-        if (TerretoryData.Type == TerritoryType.Fort)
+        if (terretoryData.Type == TerritoryType.Fort)
         {
             float amount = damage / 3;
             amountOfTroops -= amount;
         }
-        else if(TerretoryData.Type == TerritoryType.HeavyProd)
+        else if(terretoryData.Type == TerritoryType.DwarfProd)
         {
             float amount = damage / 2;
             amountOfTroops -= amount;
@@ -129,12 +125,12 @@ public class TerretoryController : MonoBehaviour, IPointerDownHandler, IDragHand
     }
     public void ReceiveTroops(float received)
     {
-        if (TerretoryData.Type == TerritoryType.Fort)
+        if (terretoryData.Type == TerritoryType.Fort)
         {
             float amount = received / 3;
             amountOfTroops += amount;
         }
-        else if (TerretoryData.Type == TerritoryType.HeavyProd)
+        else if (terretoryData.Type == TerritoryType.DwarfProd)
         {
             float amount = received / 2;
             amountOfTroops += amount;
@@ -158,26 +154,24 @@ public class TerretoryController : MonoBehaviour, IPointerDownHandler, IDragHand
         if (owner== Owner.Player)
         {
             //give its production rate == something different
-            troopsStatsPlayer = troopsStatsPlayer.WithTier(AssignLevel.Instance.GetUnitStrenght(0), AssignLevel.Instance.GetUnitStrenght(2), AssignLevel.Instance.GetUnitStrenght(1), unitType);
-            StandardProductionRate = troopsStatsPlayer.productionRate;
+            troopsStatsPlayer = troopsStatsPlayer.WithTier( AssignLevel.Instance.GetUnitStrenght(1), unitType);
+            terretoryData = terretoryData.TerritoryTier(AssignLevel.Instance.GetUnitStrenght(0), AssignLevel.Instance.GetUnitStrenght(2));
+            StandardProductionRate = terretoryData.productionRate;
         }
         else if (owner != Owner.Neutral)
         {
        
             EnemyTierSet enemyTier = Difficulty.GetEnemyTier(AssignLevel.Instance.GetUnitStrenght(0), AssignLevel.Instance.GetUnitStrenght(2), AssignLevel.Instance.GetUnitStrenght(1));
-            troopsStatsEnemy = troopsStatsEnemy.WithTier(enemyTier.productionTier, enemyTier.capacityTier, enemyTier.productionTier, unitType);
-            StandardProductionRate = troopsStatsEnemy.productionRate;
+            troopsStatsEnemy = troopsStatsEnemy.WithTier( enemyTier.productionTier, unitType);
+            terretoryData = terretoryData.TerritoryTier(enemyTier.productionTier, enemyTier.capacityTier);
+            StandardProductionRate = terretoryData.productionRate;
 
         }else
         {
-            neutralStats = neutralStats.WithTier(-10,-10,-10, unitType);
-            StandardProductionRate = 3;
-        }
-
-        if (TerretoryData.Type == TerritoryType.Fort)
-        {
-            float newStandard = StandardProductionRate * 1.6f;
-            return newStandard;
+            //needs a few fix take production rate ofneutral and different for each territory
+            neutralStats = neutralStats.WithTier(-10, unitType);
+            terretoryData = terretoryData.TerritoryTier(-8, -8);
+            StandardProductionRate = terretoryData.productionRate;
         }
         return StandardProductionRate;
     }
@@ -210,32 +204,38 @@ public class TerretoryController : MonoBehaviour, IPointerDownHandler, IDragHand
     }
     void SetTerretoryLook()
     {
-        switch (TerretoryData.Type)
+        switch (terretoryData.Type)
         {
-            case TerritoryType.Production:
+            case TerritoryType.SoldierProd:
                 sprites[0].SetActive(true);
-                unitSprite = troopSprites[0];
                 troopsMiddleSprite = sprites[0].GetComponent<SpriteRenderer>();
                 break;
 
             case TerritoryType.Fort:
                 sprites[1].SetActive(true);
-                unitSprite = troopSprites[0];
                 troopsMiddleSprite = sprites[1].GetComponent<SpriteRenderer>();
                 break;
 
-            case TerritoryType.scoutProd:
+            case TerritoryType.AssassinProd:
                 sprites[2].SetActive(true);
-                unitSprite = troopSprites[2];
                 troopsMiddleSprite = sprites[2].GetComponent<SpriteRenderer>();
-                unitType = UnitType.Scout;
+                unitType = UnitType.Assassin;
                 break;
 
-            case TerritoryType.HeavyProd:
+            case TerritoryType.DwarfProd:
                 sprites[3].SetActive(true);
-                unitSprite = troopSprites[1];
                 troopsMiddleSprite = sprites[3].GetComponent<SpriteRenderer>();
-                unitType = UnitType.Heavy;
+                unitType = UnitType.Dwarf;
+                break;
+            case TerritoryType.MageProd:
+                sprites[4].SetActive(true);
+                troopsMiddleSprite = sprites[4].GetComponent<SpriteRenderer>();
+                unitType = UnitType.Mage;
+                break;
+            case TerritoryType.RangerProd:
+                sprites[5].SetActive(true);
+                troopsMiddleSprite = sprites[5].GetComponent<SpriteRenderer>();
+                unitType = UnitType.Ranger;
                 break;
         }
         middleOuterSprite = troopsMiddleSprite.GetComponentInChildren<SpriteRenderer>();
@@ -284,7 +284,6 @@ public class TerretoryController : MonoBehaviour, IPointerDownHandler, IDragHand
         // Stretch the arrow forward only
         activeArrow.transform.localScale = new Vector3(distance, 1f, 1f);
     }
-
     //on mouse release
     public void OnPointerUp(PointerEventData eventData)
     {
@@ -331,14 +330,12 @@ public class TerretoryController : MonoBehaviour, IPointerDownHandler, IDragHand
 
                 if (unitScript != null)
                 {
-                    if (CombatOwner == Owner.Player) { unitScript.SetUp(troopsStatsPlayer, targetPosition, targetIndex, CombatOwner, unitSprite); }
-                    else { unitScript.SetUp(troopsStatsEnemy, targetPosition, targetIndex, CombatOwner, unitSprite); }
+                    if (CombatOwner == Owner.Player) { unitScript.SetUp(troopsStatsPlayer, targetPosition, targetIndex, CombatOwner); }
+                    else { unitScript.SetUp(troopsStatsEnemy, targetPosition, targetIndex, CombatOwner); }
                 }
                 spawned++;
             }
             yield return new WaitForSeconds(0.3f);
-        }
-
-       
+        }     
     }
 }

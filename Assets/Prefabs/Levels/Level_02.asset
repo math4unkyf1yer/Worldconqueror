@@ -23,24 +23,32 @@ MonoBehaviour:
     StartingUnits: 0
     scale: 1
     position: {x: -2, y: 1.5}
+    maxCapacity: 50
+    productionRate: 1
   - TerretoryID: 1
-    Type: 0
+    Type: 5
     Owner: 0
     StartingUnits: 0
     scale: 1
     position: {x: 2, y: 1.5}
+    maxCapacity: 50
+    productionRate: 1
   - TerretoryID: 2
     Type: 0
     Owner: 0
     StartingUnits: 0
     scale: 1
     position: {x: -2, y: -1.5}
+    maxCapacity: 50
+    productionRate: 1
   - TerretoryID: 3
     Type: 0
     Owner: 2
     StartingUnits: 0
     scale: 1
     position: {x: 2, y: -1.5}
+    maxCapacity: 50
+    productionRate: 1
   DifficultyConfiguration:
     setting: 3
     levelDifficulty: 1

@@ -81,24 +81,28 @@ public class AIController : MonoBehaviour
 
         float troopDiff;
         
-        if (from.TerretoryData.Type == TerritoryType.HeavyProd) { ourTroops = from.amountOfTroops * 2; }
-        else if(from.TerretoryData.Type == TerritoryType.scoutProd) { ourTroops = from.amountOfTroops / 2; }
+        if (from.terretoryData.Type == TerritoryType.DwarfProd) { ourTroops = from.amountOfTroops * 2; }
+        else if(from.terretoryData.Type == TerritoryType.AssassinProd) { ourTroops = from.amountOfTroops / 2; }
         else { ourTroops = from.amountOfTroops; }
 
-        if (target.TerretoryData.Type == TerritoryType.HeavyProd || target.TerretoryData.Type == TerritoryType.Fort)
+        if (target.terretoryData.Type == TerritoryType.DwarfProd || target.terretoryData.Type == TerritoryType.Fort)
         {
             troopDiff = ourTroops - target.amountOfTroops * 1.4f;
+        }
+        else if(target.terretoryData.Type == TerritoryType.AssassinProd)
+        {
+            troopDiff = ourTroops - target.amountOfTroops / 2f;
         }
         else
         {
             troopDiff = ourTroops - target.amountOfTroops;
         }
 
-        switch (target.TerretoryData.Type)
+        switch (target.terretoryData.Type)
         {
             case TerritoryType.Fort: score += 1f; break;
-            case TerritoryType.HeavyProd: score += 1f; break;
-            case TerritoryType.scoutProd: score += 1f; break;
+            case TerritoryType.DwarfProd: score += 1f; break;
+            case TerritoryType.AssassinProd: score += 1f; break;
         }
 
         if (target.owner == Owner.Player)
