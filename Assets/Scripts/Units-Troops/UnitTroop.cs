@@ -7,6 +7,7 @@ public class UnitTroop : MonoBehaviour
 {
     //class beahavior
     private IUnitBehavior behavior;
+    BuffHolder buffScript;
 
     public float speed;
     float strenght;
@@ -39,16 +40,18 @@ public class UnitTroop : MonoBehaviour
 
     public void SetUp(UnitStats stats,Transform targetLocation,int ID,Owner owner)
     {
+        //get buff without changing the actuals stats of the troops
+        buffScript = BuffHolder.Instance;
         isReturned = false;
         hasFought = false;
         StopAllCoroutines();
 
         
         unitType = stats.unitType;
-        speed = stats.moveSpeed;
+        speed = stats.moveSpeed * (buffScript.moveSpeedBuff + 1);
         strenght = stats.strenght;
-        attackPower = stats.attackPower;
-        health = stats.health;
+        attackPower = stats.attackPower * (buffScript.attackBuff + 1);
+        health = stats.health * (buffScript.healthBuff + 1);
         range = stats.attackRange;
         releasedRadius = range + 0.5f;
         location = targetLocation;
@@ -117,10 +120,12 @@ public class UnitTroop : MonoBehaviour
     public void ReturnToPool()
     {
         if (isReturned) return;
-        if (CurrentEnemy) { }
+        if (CurrentEnemy) { CurrentEnemy.isTargeted = false; CurrentEnemy = null; }
         isReturned = true;
         StopAllCoroutines();
-        BulletPool.Instance.ReceiveTroop(gameObject);
+        if(ownercl == Owner.Player) { TroopConter.Instance.UnregisterTroop(true); }
+        else { TroopConter.Instance.UnregisterTroop(false); }
+            BulletPool.Instance.ReceiveTroop(gameObject);
     }
     IEnumerator ReadyToFight()
     {
@@ -193,6 +198,7 @@ public class UnitTroop : MonoBehaviour
                 break;
             case UnitType.Ranger:
                 unitSprite = troopSprites[4];
+                behavior = new RangerBehavior();
                 break;
         }
         spriteRenderer.sprite = unitSprite;

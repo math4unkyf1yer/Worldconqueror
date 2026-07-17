@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 71187952}
   - component: {fileID: 71187953}
   m_Layer: 0
-  m_Name: projectileHolder
+  m_Name: FireBallHolder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -876,6 +876,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1034209045}
   - component: {fileID: 1034209046}
+  - component: {fileID: 1034209047}
+  - component: {fileID: 1034209048}
   m_Layer: 0
   m_Name: TerretoryHolder
   m_TagString: Untagged
@@ -919,8 +921,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelData: {fileID: 11400000, guid: 4acf71c582a114347b1d5090e1043bed, type: 2}
   terretoryPrefab: {fileID: 3245626783341852655, guid: 18e3d9141879b464fad0736ab070ff16, type: 3}
-  projectileParent: {fileID: 71187952}
+  projectileFireParent: {fileID: 71187952}
+  projectileArrowParent: {fileID: 1793657339}
   fireBallObject: {fileID: 5987478953600814503, guid: 2279fbd4e37d5be488069081793e1527, type: 3}
+  arrowObject: {fileID: 4371469682875980924, guid: 31fa737fb0814fe4d8bfec6e86b44862, type: 3}
   AiControllers:
   - {fileID: 4702991559386867186, guid: 2db39d40afbcec24f8f3fdf1aa97cb53, type: 3}
   - {fileID: 1292318610296424013, guid: 7dd3ce490783f3d4383c4a719e1f4767, type: 3}
@@ -932,6 +936,35 @@ MonoBehaviour:
   barParent: {fileID: 865843345}
   winPage: {fileID: 602016469}
   losePage: {fileID: 1075408188}
+--- !u!114 &1034209047
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1034209044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4aea08c5eb03de499ec4fb6d0e92095, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlayerTroopsAlive: 0
+  EnemyTroopsAlive: 0
+--- !u!114 &1034209048
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1034209044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 113b71c6ea28a114d94e99982ca6afc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackBuff: 0
+  healthBuff: 0
+  moveSpeedBuff: 0
 --- !u!1 &1037278734
 GameObject:
   m_ObjectHideFlags: 0
@@ -1138,7 +1171,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0.56}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1133368107
@@ -1157,6 +1190,53 @@ MonoBehaviour:
   troops: {fileID: 6896215773934967905, guid: cae23a0d85902564e920ce4a7a502707, type: 3}
   amountOfBullet: 75
   extraTroopHolder: {fileID: 728487443}
+--- !u!1 &1160448982
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1160448984}
+  - component: {fileID: 1160448983}
+  m_Layer: 0
+  m_Name: RoadManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1160448983
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1160448982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7fa8d19d7ab2574ba9430c654ddde77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  start: {x: 0, y: 0, z: 0}
+  end: {x: 0, y: 0, z: 0}
+  roadPrefab: {fileID: 3870769745357852685, guid: c71663cf00db85e42ae6556acb0f5856, type: 3}
+--- !u!4 &1160448984
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1160448982}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.7691247, y: 0.11035953, z: 0.029555973}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1334792131
 GameObject:
   m_ObjectHideFlags: 0
@@ -1399,8 +1479,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.000061035, y: 0}
-  m_SizeDelta: {x: 1920, y: 1080}
+  m_AnchoredPosition: {x: 2, y: 0}
+  m_SizeDelta: {x: 1979.91, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1413259398
 MonoBehaviour:
@@ -2116,6 +2196,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1774829677}
   m_CullTransparentMesh: 1
+--- !u!1 &1793657337
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1793657339}
+  - component: {fileID: 1793657338}
+  m_Layer: 0
+  m_Name: ArrowHolder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1793657338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1793657337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14f08b08928fa5a46817801ddf23e436, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ArrowsList: []
+--- !u!4 &1793657339
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1793657337}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.303151, y: -0.3051391, z: 0.06297124}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1969079555
 GameObject:
   m_ObjectHideFlags: 0
@@ -2474,8 +2599,10 @@ SceneRoots:
   m_Roots:
   - {fileID: 1596678072}
   - {fileID: 2082697042}
+  - {fileID: 1160448984}
   - {fileID: 912665432}
   - {fileID: 2027507703}
   - {fileID: 1034209045}
   - {fileID: 728487444}
   - {fileID: 71187952}
+  - {fileID: 1793657339}

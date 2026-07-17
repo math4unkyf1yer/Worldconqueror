@@ -482,6 +482,7 @@ GameObject:
   m_Component:
   - component: {fileID: 790482913224011950}
   - component: {fileID: 5667142150602614006}
+  - component: {fileID: 8698210875941977555}
   m_Layer: 0
   m_Name: TerretoryPref
   m_TagString: Untagged
@@ -533,6 +534,7 @@ MonoBehaviour:
     scale: 0
     position: {x: 0, y: 0}
     maxCapacity: 50
+    buffPercentage: 0
     productionRate: 1
   Difficulty:
     setting: 1
@@ -576,6 +578,21 @@ MonoBehaviour:
   - {fileID: 4013243048653494322}
   - {fileID: 5280240211084477125}
   sliderList: []
+--- !u!114 &8698210875941977555
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3245626783341852655}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd1022989b69cc14c92efba434c12051, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  territoryLayer:
+    serializedVersion: 2
+    m_Bits: 1
 --- !u!1 &3283799802688310861
 GameObject:
   m_ObjectHideFlags: 0

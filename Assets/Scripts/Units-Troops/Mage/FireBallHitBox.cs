@@ -27,7 +27,7 @@ public class FireBallHitBox : MonoBehaviour
 
     public IEnumerator CloseDamageRing()
     {
-        yield return new WaitForSeconds(0.5f);
-        fireBallRef.CloseProjectile();
+        yield return new WaitForSeconds(0.4f);
+        fireBallRef.CloseFireProjectile();
     }
 }

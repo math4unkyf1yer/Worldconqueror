@@ -7,8 +7,11 @@ using UnityEngine;
 public struct EnemyTierSet
 {
     public int capacityTier;
+    public int buffTier;
     public int moveSpeedTier;
     public int productionTier;
+    public int AttackPowerTier;
+    public int healthTier;
 }
 [System.Serializable]
 public class DifficultyConfiguration
@@ -22,7 +25,7 @@ public class DifficultyConfiguration
     public int levelDifficulty;
 
 
-    public EnemyTierSet GetEnemyTier(int playerProduction,int playerCapacity,int playerMoveSpeed)
+    public EnemyTierSet GetEnemyTier(int playerProduction,int playerCapacity, int playerBuff,int playerMoveSpeed, int playerAttackPower, int playerHealth)
     {
         int offset = setting == Difficulty.easy ? EasyOffset :
                      setting == Difficulty.Hard ? HardOffset :
@@ -33,23 +36,21 @@ public class DifficultyConfiguration
             playerCapacity = 0;
             playerMoveSpeed = 0;
             playerProduction = 0;
+            playerHealth = 0;
+            playerAttackPower = 0;
+            playerBuff = 0;
         }
 
         return new EnemyTierSet
         {
-            capacityTier = Mathf.Clamp(playerCapacity + offset, -1, 10),
+            AttackPowerTier = Mathf.Clamp(playerAttackPower + offset, -1, 10),
             moveSpeedTier = Mathf.Clamp(playerMoveSpeed + offset, -1, 10),
-            productionTier = Mathf.Clamp(playerProduction + offset, -1, 10)
+            healthTier = Mathf.Clamp(playerHealth + offset, -1, 10),
+            productionTier = Mathf.Clamp(playerProduction + offset, -1, 10),
+            capacityTier = Mathf.Clamp(playerCapacity + offset, -1, 10),
+            buffTier = Mathf.Clamp(playerBuff + offset,-1,10),
+
         };
     }
 
-    //get specific tier for each 
-    public int GetEnemyTierCapacity(int playerTier)
-    {
-        return 0;
-    }
-    public int GetEnemyTierMoveSpeed(int playerTier)
-    {
-        return 0;
-    }
 }

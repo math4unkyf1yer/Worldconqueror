@@ -1,26 +1,14 @@
 using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using TMPro;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
+using UnityEditor.SceneTemplate;
+using UnityEngine;
+using static UnityEditor.MaterialProperty;
 
 public class AssignLevel : MonoBehaviour
 {
-    public LevelData[] LevelData;
-    public LevelData customData;
-    public bool customGame;
-    public int levelCount = 0;
-    [SerializeField]private int UnitProduction = 1;
-    [SerializeField] private int UnitMoveSpeed = 1;
-    [SerializeField] private int UnitCapacity = 1;
-    private int coin;
-    int territroyCount;
-    int hazardCount;
-    float territoryScale = 1f;
-
-    //troops upgrade
-    public int[] cost;
-
     //Custom game 
     public Vector2[] smallPosition;
     public Vector2[] mediumPosition;
@@ -28,6 +16,48 @@ public class AssignLevel : MonoBehaviour
     public Vector2[] superPosition;
     private Vector2[] chosenPosition;
     private int[] enemyPosition = new int[3];
+
+    public LevelData[] LevelData;
+    public LevelData customData;
+    public bool customGame;
+    public int levelCount = 0;
+    private int coin = 20;
+    int territroyCount;
+    int hazardCount;
+
+    public UnitStats currentTroopStats;
+    public TerretoryData terretoryData;
+    //troops upgrade
+    public int[] cost;
+
+    //Have you unlock the other troops
+    public bool unlockedAssassin { get; private set; } = false;
+    public bool unlockedDwarfs { get; private set; } = false;
+    public bool unlockedMage { get; private set; } = false;
+    public bool unlockedRanger { get; private set; } = false;
+
+    public Dictionary<UnitType, TroopUpgradeStats> troopUpgrades = new Dictionary<UnitType, TroopUpgradeStats>();
+    public Dictionary<TerritoryType, TerritoryUpgradeStats> territoryUpgrades = new Dictionary<TerritoryType, TerritoryUpgradeStats>();
+
+    [System.Serializable]
+    public class TroopUpgradeStats
+    {
+        public int Attack = 1;
+        public int MoveSpeed = 1;
+        public int Health = 1;
+
+        public int[] cost = new int[3];
+    }
+    [System.Serializable]
+    public class TerritoryUpgradeStats
+    {
+        public int Production = 1;
+        public int Capacity = 1;
+        //will need whatever buff this is 
+        public int buff = 1;
+
+        public int[] cost = new int[3];
+    }
 
     public static AssignLevel Instance { get; private set; }
 
@@ -41,9 +71,25 @@ public class AssignLevel : MonoBehaviour
         }
         Instance = this;
         DontDestroyOnLoad(gameObject);
-        cost[0] = 10;
-        cost[1] = 10;
-        cost[2] = 10;
+
+        foreach (UnitType type in System.Enum.GetValues(typeof(UnitType)))
+        {
+            TroopUpgradeStats stats = new TroopUpgradeStats();
+            stats.cost[0] = 10;
+            stats.cost[1] = 10;
+            stats.cost[2] = 10;
+
+            troopUpgrades[type] = stats;
+        }
+        foreach (TerritoryType type in System.Enum.GetValues(typeof(TerritoryType)))
+        {
+            TerritoryUpgradeStats stats = new TerritoryUpgradeStats();
+            stats.cost[0] = 10;
+            stats.cost[1] = 10;
+            stats.cost[2] = 10;
+
+            territoryUpgrades[type] = stats;
+        }
     }
 
     public void NewLevel(int amountGain)
@@ -66,57 +112,96 @@ public class AssignLevel : MonoBehaviour
     {
         return coin;
     }
-    public int GetUnitStrenght(int upgrade)
+
+    public UnitStats GetCurrentStats(UnitType troopType)
     {
-        if(upgrade == 0) { return UnitProduction; }
-        else if(upgrade == 1) { return UnitMoveSpeed; }
-        return UnitCapacity;
+        return currentTroopStats.WithTier(GetMoveSpeed(troopType), GetAttack(troopType), GetHealth(troopType), troopType);
     }
-    public void SetUnitStrenght(int strenght, int upgrade)
+    public TerretoryData GetCurrentTerStat(TerritoryType territoryType)
     {
-        if (upgrade == 0)
-        {
-            UnitProduction = strenght;
-        }
-        else if (upgrade == 1) { UnitMoveSpeed = strenght; }
-        else { UnitCapacity = strenght; }
+        return terretoryData.TerritoryTier(GetProduction(territoryType), GetCapacity(territoryType),GetBuff(territoryType), territoryType);
     }
 
-    public bool TryUpgradeTroop(int whichUpgrade)
+    public bool TryUpgradeTroop(int whichUpgrade, UnitType troopType)
     {
+        TroopUpgradeStats stats = troopUpgrades[troopType];
 
-        if (coin >= cost[whichUpgrade])// this is only production
+        if (coin < stats.cost[whichUpgrade])
+            return false;
+
+        coin -= stats.cost[whichUpgrade];
+
+        switch (whichUpgrade)
         {
-            coin -= cost[whichUpgrade];
-            int pt = GetUnitStrenght(whichUpgrade);
-            pt++;
-            SetUnitStrenght(pt,whichUpgrade);
-            cost[whichUpgrade] = GetUpgradeCost(whichUpgrade);
-            return true;
+            case 0: stats.Attack++; break;
+            case 1: stats.MoveSpeed++; break;
+            case 2: stats.Health++; break;
         }
 
-        return false;
+        stats.cost[whichUpgrade] = GetUpgradeCost(stats,null, whichUpgrade);
+        return true;
+    }
+    public bool TryUpgradeTerritory(int whichUpgrade, TerritoryType terType)
+    {
+        TerritoryUpgradeStats stats = territoryUpgrades[terType];
+
+        if (coin < stats.cost[whichUpgrade])
+            return false;
+
+        coin -= stats.cost[whichUpgrade];
+
+        switch (whichUpgrade)
+        {
+            case 0: stats.Production++; break;
+            case 1: stats.Capacity++; break;
+            case 2: stats.buff++; break;
+        }
+
+        stats.cost[whichUpgrade] = GetUpgradeCost(null, stats, whichUpgrade);
+        return true;
     }
 
 
     //0 is production. 1 is move speed, 2 is capacity
-    public int GetUpgradeCost(int whichUpgrade)
+    public int GetUpgradeCost(TroopUpgradeStats stats,TerritoryUpgradeStats terStats, int upgradeInt)
     {
         int baseCost = 10;
         float growth = 1.5f;
 
-        if(whichUpgrade == 0)
-        { 
-            return Mathf.RoundToInt(baseCost * Mathf.Pow(growth, UnitProduction));
+        if(stats != null)
+        {
+            switch (upgradeInt)
+            {
+                case 0: return Mathf.RoundToInt(baseCost * Mathf.Pow(growth, stats.Attack));
+                case 1: return Mathf.RoundToInt(baseCost * Mathf.Pow(growth, stats.MoveSpeed));
+                case 2: return Mathf.RoundToInt(baseCost * Mathf.Pow(growth, stats.Health));
+            }
         }
-        else if(whichUpgrade == 1) { return Mathf.RoundToInt(baseCost * Mathf.Pow(growth, UnitMoveSpeed)); }
-        return Mathf.RoundToInt(baseCost * Mathf.Pow(growth, UnitCapacity));
+        else
+        {
+            switch (upgradeInt)
+            {
+                case 0: return Mathf.RoundToInt(baseCost * Mathf.Pow(growth, terStats.Production));
+                case 1: return Mathf.RoundToInt(baseCost * Mathf.Pow(growth, terStats.Capacity));
+                case 2: return Mathf.RoundToInt(baseCost * Mathf.Pow(growth, terStats.buff));
+            }
+        }
+
+         return baseCost;
     }
 
     public void SetCoin(int cost)
     {
         coin -= cost;
     }
+
+    public int GetAttack(UnitType type) => troopUpgrades[type].Attack;
+    public int GetMoveSpeed(UnitType type) => troopUpgrades[type].MoveSpeed;
+    public int GetHealth(UnitType type) => troopUpgrades[type].Health;
+
+    public int GetProduction(TerritoryType type) => territoryUpgrades[type].Production;
+    public int GetCapacity(TerritoryType type) => territoryUpgrades[type].Capacity;
+    public int GetBuff(TerritoryType type) => territoryUpgrades[type].buff;
 
 
     public void SetupLevel(int enemyCount, bool hazard, MapSize mapSize, DifficultyConfiguration difficulty)
@@ -205,5 +290,23 @@ public class AssignLevel : MonoBehaviour
             }
         }
 
+    }
+
+
+    public void UnlockedAssassin()
+    {
+        unlockedAssassin = true;
+    }
+    public void UnlockedDwarf()
+    {
+        unlockedDwarfs = true;
+    }
+    public void UnlockedMage()
+    {
+        unlockedMage = true;
+    }
+    public void UnlockedRanger()
+    {
+        unlockedRanger = true;
     }
 }

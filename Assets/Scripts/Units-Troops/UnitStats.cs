@@ -19,14 +19,23 @@ public class UnitStats
 
     public float attackRange = 1;
 
-    public UnitStats WithTier(int tierMoveSpeed, UnitType newType)
+    public UnitStats WithTier(int tierMoveSpeed,int tierAttacPower, int tierHealth , UnitType newType) // need to add attack power and health 
     {
         float tMoveSpeed = tierMoveSpeed - 1;
+        float tAttackPower = tierAttacPower - 1;
+        float tHealth = tierHealth - 1;
 
         // Start from BASE values, not mutated ones
         float baseMoveSpeed = moveSpeed;
         float baseStrength = strenght;
 
+        if(newType == UnitType.Soldier)
+        {
+            baseMoveSpeed = 1f;
+            baseStrength = 1;
+            attackPower = 1;
+            health = 1f;
+        }
         // Apply unit type overrides
         if (newType == UnitType.Dwarf)
         {
@@ -48,16 +57,22 @@ public class UnitStats
             attackPower = 0;
             health = 0.5f;
             attackRange = 1.8f;
-        }
-        return new UnitStats
+        }else if(newType == UnitType.Ranger)
         {
-            unitType = newType,
-            strenght = baseStrength,//change for future(attack power) 
-            moveSpeed = baseMoveSpeed * (1f + tMoveSpeed * 0.05f),
-            attackRange = attackRange,
-            attackPower= attackPower,
-            health = health
-        };
+            baseMoveSpeed = 1f;
+            baseStrength = 1f;
+            attackPower = 0.5f;
+            health = 1;
+        }
+            return new UnitStats
+            {
+                unitType = newType,
+                strenght = baseStrength,//change for future(attack power) 
+                moveSpeed = baseMoveSpeed * (1f + tMoveSpeed * 0.05f),
+                attackRange = attackRange, //increase attack range 
+                attackPower = attackPower * (1f + tAttackPower * 0.05f), // increase attack power
+                health = health * (1f + tHealth * 0.05f) // increase health of troop 
+            };
     }
 
 

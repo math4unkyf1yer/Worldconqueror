@@ -8,9 +8,11 @@ public class MapGenerator : MonoBehaviour
 
     [SerializeField] LevelData levelData;
     [SerializeField] GameObject terretoryPrefab;
-    [SerializeField] Transform projectileParent;
+    [SerializeField] Transform projectileFireParent;
+    [SerializeField] Transform projectileArrowParent;
     [SerializeField] GameObject fireBallObject;
-    int mageProjectileMax = 30;
+    [SerializeField] GameObject arrowObject;
+    int mageProjectileMax = 20;
     [SerializeField] GameObject[] AiControllers;
     public BulletPool bulletPool;
 
@@ -36,7 +38,7 @@ public class MapGenerator : MonoBehaviour
 
     void Start()
     {
-        if(AssignLevel.Instance != null)
+        if (AssignLevel.Instance != null)
         {
             levelData = AssignLevel.Instance.WhichLevel();
             SetUp();
@@ -80,8 +82,15 @@ public class MapGenerator : MonoBehaviour
             {
                 for(int i = 0; i < mageProjectileMax; i++)
                 {
-                    GameObject fireBallProjectile = Instantiate(fireBallObject, projectileParent);
+                    GameObject fireBallProjectile = Instantiate(fireBallObject, projectileFireParent);
                     FireBallPool.Instance.AddFireBall(fireBallProjectile);
+                }
+            }else if(data.Type == TerritoryType.RangerProd)
+            {
+                for (int i = 0; i < mageProjectileMax; i++)
+                {
+                    GameObject arrowProjectile = Instantiate(arrowObject, projectileArrowParent);
+                    ArrowPool.Instance.AddArrow(arrowProjectile);
                 }
             }
         }
@@ -168,8 +177,12 @@ public class MapGenerator : MonoBehaviour
                 return false; // Found a different owner → not over
             }
         }
-
-        return true; // All owners match → level over
+        //check if there is no more  enemy troop in the game 
+        if(TroopConter.Instance.EnemyTroopsAlive != 0)
+        {
+            return false; // All owners match → level over
+        }
+        return true;
     }
 
     bool PlayerIsGone()
@@ -181,6 +194,7 @@ public class MapGenerator : MonoBehaviour
                 return false; // Found a different owner → not over
             }
         }
+        if (TroopConter.Instance.PlayerTroopsAlive != 0) { return false; }
 
         return true;
     }
@@ -227,7 +241,6 @@ public class MapGenerator : MonoBehaviour
         }
 
         SceneManager.LoadScene(0);
-
     }
 
 }

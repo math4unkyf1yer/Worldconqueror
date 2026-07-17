@@ -31,8 +31,10 @@ public class TerretoryController : MonoBehaviour, IPointerDownHandler, IDragHand
     UnitType unitType = UnitType.Soldier;
     [SerializeField] GameObject mageProjectile;
 
+    AssignLevel troopTiersScript;
+    BuffHolder buffScript;
 
-    [Header("UI/Dragging")]
+   [Header("UI/Dragging")]
     //Dragging
     bool isDragging;
     [SerializeField] private GameObject arrowPrefab;
@@ -43,17 +45,25 @@ public class TerretoryController : MonoBehaviour, IPointerDownHandler, IDragHand
 
     //MapGenerator
     MapGenerator mapGenerator;
+    TroopConter countingTroopScript;
     public Dictionary<Owner, AIController> aiControllers;
     [SerializeField]private List<TerritorySlider> sliderList = new List<TerritorySlider>();
+
+    TerBuildRoad buildRoad;
 
     void Awake()
     {
         mainCamera = Camera.main;
     }
 
-    //start of it and it will keep increasing-- getting the data that the territory will need(should have got a territory manager)
+    //start of it and it will keep increasing-- getting the data that the territory will need(should have got a territory manager) 
+    //add the roads here do a chek to see if any territory are open 
     public void GetData(TerretoryData data, DifficultyConfiguration difficulty, MapGenerator gameMode, List<TerritorySlider> sliders)
     {
+        troopTiersScript = AssignLevel.Instance;
+        buffScript = BuffHolder.Instance;
+        buildRoad = GetComponent<TerBuildRoad>();
+        buildRoad.SetUp();
         transform.localScale = new Vector3(data.scale, data.scale, data.scale);
 
         terretoryData = data;
@@ -62,8 +72,11 @@ public class TerretoryController : MonoBehaviour, IPointerDownHandler, IDragHand
         owner = terretoryData.Owner;
         amountOfTroops = terretoryData.StartingUnits;
         mapGenerator = gameMode;
+        GameObject map = gameMode.gameObject;
+        countingTroopScript = map.GetComponent<TroopConter>();
         sliderList = sliders;
 
+        buffScript.OnTerritoryOwnerChanged(Owner.Neutral, owner, terretoryData.Type, terretoryData.buffPercentage);
         SetTerretoryLook();
         StandardProductionRate = ProductionRate();
        //Invoke reapeate the function for the production rate 
@@ -81,21 +94,7 @@ public class TerretoryController : MonoBehaviour, IPointerDownHandler, IDragHand
 
     public void TakeDamage(float damage,Owner ownercl)
     {
-        //reduce the amounts of trrops
-        if (terretoryData.Type == TerritoryType.Fort)
-        {
-            float amount = damage / 3;
-            amountOfTroops -= amount;
-        }
-        else if(terretoryData.Type == TerritoryType.DwarfProd)
-        {
-            float amount = damage / 2;
-            amountOfTroops -= amount;
-        }
-        else
-        {
-            amountOfTroops -= damage;
-        }
+        amountOfTroops -= CalculateTroops(damage);
 
         if (amountOfTroops < 0)
         {
@@ -110,12 +109,12 @@ public class TerretoryController : MonoBehaviour, IPointerDownHandler, IDragHand
             {
                 aiControllers[owner].OnTerritoryGain(this, owner);
             }
-
             //Slider Update
             foreach(TerritorySlider data in sliderList)
             {
                 data.SetOwnerTerritories(owner, previousOwner);
             }
+            buffScript.OnTerritoryOwnerChanged(previousOwner, owner, terretoryData.Type, terretoryData.buffPercentage);
             CancelInvoke("OnUnitCountUp");
             StandardProductionRate = ProductionRate();
             InvokeRepeating("OnUnitCountUp", 0, StandardProductionRate);
@@ -125,21 +124,27 @@ public class TerretoryController : MonoBehaviour, IPointerDownHandler, IDragHand
     }
     public void ReceiveTroops(float received)
     {
+        amountOfTroops += CalculateTroops(received);
+        amountText.text = amountOfTroops.ToString();
+    }
+
+    float CalculateTroops(float amountGiven)
+    {
+        float amount = amountGiven;
+        //reduce the amounts of trrops
         if (terretoryData.Type == TerritoryType.Fort)
         {
-            float amount = received / 3;
-            amountOfTroops += amount;
+             amount = amountGiven / 3;
         }
         else if (terretoryData.Type == TerritoryType.DwarfProd)
         {
-            float amount = received / 2;
-            amountOfTroops += amount;
+             amount = amountGiven / 2;
         }
-        else
+        else if (terretoryData.Type == TerritoryType.AssassinProd)
         {
-            amountOfTroops += received;
+             amount = amountGiven * 2;
         }
-        amountText.text = amountOfTroops.ToString();
+        return amount;
     }
 
     void UpdateTroopDisplay()
@@ -153,24 +158,24 @@ public class TerretoryController : MonoBehaviour, IPointerDownHandler, IDragHand
         ChangeOwnershipColor();
         if (owner== Owner.Player)
         {
-            //give its production rate == something different
-            troopsStatsPlayer = troopsStatsPlayer.WithTier( AssignLevel.Instance.GetUnitStrenght(1), unitType);
-            terretoryData = terretoryData.TerritoryTier(AssignLevel.Instance.GetUnitStrenght(0), AssignLevel.Instance.GetUnitStrenght(2));
+            //give its production rate == something different and its buff
+            troopsStatsPlayer = troopsStatsPlayer.WithTier(troopTiersScript.GetMoveSpeed(unitType), troopTiersScript.GetAttack(unitType), troopTiersScript.GetHealth(unitType), unitType);
+            terretoryData = terretoryData.TerritoryTier(troopTiersScript.GetProduction(terretoryData.Type), troopTiersScript.GetCapacity(terretoryData.Type), troopTiersScript.GetBuff(terretoryData.Type), terretoryData.Type);
             StandardProductionRate = terretoryData.productionRate;
         }
         else if (owner != Owner.Neutral)
         {
        
-            EnemyTierSet enemyTier = Difficulty.GetEnemyTier(AssignLevel.Instance.GetUnitStrenght(0), AssignLevel.Instance.GetUnitStrenght(2), AssignLevel.Instance.GetUnitStrenght(1));
-            troopsStatsEnemy = troopsStatsEnemy.WithTier( enemyTier.productionTier, unitType);
-            terretoryData = terretoryData.TerritoryTier(enemyTier.productionTier, enemyTier.capacityTier);
+            EnemyTierSet enemyTier = Difficulty.GetEnemyTier(troopTiersScript.GetProduction(terretoryData.Type), troopTiersScript.GetCapacity(terretoryData.Type), troopTiersScript.GetBuff(terretoryData.Type), troopTiersScript.GetMoveSpeed(unitType),troopTiersScript.GetAttack(unitType), troopTiersScript.GetHealth(unitType));
+            troopsStatsEnemy = troopsStatsEnemy.WithTier( enemyTier.moveSpeedTier, enemyTier.AttackPowerTier, enemyTier.healthTier, unitType);
+            terretoryData = terretoryData.TerritoryTier(enemyTier.productionTier, enemyTier.capacityTier,enemyTier.buffTier, terretoryData.Type);
             StandardProductionRate = terretoryData.productionRate;
-
-        }else
+        }
+        else
         {
             //needs a few fix take production rate ofneutral and different for each territory
-            neutralStats = neutralStats.WithTier(-10, unitType);
-            terretoryData = terretoryData.TerritoryTier(-8, -8);
+            neutralStats = neutralStats.WithTier(-10,-10,-10, unitType);
+            terretoryData = terretoryData.TerritoryTier(-10, -8,-8, terretoryData.Type);
             StandardProductionRate = terretoryData.productionRate;
         }
         return StandardProductionRate;
@@ -220,22 +225,26 @@ public class TerretoryController : MonoBehaviour, IPointerDownHandler, IDragHand
                 sprites[2].SetActive(true);
                 troopsMiddleSprite = sprites[2].GetComponent<SpriteRenderer>();
                 unitType = UnitType.Assassin;
+                troopTiersScript.UnlockedAssassin();
                 break;
 
             case TerritoryType.DwarfProd:
                 sprites[3].SetActive(true);
                 troopsMiddleSprite = sprites[3].GetComponent<SpriteRenderer>();
                 unitType = UnitType.Dwarf;
+                troopTiersScript.UnlockedDwarf();
                 break;
             case TerritoryType.MageProd:
                 sprites[4].SetActive(true);
                 troopsMiddleSprite = sprites[4].GetComponent<SpriteRenderer>();
                 unitType = UnitType.Mage;
+                troopTiersScript.UnlockedMage();
                 break;
             case TerritoryType.RangerProd:
                 sprites[5].SetActive(true);
                 troopsMiddleSprite = sprites[5].GetComponent<SpriteRenderer>();
                 unitType = UnitType.Ranger;
+                troopTiersScript.UnlockedRanger();
                 break;
         }
         middleOuterSprite = troopsMiddleSprite.GetComponentInChildren<SpriteRenderer>();
@@ -330,8 +339,16 @@ public class TerretoryController : MonoBehaviour, IPointerDownHandler, IDragHand
 
                 if (unitScript != null)
                 {
-                    if (CombatOwner == Owner.Player) { unitScript.SetUp(troopsStatsPlayer, targetPosition, targetIndex, CombatOwner); }
-                    else { unitScript.SetUp(troopsStatsEnemy, targetPosition, targetIndex, CombatOwner); }
+                    if (CombatOwner == Owner.Player) 
+                    { 
+                        countingTroopScript.RegisterTroop(true);
+                        unitScript.SetUp(troopsStatsPlayer, targetPosition, targetIndex, CombatOwner);                    
+                    }
+                    else 
+                    {
+                        countingTroopScript.RegisterTroop(false);
+                        unitScript.SetUp(troopsStatsEnemy, targetPosition, targetIndex, CombatOwner);
+                    }
                 }
                 spawned++;
             }

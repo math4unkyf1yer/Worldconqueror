@@ -12,6 +12,7 @@ public class Menu : MonoBehaviour
     [SerializeField] private GameObject storePage;
     [SerializeField] private GameObject upgradePage;
     [SerializeField] private GameObject customGamePage;
+    [SerializeField] private GameObject terUpgradePage;
     [SerializeField] private GameObject playButton;
     [SerializeField] private TextMeshProUGUI levelText; 
 
@@ -45,6 +46,7 @@ public class Menu : MonoBehaviour
     {
         playPage.SetActive(true);
         playButton.SetActive(true);
+        terUpgradePage.SetActive(false);
         storePage.SetActive(false);
         upgradePage.SetActive(false);
         customGamePage.SetActive(false);
@@ -53,6 +55,7 @@ public class Menu : MonoBehaviour
     {
         storePage.SetActive(true);
         playButton.SetActive(true);
+        terUpgradePage.SetActive(false);
         playPage.SetActive(false);
         upgradePage.SetActive(false);
         customGamePage.SetActive(false);
@@ -61,6 +64,16 @@ public class Menu : MonoBehaviour
     {
         upgradePage.SetActive(true);
         playButton.SetActive(true);
+        terUpgradePage.SetActive(false);
+        playPage.SetActive(false);
+        storePage.SetActive(false);
+        customGamePage.SetActive(false);
+    }
+    public void TerUpgradePage()
+    {
+        playButton.SetActive(true);
+        terUpgradePage.SetActive(true);
+        upgradePage.SetActive(false);
         playPage.SetActive(false);
         storePage.SetActive(false);
         customGamePage.SetActive(false);

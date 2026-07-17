@@ -1,13 +1,11 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.FilePathAttribute;
-using static UnityEngine.RuleTile.TilingRuleOutput;
 
-public class MageBehavior : IUnitBehavior
+public class RangerBehavior : IUnitBehavior
 {
     float nextAttackTime;
-    float attackDelay = 1;
+    float attackDelay = 1.7f;
     public UnitTroop enemyInRange;
     float nextScanTime = 0f;
     float scanDelay = 0.1f;
@@ -19,6 +17,14 @@ public class MageBehavior : IUnitBehavior
         while (troop.isAlive)
         {
             UnitTroop currentEnemy = troop.GetCurrentEnemy();
+            //make sure that if we assign it and dies immedialty removes it 
+            if (enemyInRange != null)
+            {
+                if (!enemyInRange.isAlive || !enemyInRange.gameObject.activeInHierarchy)
+                {
+                    enemyInRange = null;
+                }
+            }
 
             switch (troop.State)
             {
@@ -35,7 +41,7 @@ public class MageBehavior : IUnitBehavior
                     break;
             }
 
-            if(!currentEnemy && !enemyInRange)
+            if (!currentEnemy && !enemyInRange)
             {
                 troop.MoveTroop();
             }
@@ -46,12 +52,12 @@ public class MageBehavior : IUnitBehavior
     public void Attack(UnitTroop troop)
     {
         //spawn object(will pool later)
-        GameObject fireball = FireBallPool.Instance.GetFireBall();
-        FireBall fireBallRef = fireball.GetComponent<FireBall>();
-        if (fireBallRef != null)
+        GameObject Arrow = ArrowPool.Instance.GetFireBall();
+        Arrow ArrowRef = Arrow.GetComponent<Arrow>();
+        if (ArrowRef != null)
         {
-            fireball.transform.position = troop.transform.position;
-            fireBallRef.SetUp(troop.ownercl, troop.GetCurrentEnemy().transform);
+            Arrow.transform.position = troop.transform.position;
+            ArrowRef.SetUp(troop.ownercl, troop.GetCurrentEnemy().transform, 0.7f, 1.5f);
         }
     }
     void HandleObjective(UnitTroop troop, UnitTroop enemy)
@@ -68,7 +74,6 @@ public class MageBehavior : IUnitBehavior
             nextScanTime = Time.time + scanDelay;
             //no enemy see if there is any 
             Collider2D[] hits = Physics2D.OverlapCircleAll(troop.transform.position, troop.range, troop.troopLayer);
-            if (enemyInRange) { enemyInRange = null; }
 
             foreach (Collider2D h in hits)
             {
@@ -86,8 +91,11 @@ public class MageBehavior : IUnitBehavior
                     }
                     else
                     {
-                        enemyInRange = found;
-                        fallbackTargetTime = Time.time + fallbackDelay;
+                        if (enemyInRange == null)
+                        {
+                            enemyInRange = found;
+                            fallbackTargetTime = Time.time + fallbackDelay;
+                        }
                     }
                 }
             }
@@ -96,6 +104,7 @@ public class MageBehavior : IUnitBehavior
             {
                 if (Time.time >= fallbackTargetTime)
                 {
+                    troop.territoryLocation = troop.location;
                     troop.SetCurrentEnemy(enemyInRange);
                     troop.State = TroopState.Attacking;
                 }
@@ -137,4 +146,3 @@ public class MageBehavior : IUnitBehavior
 
     }
 }
-

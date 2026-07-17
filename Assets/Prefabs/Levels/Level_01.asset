@@ -26,13 +26,13 @@ MonoBehaviour:
     maxCapacity: 40
     productionRate: 1.7
   - TerretoryID: 1
-    Type: 3
+    Type: 2
     Owner: 0
     StartingUnits: 0
     scale: 1
     position: {x: 1, y: 0}
-    maxCapacity: 34
-    productionRate: 2.4
+    maxCapacity: 30
+    productionRate: 1.2
   - TerretoryID: 2
     Type: 0
     Owner: 2
