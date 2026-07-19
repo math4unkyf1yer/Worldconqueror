@@ -6,7 +6,7 @@ public class TerBuildRoad : MonoBehaviour
 {
     private RoadManager roadManager;
     [SerializeField] LayerMask territoryLayer;
-    float range = 8;
+    float range = 3;
     private void Start()
     {
 

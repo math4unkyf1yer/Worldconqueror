@@ -61,7 +61,6 @@ public class SoldierBehavior : IUnitBehavior
     {
         if (enemy)
         {
-            troop.territoryLocation = troop.location;
             troop.State = TroopState.Chasing;
             return;
         }

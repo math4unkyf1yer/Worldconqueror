@@ -55,6 +55,7 @@ public class UnitTroop : MonoBehaviour
         range = stats.attackRange;
         releasedRadius = range + 0.5f;
         location = targetLocation;
+        territoryLocation = location;
         index = ID;
         ownercl = owner;
 

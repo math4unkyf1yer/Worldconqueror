@@ -9016,6 +9016,7 @@ MonoBehaviour:
     scale: 0
     position: {x: 0, y: 0}
     maxCapacity: 50
+    buffPercentage: 0
     productionRate: 1
   cost: 000000000000000000000000
 --- !u!4 &1120641415
