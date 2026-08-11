@@ -5,6 +5,8 @@ using UnityEngine;
 public class ArrowPool : MonoBehaviour
 {
     [SerializeField] private List<GameObject> ArrowsList = new List<GameObject>();
+    private GameObject arrowCl;
+
     // Start is called before the first frame update
 
     public static ArrowPool Instance { get; private set; }
@@ -20,6 +22,7 @@ public class ArrowPool : MonoBehaviour
 
     public void AddArrow(GameObject arrow)
     {
+        if (arrowCl == null) { arrowCl = arrow; }
         arrow.SetActive(false);
         ArrowsList.Add(arrow);
     }
@@ -37,6 +40,6 @@ public class ArrowPool : MonoBehaviour
             RemoveArrow(arr);
             return arr;
         }
-        return null;
+        return Instantiate(arrowCl, transform);
     }
 }

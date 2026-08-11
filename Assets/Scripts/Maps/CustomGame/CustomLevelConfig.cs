@@ -12,6 +12,7 @@ public class CustomLevelConfig : MonoBehaviour
     public MapSize mapSize; // NEW
     public DifficultyConfiguration difficulty;
 
+    [SerializeField] private GameObject menuObj;
     [SerializeField] private TMP_Dropdown sizeMapDropdown;
     [SerializeField] private TMP_Dropdown enemyDropdown;
     [SerializeField] private TMP_Dropdown difficultyDropdown;
@@ -48,6 +49,8 @@ public class CustomLevelConfig : MonoBehaviour
     public void CustomPlay()
     {
         AssignLevel.Instance.SetupLevel(enemyCount,hasHazard,mapSize,difficulty);
-        SceneManager.LoadScene(1);
+        gameObject.SetActive(false);
+        menuObj.SetActive(false);
+        LoadScreen.Instance.LoadScene(1);
     }
 }

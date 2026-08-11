@@ -1,0 +1,185 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ee972ba3cfb08e48a58e3b0b5f586d6, type: 3}
+  m_Name: DavidLevel
+  m_EditorClassIdentifier: 
+  levelIndex: 0
+  enemyCount: 1
+  hasHazard: 0
+  Zones: []
+  terretories:
+  - TerretoryID: 0
+    Type: 0
+    Owner: 2
+    StartingUnits: 0
+    scale: 0.7
+    position: {x: -6.5, y: 3}
+    maxCapacity: 40
+    buffPercentage: 2.5
+    productionRate: 1.7
+  - TerretoryID: 1
+    Type: 3
+    Owner: 0
+    StartingUnits: 0
+    scale: 0.7
+    position: {x: -5.8, y: 1.65}
+    maxCapacity: 34
+    buffPercentage: 2.5
+    productionRate: 2.4
+  - TerretoryID: 2
+    Type: 3
+    Owner: 0
+    StartingUnits: 0
+    scale: 0.7
+    position: {x: -5.1, y: 3}
+    maxCapacity: 34
+    buffPercentage: 2.5
+    productionRate: 2.4
+  - TerretoryID: 3
+    Type: 3
+    Owner: 0
+    StartingUnits: 0
+    scale: 0.7
+    position: {x: -3.5, y: 1}
+    maxCapacity: 34
+    buffPercentage: 2.5
+    productionRate: 2.4
+  - TerretoryID: 4
+    Type: 3
+    Owner: 1
+    StartingUnits: 0
+    scale: 0.7
+    position: {x: 0, y: 2.3}
+    maxCapacity: 34
+    buffPercentage: 2.5
+    productionRate: 2.4
+  - TerretoryID: 5
+    Type: 3
+    Owner: 0
+    StartingUnits: 0
+    scale: 0.7
+    position: {x: -0.7, y: 1}
+    maxCapacity: 34
+    buffPercentage: 2.5
+    productionRate: 2.4
+  - TerretoryID: 6
+    Type: 3
+    Owner: 0
+    StartingUnits: 0
+    scale: 0.7
+    position: {x: 0.7, y: 1}
+    maxCapacity: 34
+    buffPercentage: 2.5
+    productionRate: 2.4
+  - TerretoryID: 7
+    Type: 3
+    Owner: 0
+    StartingUnits: 0
+    scale: 0.7
+    position: {x: 0, y: -0.6}
+    maxCapacity: 34
+    buffPercentage: 2.5
+    productionRate: 2.4
+  - TerretoryID: 8
+    Type: 3
+    Owner: 0
+    StartingUnits: 0
+    scale: 0.7
+    position: {x: 0, y: -2}
+    maxCapacity: 34
+    buffPercentage: 2.5
+    productionRate: 2.4
+  - TerretoryID: 9
+    Type: 3
+    Owner: 0
+    StartingUnits: 0
+    scale: 0.7
+    position: {x: -0.7, y: -3.3}
+    maxCapacity: 34
+    buffPercentage: 2.5
+    productionRate: 2.4
+  - TerretoryID: 10
+    Type: 0
+    Owner: 3
+    StartingUnits: 0
+    scale: 0.7
+    position: {x: 0.7, y: -3.3}
+    maxCapacity: 40
+    buffPercentage: 2.5
+    productionRate: 1.7
+  - TerretoryID: 11
+    Type: 0
+    Owner: 0
+    StartingUnits: 0
+    scale: 0.7
+    position: {x: 3.5, y: 1}
+    maxCapacity: 40
+    buffPercentage: 2.5
+    productionRate: 1.7
+  - TerretoryID: 12
+    Type: 0
+    Owner: 0
+    StartingUnits: 0
+    scale: 0.7
+    position: {x: 6.5, y: 3}
+    maxCapacity: 40
+    buffPercentage: 2.5
+    productionRate: 1.7
+  - TerretoryID: 13
+    Type: 0
+    Owner: 0
+    StartingUnits: 0
+    scale: 0.7
+    position: {x: 5.8, y: 1.65}
+    maxCapacity: 40
+    buffPercentage: 2.5
+    productionRate: 1.7
+  - TerretoryID: 14
+    Type: 0
+    Owner: 4
+    StartingUnits: 0
+    scale: 0.7
+    position: {x: 5.1, y: 3}
+    maxCapacity: 40
+    buffPercentage: 2.5
+    productionRate: 1.7
+  DifficultyConfiguration:
+    setting: 1
+    levelDifficulty: 0
+  populatedItem:
+  - sprite: {fileID: 21300000, guid: 6d21407ae41bb204aa996aadfa5f83ac, type: 3}
+    radius: 0.25
+    maxCount: 120
+    scaleX: 0.3
+    scaleY: 0.5
+  - sprite: {fileID: 21300000, guid: a1a8f22aff94dd24791a0cdf408f4f34, type: 3}
+    radius: 0.25
+    maxCount: 80
+    scaleX: 0.3
+    scaleY: 0.5
+  - sprite: {fileID: 21300000, guid: 02403e913cb513943975ef8b17ba6f75, type: 3}
+    radius: 0.7
+    maxCount: 1
+    scaleX: 0.5
+    scaleY: 0.4
+  - sprite: {fileID: 21300000, guid: fb6ba18f9d9ce134bbaa146495ff6b07, type: 3}
+    radius: 0.7
+    maxCount: 2
+    scaleX: 0.5
+    scaleY: 0.4
+  - sprite: {fileID: 21300000, guid: ddc2cc777970d564186f79d7fd879cbc, type: 3}
+    radius: 1.1
+    maxCount: 1
+    scaleX: 1
+    scaleY: 1.2
+  coinReward: 10
+  Cost: 1

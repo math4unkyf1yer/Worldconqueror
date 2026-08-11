@@ -1,0 +1,131 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ee972ba3cfb08e48a58e3b0b5f586d6, type: 3}
+  m_Name: Level_08
+  m_EditorClassIdentifier: 
+  levelIndex: 0
+  enemyCount: 1
+  hasHazard: 0
+  Zones: []
+  terretories:
+  - TerretoryID: 0
+    Type: 0
+    Owner: 1
+    StartingUnits: 0
+    scale: 1
+    position: {x: 0, y: 3}
+    maxCapacity: 40
+    buffPercentage: 2.5
+    productionRate: 1.7
+  - TerretoryID: 1
+    Type: 5
+    Owner: 0
+    StartingUnits: 0
+    scale: 1
+    position: {x: 3, y: 1.5}
+    maxCapacity: 30
+    buffPercentage: 2.5
+    productionRate: 1.2
+  - TerretoryID: 2
+    Type: 0
+    Owner: 0
+    StartingUnits: 0
+    scale: 1
+    position: {x: 5, y: 0}
+    maxCapacity: 40
+    buffPercentage: 2.5
+    productionRate: 1.7
+  - TerretoryID: 3
+    Type: 5
+    Owner: 0
+    StartingUnits: 0
+    scale: 1
+    position: {x: 3, y: -1.5}
+    maxCapacity: 30
+    buffPercentage: 2.5
+    productionRate: 1.2
+  - TerretoryID: 4
+    Type: 0
+    Owner: 2
+    StartingUnits: 0
+    scale: 1
+    position: {x: 0, y: -3}
+    maxCapacity: 40
+    buffPercentage: 2.5
+    productionRate: 1.7
+  - TerretoryID: 5
+    Type: 5
+    Owner: 0
+    StartingUnits: 0
+    scale: 1
+    position: {x: -3, y: -1.5}
+    maxCapacity: 30
+    buffPercentage: 2.5
+    productionRate: 1.2
+  - TerretoryID: 6
+    Type: 0
+    Owner: 0
+    StartingUnits: 0
+    scale: 1
+    position: {x: -5, y: 0}
+    maxCapacity: 40
+    buffPercentage: 2.5
+    productionRate: 1.7
+  - TerretoryID: 7
+    Type: 5
+    Owner: 0
+    StartingUnits: 0
+    scale: 1
+    position: {x: -3, y: 1.5}
+    maxCapacity: 30
+    buffPercentage: 2.5
+    productionRate: 1.2
+  - TerretoryID: 8
+    Type: 0
+    Owner: 0
+    StartingUnits: 0
+    scale: 1
+    position: {x: 0, y: 0}
+    maxCapacity: 40
+    buffPercentage: 2.5
+    productionRate: 1.7
+  DifficultyConfiguration:
+    setting: 1
+    levelDifficulty: 1
+  populatedItem:
+  - sprite: {fileID: 21300000, guid: a366836862f65e04da25deec629d3348, type: 3}
+    radius: 0.25
+    maxCount: 80
+    scaleX: 0.35
+    scaleY: 0.6
+  - sprite: {fileID: 21300000, guid: 35892777aca14f2498962d3c2a99b4ae, type: 3}
+    radius: 0.26
+    maxCount: 50
+    scaleX: 0.35
+    scaleY: 0.6
+  - sprite: {fileID: 21300000, guid: 561f782e9c0cbd74696455a8e90d9d5b, type: 3}
+    radius: 0.7
+    maxCount: 2
+    scaleX: 0.6
+    scaleY: 0.6
+  - sprite: {fileID: 21300000, guid: bb810b4957fb0e341a8636eb97dae553, type: 3}
+    radius: 0.5
+    maxCount: 4
+    scaleX: 0.5
+    scaleY: 0.4
+  - sprite: {fileID: 21300000, guid: e68da782bb8e5994d9504c69a7a63e52, type: 3}
+    radius: 0.5
+    maxCount: 1
+    scaleX: 0.8
+    scaleY: 0.6
+  coinReward: 10
+  Cost: 1

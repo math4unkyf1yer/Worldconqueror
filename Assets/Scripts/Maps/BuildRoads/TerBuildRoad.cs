@@ -1,39 +1,62 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Burst.CompilerServices;
 using UnityEngine;
 
 public class TerBuildRoad : MonoBehaviour
 {
     private RoadManager roadManager;
     [SerializeField] LayerMask territoryLayer;
-    float range = 3;
-    private void Start()
-    {
+    public Collider2D ourCollider;
+    public List<Collider2D> alreadyCollided = new List<Collider2D>();
+        
+    public float range = 1.5f; 
 
-    }
+    [SerializeField] float push = 50;
 
     public void SetUp()
     {
         roadManager = RoadManager.Instance;
+        ourCollider = GetComponent<Collider2D>();
 
-        //check if we bild roads if we do get out transform and target transform
-        //no enemy see if there is any 
-        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, range, territoryLayer);
+        StartCoroutine(CloseCollider());
+    }
 
-        foreach (Collider2D h in hits)
-        {
-            TerretoryController found = h.GetComponentInParent<TerretoryController>();
-
-            if (found != null)
-            {
-                roadManager.DrawRoads(transform.position, found.transform.position);
-            }
-        }
+    IEnumerator CloseCollider()
+    {
+        yield return new WaitForSeconds(0.4f);
+        ourCollider.enabled = false;
     }
 
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, range);
+
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        // Only collide with border layer
+        if (collision.gameObject.layer != 11)
+            return;
+
+        // Get the territory we collided with
+        TerBuildRoad other = collision.GetComponent<TerBuildRoad>();
+        if (other == null || other == this)
+            return;
+
+        // If we already collided with this territory, do nothing
+        if (alreadyCollided.Contains(other.ourCollider))
+            return;
+
+        // Add each other to the lists
+        alreadyCollided.Add(other.ourCollider);
+        other.alreadyCollided.Add(ourCollider);
+
+        if(roadManager != null) { roadManager.DrawRoadsStraight(transform.position, other.transform.position); }
+        // Draw the road
+    }
+
+
 }

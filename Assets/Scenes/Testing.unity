@@ -131,7 +131,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1396668125}
-  - component: {fileID: 1396668124}
+  - component: {fileID: 1396668126}
   m_Layer: 0
   m_Name: RoadBuilder
   m_TagString: Untagged
@@ -139,21 +139,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1396668124
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1396668122}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d7fa8d19d7ab2574ba9430c654ddde77, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  start: {x: -5, y: 0, z: 0}
-  end: {x: 5, y: 0, z: 0}
-  roadPrefab: {fileID: 3870769745357852685, guid: c71663cf00db85e42ae6556acb0f5856, type: 3}
 --- !u!4 &1396668125
 Transform:
   m_ObjectHideFlags: 0
@@ -163,12 +148,29 @@ Transform:
   m_GameObject: {fileID: 1396668122}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -8.79, y: -4.85, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1396668126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1396668122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cffd16dbc23114043a95b58b529ec7cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  size: {x: 17.5, y: 9.69}
+  minSpacing: 0.8
+  number: 30
+  displayRadius: 0.09
+  populatePrefab: {fileID: 5301255945844353899, guid: 547c67df54e9e9b4b803c292306c02b9, type: 3}
 --- !u!1 &1454103920
 GameObject:
   m_ObjectHideFlags: 0

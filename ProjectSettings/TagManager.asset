@@ -9,6 +9,7 @@ TagManager:
   - AIController
   - Wall
   - wall
+  - Overlay
   layers:
   - Default
   - TransparentFX
@@ -21,7 +22,7 @@ TagManager:
   - Unit
   - Territory
   - Roads
-  - 
+  - Border
   - 
   - 
   - 

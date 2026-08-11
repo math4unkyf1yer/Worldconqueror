@@ -23,13 +23,15 @@ public class TerretoryController : MonoBehaviour, IPointerDownHandler, IDragHand
     [SerializeField] private UnitStats troopsStatsEnemy;
     [SerializeField] private UnitStats neutralStats;
 
+    //Colors
+    [SerializeField] Color playerColor;
+
     [Header("Troops")]
     //Looks
     [SerializeField] SpriteRenderer troopsMiddleSprite;
     [SerializeField] SpriteRenderer terretoryImage;
     private SpriteRenderer middleOuterSprite;
     UnitType unitType = UnitType.Soldier;
-    [SerializeField] GameObject mageProjectile;
 
     AssignLevel troopTiersScript;
     BuffHolder buffScript;
@@ -62,7 +64,7 @@ public class TerretoryController : MonoBehaviour, IPointerDownHandler, IDragHand
     {
         troopTiersScript = AssignLevel.Instance;
         buffScript = BuffHolder.Instance;
-        buildRoad = GetComponent<TerBuildRoad>();
+        buildRoad = GetComponentInChildren<TerBuildRoad>();
         buildRoad.SetUp();
         transform.localScale = new Vector3(data.scale, data.scale, data.scale);
 
@@ -175,7 +177,7 @@ public class TerretoryController : MonoBehaviour, IPointerDownHandler, IDragHand
         {
             //needs a few fix take production rate ofneutral and different for each territory
             neutralStats = neutralStats.WithTier(-10,-10,-10, unitType);
-            terretoryData = terretoryData.TerritoryTier(-10, -8,-8, terretoryData.Type);
+            terretoryData = terretoryData.TerritoryTier(-17, -8,-8, terretoryData.Type);
             StandardProductionRate = terretoryData.productionRate;
         }
         return StandardProductionRate;
@@ -188,7 +190,7 @@ public class TerretoryController : MonoBehaviour, IPointerDownHandler, IDragHand
             case Owner.Player:
                 troopsMiddleSprite.color = Color.blue;
                 terretoryImage.color = new Color(0f, 0f, 1f, 0.3f);
-                middleOuterSprite.color = new Color(0f, 0f, 1f, 0.3f);
+                middleOuterSprite.color = new Color(0.4f, 0.6f, 1f, 0.3f);
                 break;
             case Owner.AI1:
                 troopsMiddleSprite.color = Color.red;

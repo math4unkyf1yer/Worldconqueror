@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.FilePathAttribute;
 
 public class FireBall : Projectiles
 {
@@ -9,7 +8,7 @@ public class FireBall : Projectiles
     [SerializeField] GameObject outerEdge;
     [SerializeField] GameObject innerEdge;
 
-
+    
     public override void ReachTarget()
     {
         base.ReachTarget();
@@ -28,6 +27,7 @@ public class FireBall : Projectiles
     }
     public void CloseFireProjectile()
     {
+        spriteRenderer.enabled = true;
         outerEdge.SetActive(false);
         innerEdge.SetActive(false);
         FireBallPool.Instance.AddFireBall(gameObject);

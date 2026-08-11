@@ -23,7 +23,7 @@ public class HazardZone
     {
         switch(Type)
         {
-            case HazardType.Slow: return Mathf.Lerp(1f, 0.7f, intensity); // slows to 30% at full intensity
+            case HazardType.Slow: return Mathf.Lerp(1f, 0.3f, intensity); // slows to 20% at full intensity
             case HazardType.Speed: return Mathf.Lerp(1f, 2f, intensity); // speeds up to 2x
             default: return 1f;
         }

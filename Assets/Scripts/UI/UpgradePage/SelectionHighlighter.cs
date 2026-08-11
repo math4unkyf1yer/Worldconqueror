@@ -10,21 +10,25 @@ public class SelectionHighlighter : MonoBehaviour
     public Color inactiveColor;
 
     private Button oldActivatedButton;
+    private GameObject oldOverlay;
+
+    //keep this to add the gold animation arround the button 
     public void ChangeButtonColor(Button btn)
     {
-        if (oldActivatedButton != null)
+        if(oldActivatedButton != null)
         {
-            ColorBlock cbOld = oldActivatedButton.colors;
-            cbOld.normalColor = inactiveColor;
-            cbOld.selectedColor = inactiveColor;
-            oldActivatedButton.colors = cbOld;
+            oldOverlay.SetActive(false);
         }
-
-        ColorBlock cb = btn.colors;
-        cb.normalColor = activeColor;
-        cb.selectedColor = activeColor;
-        btn.colors = cb;
-
         oldActivatedButton = btn;
+
+        // Loop through all children using Transform
+        foreach (Transform child in oldActivatedButton.transform)
+        {
+            if (child.CompareTag("Overlay"))
+            {
+                child.gameObject.SetActive(true);
+                oldOverlay = child.gameObject;
+            }
+        }
     }
 }

@@ -1,8 +1,9 @@
-using System.Collections;
+
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.SceneManagement;
 using TMPro;
+using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class Menu : MonoBehaviour
 {
@@ -15,73 +16,189 @@ public class Menu : MonoBehaviour
     [SerializeField] private GameObject terUpgradePage;
     [SerializeField] private GameObject playButton;
     [SerializeField] private TextMeshProUGUI levelText; 
+    [SerializeField] private LevelUI levelUI;
+    [SerializeField] private GameObject holderTer;
 
+    [SerializeField] private Cost costScript;
+    [SerializeField] private Cost costTerScript;
+
+    private ButtonLockController buttonLock;
+    //for button look
+    [SerializeField] private GameObject buttonHolder;
+    private List<Button> buttonsInHolder = new List<Button>();
+    //selected Button
+    private Button selectedButton;
+    int oldButtonId;
     public static Menu Instance { get; private set; }
+
 
     private void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         Instance = this;
+        DontDestroyOnLoad(gameObject);
     }
 
     private void Start()
     {
+        buttonLock = GetComponent<ButtonLockController>();
+        CacheButtons();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+            QuitGame();
+    }
+
+    // ---------------------------------------------------------
+    // BUTTON INITIALIZATION
+    // ---------------------------------------------------------
+
+    private void CacheButtons()
+    {
+        buttonsInHolder.Clear();
+
+        foreach (Button child in buttonHolder.GetComponentsInChildren<Button>())
+            buttonsInHolder.Add(child);
+
+        // Select first button by default
+        selectedButton = buttonsInHolder[0];
+        EventSystem.current.SetSelectedGameObject(selectedButton.gameObject);
+    }
+
+    // ---------------------------------------------------------
+    // GENERAL SETUP
+    // ---------------------------------------------------------
+
+    public void SetUp()
+    {
+        buttonLock.CheckAllButtons(AssignLevel.Instance.levelCount);
+    }
+
+    public void BackToMenu()
+    {
+        buttonLock.CheckAllButtons(AssignLevel.Instance.levelCount);
+
+        gameObject.SetActive(true);
+        holderTer.SetActive(true);
+
         SetCoinText();
+        levelUI.RefreshMap(false);
+
+        EventSystem.current.SetSelectedGameObject(selectedButton.gameObject);
     }
 
     public void SetCoinText()
     {
         int currentLevel = AssignLevel.Instance.levelCount + 1;
         int coin = AssignLevel.Instance.GetCoin();
-        coinText.text = "Coin:" + coin.ToString();
-        levelText.text = "Level " + currentLevel.ToString();
-    }
-    public void PlayButton()
-    {
-        AssignLevel.Instance.customGame = false;
-        SceneManager.LoadScene(1);
+
+        coinText.text = "Coin: " + coin;
+        levelText.text = "Level " + currentLevel;
     }
 
-   
+    // ---------------------------------------------------------
+    // PAGE SWITCHING (CENTRALIZED)
+    // ---------------------------------------------------------
+
+    private void ShowPage(GameObject targetPage)
+    {
+        playPage.SetActive(false);
+        storePage.SetActive(false);
+        upgradePage.SetActive(false);
+        customGamePage.SetActive(false);
+        terUpgradePage.SetActive(false);
+
+        holderTer.SetActive(false);
+        playButton.SetActive(true);
+
+        targetPage.SetActive(true);
+    }
+
+    private void PreventSelection()
+    {
+        EventSystem.current.SetSelectedGameObject(selectedButton.gameObject);
+    }
+
+    // ---------------------------------------------------------
+    // PAGE ACTIONS
+    // ---------------------------------------------------------
+
+    public void PlayButton()
+    {
+        holderTer.SetActive(false);
+        AssignLevel.Instance.customGame = false;
+
+        gameObject.SetActive(false);
+        LoadScreen.Instance.LoadScene(1);
+    }
+
     public void PlayPageOpen()
     {
-        playPage.SetActive(true);
-        playButton.SetActive(true);
-        terUpgradePage.SetActive(false);
-        storePage.SetActive(false);
-        upgradePage.SetActive(false);
-        customGamePage.SetActive(false);
+        ShowPage(playPage);
+        holderTer.SetActive(true);
+
+        selectedButton = buttonsInHolder[0];
     }
+
     public void StorePage()
     {
-        storePage.SetActive(true);
-        playButton.SetActive(true);
-        terUpgradePage.SetActive(false);
-        playPage.SetActive(false);
-        upgradePage.SetActive(false);
-        customGamePage.SetActive(false);
+        if (!buttonLock.unlockShop)
+        {
+            PreventSelection();
+            return;
+        }
+
+        ShowPage(storePage);
+        selectedButton = buttonsInHolder[3];
     }
+
     public void UpgradePage()
     {
-        upgradePage.SetActive(true);
-        playButton.SetActive(true);
-        terUpgradePage.SetActive(false);
-        playPage.SetActive(false);
-        storePage.SetActive(false);
-        customGamePage.SetActive(false);
+        if (!buttonLock.unlockTroopUpgrades)
+        {
+            PreventSelection();
+            return;
+        }
+
+        ShowPage(upgradePage);
+        costScript.SetUp();
+
+        selectedButton = buttonsInHolder[1];
     }
+
     public void TerUpgradePage()
     {
-        playButton.SetActive(true);
-        terUpgradePage.SetActive(true);
-        upgradePage.SetActive(false);
-        playPage.SetActive(false);
-        storePage.SetActive(false);
-        customGamePage.SetActive(false);
+        if (!buttonLock.unlockTerritoryUpgrades)
+        {
+            PreventSelection();
+            return;
+        }
+
+        ShowPage(terUpgradePage);
+        costTerScript.SetUp();
+
+        selectedButton = buttonsInHolder[2];
     }
 
     public void CustomGamePageOpen()
     {
-        customGamePage.SetActive(true);
-        playButton.SetActive(false);
+        ShowPage(customGamePage);
     }
+
+    // ---------------------------------------------------------
+    // QUIT
+    // ---------------------------------------------------------
+
+    private void QuitGame()
+    {
+        Application.Quit();
+    }
+
 }

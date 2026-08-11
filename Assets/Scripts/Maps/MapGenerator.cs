@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -29,6 +30,9 @@ public class MapGenerator : MonoBehaviour
     [SerializeField] GameObject terBar;
     [SerializeField] Transform barParent;
     private List<TerritorySlider> sliders = new List<TerritorySlider>();
+    //populating and its script
+    Dictionary<GameObject, int> populatedItem = new Dictionary<GameObject, int>();
+    [SerializeField] PopulateTerritory populatedScript;
 
     //Winnning
     [SerializeField] GameObject winPage;
@@ -49,6 +53,7 @@ public class MapGenerator : MonoBehaviour
     void SetUp()
     {
         //Slider ui look for better eye
+        
         foreach (TerretoryData data in levelData.terretories)
         {
             if (data.Owner != Owner.Neutral)
@@ -130,6 +135,8 @@ public class MapGenerator : MonoBehaviour
             foreach (TerretoryController t in spawnedTerretories)
                 t.aiControllers = aiControllers;
         }
+
+        populatedScript.Setup(levelData.populatedItem);
 
         if (AssignLevel.Instance.customGame)
         {
@@ -235,12 +242,13 @@ public class MapGenerator : MonoBehaviour
         if (playerWin)
         {
             //gives coin
-
             //change level
             AssignLevel.Instance.NewLevel(levelData.coinReward);
-        }
 
-        SceneManager.LoadScene(0);
+        }
+        losePage.SetActive(false);
+        winPage.SetActive(false);
+        LoadScreen.Instance.LoadScene(0);
     }
 
 }

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using TMPro;
+using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,6 +11,7 @@ public class Cost : MonoBehaviour
 {
     //scripts
     private AssignLevel assignLevelScript;
+    private ButtonLockController buttonController;
     private SelectionHighlighter selectionHighlighter;
     private SpriteSwitcher spriteSwitcher;
 
@@ -32,12 +34,18 @@ public class Cost : MonoBehaviour
     void Start()
     {
         assignLevelScript = AssignLevel.Instance;
+        buttonController = ButtonLockController.Instance;
         selectionHighlighter = GetComponent<SelectionHighlighter>();
         spriteSwitcher = GetComponent<SpriteSwitcher>();
 
         ChangeText();
         selectionHighlighter.ChangeButtonColor(Buttons[whichType]);
-        spriteSwitcher.SetSprite(whichType);
+        spriteSwitcher.ChangeInfo(whichType);
+    }
+
+    public void SetUp()
+    {
+
     }
 
     public void ClickTroopType(int typeInt)
@@ -51,31 +59,38 @@ public class Cost : MonoBehaviour
 
         ChangeText();
         selectionHighlighter.ChangeButtonColor(Buttons[whichType]);
-        spriteSwitcher.SetSprite(whichType);
+        spriteSwitcher.ChangeInfo(whichType);
         
     }
 
     public void ClickTerritoryType(int typeint)
     {
+        if (!isTerritoryUnlocked(typeint)) return;
+
         whichType = typeint;
         currentIndex = typeint;
         territoryType = (TerritoryType)typeint;
 
         ChangeText();
         selectionHighlighter.ChangeButtonColor(Buttons[whichType]);
-        spriteSwitcher.SetSprite(whichType);
+        spriteSwitcher.ChangeInfo(whichType);
     }
 
     bool isTerritoryUnlocked(int index)
     {
+        if(index == 1) return buttonController.unlockFortUpgrades;
+        if (index == 2) return buttonController.unlockAssassinUpgrades;
+        if (index == 3) return buttonController.unlockDwarfUpgrades;
+        if (index == 4) return buttonController.unlockMageUpgrades;
+        if (index == 5) return buttonController.unlockRangerUpgrades;
         return true;
     }
     bool IsTroopUnlocked(int index)
     {
-        if (index == 1) return assignLevelScript.unlockedAssassin;
-        if (index == 2) return assignLevelScript.unlockedDwarfs;
-        if (index == 3) return assignLevelScript.unlockedMage;
-        if (index == 4) return assignLevelScript.unlockedRanger;
+        if (index == 1) return buttonController.unlockAssassinUpgrades;
+        if (index == 2) return buttonController.unlockDwarfUpgrades;
+        if (index == 3) return buttonController.unlockMageUpgrades;
+        if (index == 4) return buttonController.unlockRangerUpgrades;
         return true;
     }
 

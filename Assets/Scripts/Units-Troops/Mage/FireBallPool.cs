@@ -6,6 +6,7 @@ using UnityEngine;
 public class FireBallPool : MonoBehaviour
 {
     [SerializeField] private List<GameObject> fireBallList = new List<GameObject>();
+    private GameObject fireball;
     // Start is called before the first frame update
 
     public static FireBallPool Instance { get; private set; }
@@ -21,6 +22,7 @@ public class FireBallPool : MonoBehaviour
 
     public void AddFireBall(GameObject fireBall)
     {
+        if(fireball == null) { fireball = fireBall; }
         fireBall.SetActive(false);
         fireBallList.Add(fireBall);
     }
@@ -38,7 +40,9 @@ public class FireBallPool : MonoBehaviour
             RemoveFireBall(fire);
             return fire;
         }
-        return null;
+
+
+        return Instantiate(fireball, transform); 
     }
 
 }

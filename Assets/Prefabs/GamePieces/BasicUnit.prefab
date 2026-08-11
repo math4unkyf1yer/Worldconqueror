@@ -30,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -2.4928288, y: 0.829, z: 0}
-  m_LocalScale: {x: 0.15978548, y: 0.16057844, z: 0.1279}
+  m_LocalScale: {x: 0.1897855, y: 0.1905784, z: 0.1279}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -100,18 +100,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0
+  health: 0
+  range: 0
+  ownercl: 0
   troopLayer:
     serializedVersion: 2
     m_Bits: 256
+  location: {fileID: 0}
+  territoryLocation: {fileID: 0}
+  chasingEnemy: 0
+  State: 0
+  isTargeted: 0
+  releasedRadius: 0
   hasFought: 0
-  cobatCooldown: 0.2
+  combatCooldown: 0.2
   spriteRenderer: {fileID: 5696815016522014535}
   troopSprites:
-  - {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  - {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  - {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
-  - {fileID: 3625043607559282579, guid: 19fb86013d8c24d6cb8410c0aadf30fa, type: 3}
-  - {fileID: -2135585597343286014, guid: 5aa8b770bc43046bc8d993d0d5b7f4a5, type: 3}
+  - {fileID: 21300000, guid: 71e754b2c45d46d44918942648cb6caf, type: 3}
+  - {fileID: 21300000, guid: 45cc5f350b7da3f44b8f9b85bafc22f0, type: 3}
+  - {fileID: 21300000, guid: bd62671c22d27d54ca154f83b3220243, type: 3}
+  - {fileID: 21300000, guid: ea0a56f7e767c7b468ae6d9895bad556, type: 3}
+  - {fileID: 21300000, guid: 5527095728d6a4648a929178d6657638, type: 3}
 --- !u!58 &3872843452764306814
 CircleCollider2D:
   m_ObjectHideFlags: 0

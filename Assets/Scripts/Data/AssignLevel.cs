@@ -3,9 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
-using UnityEditor.SceneTemplate;
 using UnityEngine;
-using static UnityEditor.MaterialProperty;
 
 public class AssignLevel : MonoBehaviour
 {
@@ -36,8 +34,11 @@ public class AssignLevel : MonoBehaviour
     public bool unlockedMage { get; private set; } = false;
     public bool unlockedRanger { get; private set; } = false;
 
+    public bool unlockedFort {  get; private set; } = false;
+
     public Dictionary<UnitType, TroopUpgradeStats> troopUpgrades = new Dictionary<UnitType, TroopUpgradeStats>();
     public Dictionary<TerritoryType, TerritoryUpgradeStats> territoryUpgrades = new Dictionary<TerritoryType, TerritoryUpgradeStats>();
+
 
     [System.Serializable]
     public class TroopUpgradeStats
@@ -98,6 +99,7 @@ public class AssignLevel : MonoBehaviour
         {
             levelCount++;
             coin += amountGain;
+            LevelUI.Instance.UpdateMap();
         }
     }
     public LevelData WhichLevel()
@@ -108,11 +110,6 @@ public class AssignLevel : MonoBehaviour
         }
         return customData;
     }
-    public int GetCoin()
-    {
-        return coin;
-    }
-
     public UnitStats GetCurrentStats(UnitType troopType)
     {
         return currentTroopStats.WithTier(GetMoveSpeed(troopType), GetAttack(troopType), GetHealth(troopType), troopType);
@@ -190,10 +187,19 @@ public class AssignLevel : MonoBehaviour
          return baseCost;
     }
 
-    public void SetCoin(int cost)
+    public void SubtractCoin(int cost)
     {
         coin -= cost;
     }
+    public int GetCoin()
+    {
+        return coin;
+    }
+    public void SetCoin(int coinCl)
+    {
+        coin = coinCl;
+    }
+
 
     public int GetAttack(UnitType type) => troopUpgrades[type].Attack;
     public int GetMoveSpeed(UnitType type) => troopUpgrades[type].MoveSpeed;
@@ -308,5 +314,9 @@ public class AssignLevel : MonoBehaviour
     public void UnlockedRanger()
     {
         unlockedRanger = true;
+    }
+    public void UnlockedFort()
+    {
+        unlockedFort = true;
     }
 }

@@ -1,0 +1,118 @@
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using UnityEngine;
+using static AssignLevel;
+
+public class SaveInGame : MonoBehaviour
+{
+    private AssignLevel asssignLevelScript;
+    private ButtonLockController lockController;
+    private LevelUI levelUiScript;
+    [SerializeField] private SaveData testSaveData;
+
+    void Start()
+    {
+        asssignLevelScript = GetComponent<AssignLevel>();
+        lockController = GetComponent<ButtonLockController>();
+        levelUiScript = LevelUI.Instance;
+        LoadGame();
+    }
+
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            SaveGame();
+        }
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            Clear();
+        }
+    }
+
+    public void SaveGame()
+    {
+        SaveData data = new SaveData();
+
+
+        data.coins = asssignLevelScript.GetCoin();
+        data.level = asssignLevelScript.levelCount;
+
+        data.mapCurrentCount = levelUiScript.mapCurrentCount;
+        data.positionYLevel = levelUiScript.levelPositionY;
+
+        // Save troop upgrades
+        foreach (var kvp in asssignLevelScript.troopUpgrades)
+        {
+            TroopUpgradeSave save = new TroopUpgradeSave();
+            save.type = kvp.Key;
+            save.attack = kvp.Value.Attack;
+            save.moveSpeed = kvp.Value.MoveSpeed;
+            save.health = kvp.Value.Health;
+            save.cost = kvp.Value.cost;
+
+            data.troopUpgrades.Add(save);
+        }
+
+        // Save territory upgrades
+        foreach (var kvp in asssignLevelScript.territoryUpgrades)
+        {
+            TerritoryUpgradeSave save = new TerritoryUpgradeSave();
+            save.type = kvp.Key;
+            save.production = kvp.Value.Production;
+            save.capacity = kvp.Value.Capacity;
+            save.buff = kvp.Value.buff;
+            save.cost = kvp.Value.cost;
+
+            data.territoryUpgrade.Add(save);
+        }
+
+        testSaveData = data;
+        SaveSystem.Save(data);
+    }
+
+    public void LoadGame()
+    {
+        SaveData data = SaveSystem.Load();
+
+        if (data == null) { Menu.Instance.SetCoinText(); levelUiScript.RefreshMap(true); return; }
+
+        asssignLevelScript.SetCoin(data.coins);
+        asssignLevelScript.levelCount = data.level;
+
+        levelUiScript.mapCurrentCount = data.mapCurrentCount;
+        levelUiScript.levelPositionY = data.positionYLevel;
+
+        //wont have need for this in the furure but for now
+
+
+        // Load troop upgrades
+        foreach (var save in data.troopUpgrades)
+        {
+            TroopUpgradeStats stats = asssignLevelScript.troopUpgrades[save.type];
+            stats.Attack = save.attack;
+            stats.MoveSpeed = save.moveSpeed;
+            stats.Health = save.health;
+            stats.cost = save.cost;
+        }
+
+        // Load territory upgrades
+        foreach (var save in data.territoryUpgrade)
+        {
+            TerritoryUpgradeStats stats = asssignLevelScript.territoryUpgrades[save.type];
+            stats.Production = save.production;
+            stats.Capacity = save.capacity;
+            stats.buff = save.buff;
+            stats.cost = save.cost;
+        }
+        Menu.Instance.SetCoinText();
+        Menu.Instance.SetUp();
+        levelUiScript.RefreshMap(true);
+    }
+
+    public void Clear()
+    {
+        SaveSystem.ClearSave();
+    }
+}

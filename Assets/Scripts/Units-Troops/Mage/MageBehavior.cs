@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.FilePathAttribute;
 using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class MageBehavior : IUnitBehavior
@@ -58,8 +57,10 @@ public class MageBehavior : IUnitBehavior
         FireBall fireBallRef = fireball.GetComponent<FireBall>();
         if (fireBallRef != null)
         {
+            // might need to make sure its active
+            fireball.SetActive(true);
             fireball.transform.position = troop.transform.position;
-            fireBallRef.SetUp(troop.ownercl, troop.GetCurrentEnemy().transform, 0.4f, 1.2f);
+            fireBallRef.SetUp(troop.ownercl, troop.GetCurrentEnemy().transform, 0.4f, 1.5f);
         }
     }
     void HandleObjective(UnitTroop troop, UnitTroop enemy)
