@@ -55,7 +55,7 @@ MonoBehaviour:
     productionRate: 1.7
   DifficultyConfiguration:
     setting: 3
-    levelDifficulty: 1
+    levelDifficulty: 0
   populatedItem:
   - sprite: {fileID: 21300000, guid: a366836862f65e04da25deec629d3348, type: 3}
     radius: 0.25

@@ -68,10 +68,10 @@ public class UnitStats
             {
                 unitType = newType,
                 strenght = baseStrength,//change for future(attack power) 
-                moveSpeed = baseMoveSpeed * (1f + tMoveSpeed * 0.05f),
+                moveSpeed = baseMoveSpeed * (1f + tMoveSpeed * 0.1f),
                 attackRange = attackRange, //increase attack range 
-                attackPower = attackPower * (1f + tAttackPower * 0.05f), // increase attack power
-                health = health * (1f + tHealth * 0.05f) // increase health of troop 
+                attackPower = attackPower * (1f + tAttackPower * 0.1f), // increase attack power
+                health = health * (1f + tHealth * 0.1f) // increase health of troop 
             };
     }
 

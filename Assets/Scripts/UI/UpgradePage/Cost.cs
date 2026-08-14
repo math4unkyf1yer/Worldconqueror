@@ -43,10 +43,6 @@ public class Cost : MonoBehaviour
         spriteSwitcher.ChangeInfo(whichType);
     }
 
-    public void SetUp()
-    {
-
-    }
 
     public void ClickTroopType(int typeInt)
     {
@@ -120,6 +116,7 @@ public class Cost : MonoBehaviour
 
     void ChangeText()
     {
+
         if (troopUpgrade)
         {
             UnitStats currentTroopStat = assignLevelScript.GetCurrentStats(type);
@@ -128,9 +125,9 @@ public class Cost : MonoBehaviour
             {
                 costtext[i].text = "Cost: " + assignLevelScript.troopUpgrades[type].cost[i].ToString();
             }
-            increaseAmountText[0].text = currentTroopStat.attackPower + " increase by: 5% ".ToString();
-            increaseAmountText[1].text = currentTroopStat.moveSpeed + " increase by: 5% ".ToString();
-            increaseAmountText[2].text = currentTroopStat.health + " increase by: 5% ".ToString();
+            increaseAmountText[0].text = currentTroopStat.attackPower + " increase by: 10% ".ToString();
+            increaseAmountText[1].text = currentTroopStat.moveSpeed + " increase by: 10% ".ToString();
+            increaseAmountText[2].text = currentTroopStat.health + " increase by: 10% ".ToString();
         }
         else
         {
@@ -140,9 +137,8 @@ public class Cost : MonoBehaviour
             {
                 costtext[i].text = "Cost: " + assignLevelScript.territoryUpgrades[territoryType].cost[i].ToString();
             }
-            increaseAmountText[0].text = currentTerStat.productionRate + "sec decrease time by: 5% ".ToString();
-            increaseAmountText[1].text = currentTerStat.maxCapacity + " increase capacity by: 5% ".ToString();
-            increaseAmountText[2].text = currentTerStat.buffPercentage + " increase by: 5% ".ToString(); // will need to add buff later
+            increaseAmountText[0].text = currentTerStat.productionRate + "sec decrease time by: 10% ".ToString();
+            increaseAmountText[1].text = currentTerStat.maxCapacity + " increase capacity by: 10% ".ToString();
         }
     }
 }

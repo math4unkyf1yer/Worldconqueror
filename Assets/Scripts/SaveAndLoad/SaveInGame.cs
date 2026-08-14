@@ -50,7 +50,6 @@ public class SaveInGame : MonoBehaviour
             save.attack = kvp.Value.Attack;
             save.moveSpeed = kvp.Value.MoveSpeed;
             save.health = kvp.Value.Health;
-            save.cost = kvp.Value.cost;
 
             data.troopUpgrades.Add(save);
         }
@@ -63,7 +62,6 @@ public class SaveInGame : MonoBehaviour
             save.production = kvp.Value.Production;
             save.capacity = kvp.Value.Capacity;
             save.buff = kvp.Value.buff;
-            save.cost = kvp.Value.cost;
 
             data.territoryUpgrade.Add(save);
         }
@@ -94,7 +92,10 @@ public class SaveInGame : MonoBehaviour
             stats.Attack = save.attack;
             stats.MoveSpeed = save.moveSpeed;
             stats.Health = save.health;
-            stats.cost = save.cost;
+
+            stats.cost[0] = asssignLevelScript.GetUpgradeCost(stats, null, 0);
+            stats.cost[1] = asssignLevelScript.GetUpgradeCost(stats, null, 1);
+            stats.cost[2] = asssignLevelScript.GetUpgradeCost(stats, null, 2);
         }
 
         // Load territory upgrades
@@ -104,7 +105,10 @@ public class SaveInGame : MonoBehaviour
             stats.Production = save.production;
             stats.Capacity = save.capacity;
             stats.buff = save.buff;
-            stats.cost = save.cost;
+
+            stats.cost[0] = asssignLevelScript.GetUpgradeCost(null, stats, 0);
+            stats.cost[1] = asssignLevelScript.GetUpgradeCost(null, stats, 1);
+            stats.cost[2] = asssignLevelScript.GetUpgradeCost(null, stats, 2);
         }
         Menu.Instance.SetCoinText();
         Menu.Instance.SetUp();

@@ -25,9 +25,7 @@ public class AssignLevel : MonoBehaviour
 
     public UnitStats currentTroopStats;
     public TerretoryData terretoryData;
-    //troops upgrade
-    public int[] cost;
-
+    
     //Have you unlock the other troops
     public bool unlockedAssassin { get; private set; } = false;
     public bool unlockedDwarfs { get; private set; } = false;
@@ -38,24 +36,23 @@ public class AssignLevel : MonoBehaviour
 
     public Dictionary<UnitType, TroopUpgradeStats> troopUpgrades = new Dictionary<UnitType, TroopUpgradeStats>();
     public Dictionary<TerritoryType, TerritoryUpgradeStats> territoryUpgrades = new Dictionary<TerritoryType, TerritoryUpgradeStats>();
+    public int test;
 
 
-    [System.Serializable]
     public class TroopUpgradeStats
     {
-        public int Attack = 1;
-        public int MoveSpeed = 1;
-        public int Health = 1;
+        public int Attack = 0;
+        public int MoveSpeed = 0;
+        public int Health = 0;
 
         public int[] cost = new int[3];
     }
-    [System.Serializable]
     public class TerritoryUpgradeStats
     {
-        public int Production = 1;
-        public int Capacity = 1;
+        public int Production = 0;
+        public int Capacity = 0;
         //will need whatever buff this is 
-        public int buff = 1;
+        public int buff = 0;
 
         public int[] cost = new int[3];
     }
@@ -76,18 +73,19 @@ public class AssignLevel : MonoBehaviour
         foreach (UnitType type in System.Enum.GetValues(typeof(UnitType)))
         {
             TroopUpgradeStats stats = new TroopUpgradeStats();
-            stats.cost[0] = 10;
-            stats.cost[1] = 10;
-            stats.cost[2] = 10;
+            stats.cost[0] = 15;
+            stats.cost[1] = 15;
+            stats.cost[2] = 15;
+            test = stats.cost[0];
 
             troopUpgrades[type] = stats;
         }
         foreach (TerritoryType type in System.Enum.GetValues(typeof(TerritoryType)))
         {
             TerritoryUpgradeStats stats = new TerritoryUpgradeStats();
-            stats.cost[0] = 10;
-            stats.cost[1] = 10;
-            stats.cost[2] = 10;
+            stats.cost[0] = 15;
+            stats.cost[1] = 15;
+            stats.cost[2] = 15;
 
             territoryUpgrades[type] = stats;
         }
@@ -162,8 +160,8 @@ public class AssignLevel : MonoBehaviour
     //0 is production. 1 is move speed, 2 is capacity
     public int GetUpgradeCost(TroopUpgradeStats stats,TerritoryUpgradeStats terStats, int upgradeInt)
     {
-        int baseCost = 10;
-        float growth = 1.5f;
+        int baseCost = 15;
+        float growth = 1.4f;
 
         if(stats != null)
         {
@@ -319,4 +317,5 @@ public class AssignLevel : MonoBehaviour
     {
         unlockedFort = true;
     }
+
 }

@@ -168,7 +168,6 @@ public class Menu : MonoBehaviour
         }
 
         ShowPage(upgradePage);
-        costScript.SetUp();
 
         selectedButton = buttonsInHolder[1];
     }
@@ -182,7 +181,6 @@ public class Menu : MonoBehaviour
         }
 
         ShowPage(terUpgradePage);
-        costTerScript.SetUp();
 
         selectedButton = buttonsInHolder[2];
     }
