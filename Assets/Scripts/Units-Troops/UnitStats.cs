@@ -56,7 +56,7 @@ public class UnitStats
             baseMoveSpeed = 0.75f;
             attackPower = 0;
             health = 0.5f;
-            attackRange = 1.8f;
+            attackRange = 1.3f;
         }else if(newType == UnitType.Ranger)
         {
             baseMoveSpeed = 1f;

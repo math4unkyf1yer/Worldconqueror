@@ -6,6 +6,7 @@ using UnityEngine;
 public class TerBuildRoad : MonoBehaviour
 {
     private RoadManager roadManager;
+    private TerAura terAura;
     [SerializeField] LayerMask territoryLayer;
     public Collider2D ourCollider;
     public List<Collider2D> alreadyCollided = new List<Collider2D>();
@@ -18,6 +19,7 @@ public class TerBuildRoad : MonoBehaviour
     {
         roadManager = RoadManager.Instance;
         ourCollider = GetComponent<Collider2D>();
+        terAura = GetComponent<TerAura>();
 
         StartCoroutine(CloseCollider());
     }
@@ -25,8 +27,9 @@ public class TerBuildRoad : MonoBehaviour
     IEnumerator CloseCollider()
     {
         yield return new WaitForSeconds(0.4f);
-        ourCollider.enabled = false;
+        terAura.SetCollider();
     }
+
 
     private void OnDrawGizmosSelected()
     {

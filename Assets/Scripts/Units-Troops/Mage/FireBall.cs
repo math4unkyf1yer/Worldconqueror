@@ -30,6 +30,8 @@ public class FireBall : Projectiles
         spriteRenderer.enabled = true;
         outerEdge.SetActive(false);
         innerEdge.SetActive(false);
+        ScaleDown();
         FireBallPool.Instance.AddFireBall(gameObject);
     }
+    
 }

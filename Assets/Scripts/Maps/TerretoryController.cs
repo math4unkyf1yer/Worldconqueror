@@ -11,6 +11,7 @@ public class TerretoryController : MonoBehaviour, IPointerDownHandler, IDragHand
     [Header("TerretoryStats")]
     [SerializeField] public TerretoryData terretoryData;
     [SerializeField] private DifficultyConfiguration Difficulty;
+    private TerAura auraField;
     public float amountOfTroops;
     private float StandardProductionRate = 3;
     public int terretoryIndex;
@@ -34,7 +35,6 @@ public class TerretoryController : MonoBehaviour, IPointerDownHandler, IDragHand
     UnitType unitType = UnitType.Soldier;
 
     AssignLevel troopTiersScript;
-    BuffHolder buffScript;
 
    [Header("UI/Dragging")]
     //Dragging
@@ -63,8 +63,8 @@ public class TerretoryController : MonoBehaviour, IPointerDownHandler, IDragHand
     public void GetData(TerretoryData data, DifficultyConfiguration difficulty, MapGenerator gameMode, List<TerritorySlider> sliders)
     {
         troopTiersScript = AssignLevel.Instance;
-        buffScript = BuffHolder.Instance;
         buildRoad = GetComponentInChildren<TerBuildRoad>();
+        auraField = GetComponent<TerAura>();
         buildRoad.SetUp();
         transform.localScale = new Vector3(data.scale, data.scale, data.scale);
 
@@ -78,7 +78,6 @@ public class TerretoryController : MonoBehaviour, IPointerDownHandler, IDragHand
         countingTroopScript = map.GetComponent<TroopConter>();
         sliderList = sliders;
 
-        buffScript.OnTerritoryOwnerChanged(Owner.Neutral, owner, terretoryData.Type, terretoryData.buffPercentage);
         SetTerretoryLook();
         StandardProductionRate = ProductionRate();
        //Invoke reapeate the function for the production rate 
@@ -116,7 +115,6 @@ public class TerretoryController : MonoBehaviour, IPointerDownHandler, IDragHand
             {
                 data.SetOwnerTerritories(owner, previousOwner);
             }
-            buffScript.OnTerritoryOwnerChanged(previousOwner, owner, terretoryData.Type, terretoryData.buffPercentage);
             CancelInvoke("OnUnitCountUp");
             StandardProductionRate = ProductionRate();
             InvokeRepeating("OnUnitCountUp", 0, StandardProductionRate);
@@ -162,13 +160,13 @@ public class TerretoryController : MonoBehaviour, IPointerDownHandler, IDragHand
         {
             //give its production rate == something different and its buff
             troopsStatsPlayer = troopsStatsPlayer.WithTier(troopTiersScript.GetMoveSpeed(unitType), troopTiersScript.GetAttack(unitType), troopTiersScript.GetHealth(unitType), unitType);
-            terretoryData = terretoryData.TerritoryTier(troopTiersScript.GetProduction(terretoryData.Type), troopTiersScript.GetCapacity(terretoryData.Type), troopTiersScript.GetBuff(terretoryData.Type), terretoryData.Type);
+            terretoryData = terretoryData.TerritoryTier(troopTiersScript.GetProduction(terretoryData.Type), troopTiersScript.GetCapacity(terretoryData.Type), troopTiersScript.GetRadius(terretoryData.Type), terretoryData.Type);
             StandardProductionRate = terretoryData.productionRate;
         }
         else if (owner != Owner.Neutral)
         {
        
-            EnemyTierSet enemyTier = Difficulty.GetEnemyTier(troopTiersScript.GetProduction(terretoryData.Type), troopTiersScript.GetCapacity(terretoryData.Type), troopTiersScript.GetBuff(terretoryData.Type), troopTiersScript.GetMoveSpeed(unitType),troopTiersScript.GetAttack(unitType), troopTiersScript.GetHealth(unitType));
+            EnemyTierSet enemyTier = Difficulty.GetEnemyTier(troopTiersScript.GetProduction(terretoryData.Type), troopTiersScript.GetCapacity(terretoryData.Type), troopTiersScript.GetRadius(terretoryData.Type), troopTiersScript.GetMoveSpeed(unitType),troopTiersScript.GetAttack(unitType), troopTiersScript.GetHealth(unitType));
             troopsStatsEnemy = troopsStatsEnemy.WithTier( enemyTier.moveSpeedTier, enemyTier.AttackPowerTier, enemyTier.healthTier, unitType);
             terretoryData = terretoryData.TerritoryTier(enemyTier.productionTier, enemyTier.capacityTier,enemyTier.buffTier, terretoryData.Type);
             StandardProductionRate = terretoryData.productionRate;
@@ -177,9 +175,10 @@ public class TerretoryController : MonoBehaviour, IPointerDownHandler, IDragHand
         {
             //needs a few fix take production rate ofneutral and different for each territory
             neutralStats = neutralStats.WithTier(-10,-10,-10, unitType);
-            terretoryData = terretoryData.TerritoryTier(-17, -8,-8, terretoryData.Type);
+            terretoryData = terretoryData.TerritoryTier(-17, -8, -1, terretoryData.Type);
             StandardProductionRate = terretoryData.productionRate;
         }
+        auraField.SetRadius(terretoryData.radiusSize,owner,terretoryData.Type);
         return StandardProductionRate;
     }
 
@@ -357,4 +356,5 @@ public class TerretoryController : MonoBehaviour, IPointerDownHandler, IDragHand
             yield return new WaitForSeconds(0.3f);
         }     
     }
+
 }

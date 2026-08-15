@@ -61,7 +61,7 @@ public class SaveInGame : MonoBehaviour
             save.type = kvp.Key;
             save.production = kvp.Value.Production;
             save.capacity = kvp.Value.Capacity;
-            save.buff = kvp.Value.buff;
+            save.radius = kvp.Value.sizeRadius;
 
             data.territoryUpgrade.Add(save);
         }
@@ -104,7 +104,7 @@ public class SaveInGame : MonoBehaviour
             TerritoryUpgradeStats stats = asssignLevelScript.territoryUpgrades[save.type];
             stats.Production = save.production;
             stats.Capacity = save.capacity;
-            stats.buff = save.buff;
+            stats.sizeRadius = save.radius;
 
             stats.cost[0] = asssignLevelScript.GetUpgradeCost(null, stats, 0);
             stats.cost[1] = asssignLevelScript.GetUpgradeCost(null, stats, 1);

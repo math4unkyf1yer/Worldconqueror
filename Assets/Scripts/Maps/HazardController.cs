@@ -18,7 +18,7 @@ public class HazardController : MonoBehaviour
     [SerializeField] SpriteRenderer imageSprite;
     [SerializeField] Sprite[] hazardSprites;
 
-    private List<UnitTroop> troopsInDamage = new List<UnitTroop>();
+    private List<UnitBuffs> troopsInDamage = new List<UnitBuffs>();
     bool isrepeating;
 
     float oldSpeed;
@@ -52,11 +52,17 @@ public class HazardController : MonoBehaviour
 
     public void DamageHazardActivated()
     {
-        if(troopsInDamage.Count > 0)
+        troopsInDamage.RemoveAll(t => t == null || t.troop.health <= 0);
+
+        if (troopsInDamage.Count == 0)
         {
-            int index = Random.Range(0, troopsInDamage.Count);
-            zone.Damage(troopsInDamage[index]);
+            CancelInvoke(nameof(DamageHazardActivated));
+            isrepeating = false;
+            return;
         }
+
+        int index = Random.Range(0, troopsInDamage.Count);
+        troopsInDamage[index].AddDamage(1);
     }
 
 
@@ -64,24 +70,20 @@ public class HazardController : MonoBehaviour
     {
         if (collision.gameObject.tag == "Unit")
         {
-            UnitTroop troop = collision.gameObject.GetComponent<UnitTroop>();
+            UnitBuffs troopBuff = collision.gameObject.GetComponent<UnitBuffs>();
 
             switch (zone.Type)
             {
                 case HazardType.Slow:
-                    oldSpeed = troop.speed;
-                    float slowdown = troop.speed * zone.speedChange();
-                    troop.speed -= slowdown;
+                    troopBuff.AddGlobalSpeed(0.65f);
                     break;
                 case HazardType.Speed:
-                    oldSpeed = troop.speed;
-                    float speed = zone.speedChange();
-                    troop.speed *= speed;
+                    troopBuff.AddGlobalSpeed(1.35f);
                     break;
                 case HazardType.Damage:
                     //chance to damage
-                    troopsInDamage.Add(troop);
-                    if (!isrepeating) { InvokeRepeating("DamageHazardActivated", 0.5f, 1); isrepeating = true; }
+                    troopsInDamage.Add(troopBuff);
+                    if (!isrepeating) { InvokeRepeating("DamageHazardActivated", 0.8f, 1); isrepeating = true; }
                     break;
 
             }
@@ -92,19 +94,19 @@ public class HazardController : MonoBehaviour
     {
         if (collision.gameObject.tag == "Unit")
         {
-            UnitTroop troop = collision.gameObject.GetComponent<UnitTroop>();
+            UnitBuffs troopBuff = collision.gameObject.GetComponent<UnitBuffs>();
 
             switch (zone.Type)
             {
-                case HazardType.Slow:                
-                    troop.speed = oldSpeed;
+                case HazardType.Slow:
+                    troopBuff.RemoveGlobalSpeed(0.65f);
                     break;
                 case HazardType.Speed:
-                    troop.speed = oldSpeed;
+                    troopBuff.RemoveGlobalSpeed(1.35f);
 
                     break;
                 case HazardType.Damage:
-                    troopsInDamage.Remove(troop);
+                    troopsInDamage.Remove(troopBuff);
                     if(troopsInDamage.Count == 0) { CancelInvoke("DamageHazardActivated"); isrepeating = false; }
                     break;
 

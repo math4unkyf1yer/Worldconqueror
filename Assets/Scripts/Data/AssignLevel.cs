@@ -51,8 +51,8 @@ public class AssignLevel : MonoBehaviour
     {
         public int Production = 0;
         public int Capacity = 0;
-        //will need whatever buff this is 
-        public int buff = 0;
+        //range of effect for the troops 
+        public int sizeRadius = 0;
 
         public int[] cost = new int[3];
     }
@@ -114,7 +114,7 @@ public class AssignLevel : MonoBehaviour
     }
     public TerretoryData GetCurrentTerStat(TerritoryType territoryType)
     {
-        return terretoryData.TerritoryTier(GetProduction(territoryType), GetCapacity(territoryType),GetBuff(territoryType), territoryType);
+        return terretoryData.TerritoryTier(GetProduction(territoryType), GetCapacity(territoryType),GetRadius(territoryType), territoryType);
     }
 
     public bool TryUpgradeTroop(int whichUpgrade, UnitType troopType)
@@ -149,7 +149,7 @@ public class AssignLevel : MonoBehaviour
         {
             case 0: stats.Production++; break;
             case 1: stats.Capacity++; break;
-            case 2: stats.buff++; break;
+            case 2: stats.sizeRadius++; break;
         }
 
         stats.cost[whichUpgrade] = GetUpgradeCost(null, stats, whichUpgrade);
@@ -178,7 +178,7 @@ public class AssignLevel : MonoBehaviour
             {
                 case 0: return Mathf.RoundToInt(baseCost * Mathf.Pow(growth, terStats.Production));
                 case 1: return Mathf.RoundToInt(baseCost * Mathf.Pow(growth, terStats.Capacity));
-                case 2: return Mathf.RoundToInt(baseCost * Mathf.Pow(growth, terStats.buff));
+                case 2: return Mathf.RoundToInt(baseCost * Mathf.Pow(growth, terStats.sizeRadius));
             }
         }
 
@@ -205,7 +205,7 @@ public class AssignLevel : MonoBehaviour
 
     public int GetProduction(TerritoryType type) => territoryUpgrades[type].Production;
     public int GetCapacity(TerritoryType type) => territoryUpgrades[type].Capacity;
-    public int GetBuff(TerritoryType type) => territoryUpgrades[type].buff;
+    public int GetRadius(TerritoryType type) => territoryUpgrades[ type].sizeRadius;
 
 
     public void SetupLevel(int enemyCount, bool hazard, MapSize mapSize, DifficultyConfiguration difficulty)

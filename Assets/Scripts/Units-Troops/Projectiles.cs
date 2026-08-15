@@ -12,6 +12,9 @@ public class Projectiles : MonoBehaviour
     protected SpriteRenderer spriteRenderer;
     protected Vector3 lastKnownTargetPos;
 
+    protected Transform oldScale;
+    bool scaleUp;
+
     private void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -62,4 +65,18 @@ public class Projectiles : MonoBehaviour
         //others will override
     }
 
+    public void ScaleUp()
+    {
+        oldScale = transform;
+        transform.localScale *= 2f;
+        scaleUp = true;
+    }
+    public void ScaleDown()
+    {
+        if (scaleUp)
+        {
+            transform.localScale = oldScale.localScale;
+            scaleUp = false;
+        }
+    }
 }

@@ -139,6 +139,7 @@ public class Cost : MonoBehaviour
             }
             increaseAmountText[0].text = currentTerStat.productionRate + "sec decrease time by: 10% ".ToString();
             increaseAmountText[1].text = currentTerStat.maxCapacity + " increase capacity by: 10% ".ToString();
+            increaseAmountText[2].text = currentTerStat.radiusSize + " increase radius effect by: 10% ".ToString();
         }
     }
 }

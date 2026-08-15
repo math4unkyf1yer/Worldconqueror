@@ -60,7 +60,7 @@ public class MageBehavior : IUnitBehavior
             // might need to make sure its active
             fireball.SetActive(true);
             fireball.transform.position = troop.transform.position;
-            fireBallRef.SetUp(troop.ownercl, troop.GetCurrentEnemy().transform, 0.4f, 1.5f);
+            fireBallRef.SetUp(troop.ownercl, troop.GetCurrentEnemy().transform,  0.4f, 1.5f);
         }
     }
     void HandleObjective(UnitTroop troop, UnitTroop enemy)

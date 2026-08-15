@@ -24,7 +24,7 @@ MonoBehaviour:
     scale: 1
     position: {x: -2, y: 2}
     maxCapacity: 40
-    buffPercentage: 2.5
+    radiusSize: 1.1
     productionRate: 1.7
   - TerretoryID: 1
     Type: 0
@@ -33,7 +33,7 @@ MonoBehaviour:
     scale: 1
     position: {x: -3, y: 0}
     maxCapacity: 40
-    buffPercentage: 2.5
+    radiusSize: 1.1
     productionRate: 1.7
   - TerretoryID: 2
     Type: 0
@@ -42,7 +42,7 @@ MonoBehaviour:
     scale: 1
     position: {x: -2, y: -2}
     maxCapacity: 40
-    buffPercentage: 2.5
+    radiusSize: 1.1
     productionRate: 1.7
   - TerretoryID: 3
     Type: 0
@@ -51,7 +51,7 @@ MonoBehaviour:
     scale: 1
     position: {x: 0, y: 0}
     maxCapacity: 40
-    buffPercentage: 2.5
+    radiusSize: 1.1
     productionRate: 1.7
   - TerretoryID: 4
     Type: 0
@@ -60,7 +60,7 @@ MonoBehaviour:
     scale: 1
     position: {x: 2, y: 2}
     maxCapacity: 40
-    buffPercentage: 2.5
+    radiusSize: 1.1
     productionRate: 1.7
   - TerretoryID: 5
     Type: 0
@@ -69,7 +69,7 @@ MonoBehaviour:
     scale: 1
     position: {x: 3, y: 0}
     maxCapacity: 40
-    buffPercentage: 2.5
+    radiusSize: 1.1
     productionRate: 1.7
   - TerretoryID: 6
     Type: 0
@@ -78,7 +78,7 @@ MonoBehaviour:
     scale: 1
     position: {x: 2, y: -2}
     maxCapacity: 40
-    buffPercentage: 2.5
+    radiusSize: 1.1
     productionRate: 1.7
   DifficultyConfiguration:
     setting: 3
@@ -109,5 +109,5 @@ MonoBehaviour:
     maxCount: 1
     scaleX: 0.8
     scaleY: 0.6
-  coinReward: 10
+  coinReward: 11
   Cost: 1

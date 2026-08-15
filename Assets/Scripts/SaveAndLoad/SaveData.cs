@@ -39,6 +39,6 @@ public class TerritoryUpgradeSave
     public TerritoryType type;
     public int production;
     public int capacity;
-    public int buff;
+    public int radius;
     public int[] cost;
 }

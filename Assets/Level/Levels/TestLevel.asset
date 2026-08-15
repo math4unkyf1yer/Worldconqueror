@@ -24,16 +24,25 @@ MonoBehaviour:
     scale: 1
     position: {x: 0, y: 1}
     maxCapacity: 40
-    buffPercentage: 2.5
+    radiusSize: 1.1
     productionRate: 1.7
   - TerretoryID: 1
-    Type: 0
+    Type: 4
     Owner: 0
     StartingUnits: 0
     scale: 1
     position: {x: 0, y: -1}
     maxCapacity: 40
-    buffPercentage: 2.5
+    radiusSize: 1.1
+    productionRate: 1.7
+  - TerretoryID: 2
+    Type: 4
+    Owner: 0
+    StartingUnits: 0
+    scale: 1
+    position: {x: 3, y: 0}
+    maxCapacity: 40
+    radiusSize: 1.1
     productionRate: 1.7
   DifficultyConfiguration:
     setting: 1

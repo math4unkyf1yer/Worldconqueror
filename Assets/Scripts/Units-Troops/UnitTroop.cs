@@ -7,7 +7,6 @@ public class UnitTroop : MonoBehaviour
 {
     //class beahavior
     private IUnitBehavior behavior;
-    BuffHolder buffScript;
 
     public float speed;
     float strenght;
@@ -41,17 +40,16 @@ public class UnitTroop : MonoBehaviour
     public void SetUp(UnitStats stats,Transform targetLocation,int ID,Owner owner)
     {
         //get buff without changing the actuals stats of the troops
-        buffScript = BuffHolder.Instance;
         isReturned = false;
         hasFought = false;
         StopAllCoroutines();
 
         
         unitType = stats.unitType;
-        speed = stats.moveSpeed * (buffScript.moveSpeedBuff + 1);
+        speed = stats.moveSpeed;
         strenght = stats.strenght;
-        attackPower = stats.attackPower * (buffScript.attackBuff + 1);
-        health = stats.health * (buffScript.healthBuff + 1);
+        attackPower = stats.attackPower;
+        health = stats.health;
         range = stats.attackRange;
         releasedRadius = range + 0.5f;
         location = targetLocation;
@@ -59,6 +57,8 @@ public class UnitTroop : MonoBehaviour
         index = ID;
         ownercl = owner;
 
+        UnitBuffs troopBuff = GetComponent<UnitBuffs>();
+        troopBuff.SetUp();
         AssignSpritesAndBeahviors();
 
         if (ownercl == Owner.Player)
@@ -222,4 +222,5 @@ public class UnitTroop : MonoBehaviour
         Gizmos.color = Color.cyan;
         Gizmos.DrawWireSphere(transform.position, range);
     }
+
 }
