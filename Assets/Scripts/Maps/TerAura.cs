@@ -162,7 +162,7 @@ public class SoldierAura : IAuraEffect
 {
     public float GetValue()
     {
-        return 2.0f;
+        return 1.5f;
     }
     public void ApplyEffect(UnitBuffs troop, Owner territoryOwner)
     {
