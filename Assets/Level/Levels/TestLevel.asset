@@ -27,7 +27,7 @@ MonoBehaviour:
     radiusSize: 1.1
     productionRate: 1.7
   - TerretoryID: 1
-    Type: 4
+    Type: 0
     Owner: 0
     StartingUnits: 0
     scale: 1
@@ -36,7 +36,7 @@ MonoBehaviour:
     radiusSize: 1.1
     productionRate: 1.7
   - TerretoryID: 2
-    Type: 4
+    Type: 0
     Owner: 0
     StartingUnits: 0
     scale: 1

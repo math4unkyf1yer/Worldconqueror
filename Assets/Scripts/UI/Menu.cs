@@ -23,6 +23,7 @@ public class Menu : MonoBehaviour
     [SerializeField] private Cost costTerScript;
 
     private ButtonLockController buttonLock;
+    [SerializeField] private CustomLevelConfig customLevelConfig;
     //for button look
     [SerializeField] private GameObject buttonHolder;
     private List<Button> buttonsInHolder = new List<Button>();
@@ -83,6 +84,7 @@ public class Menu : MonoBehaviour
 
     public void BackToMenu()
     {
+        customLevelConfig.CheckIfUnlocked();
         buttonLock.CheckAllButtons(AssignLevel.Instance.levelCount);
 
         gameObject.SetActive(true);

@@ -208,7 +208,7 @@ public class AssignLevel : MonoBehaviour
     public int GetRadius(TerritoryType type) => territoryUpgrades[ type].sizeRadius;
 
 
-    public void SetupLevel(int enemyCount, bool hazard, MapSize mapSize, DifficultyConfiguration difficulty)
+    public void SetupLevel(int enemyCount, bool hazard, MapSize mapSize, DifficultyConfiguration difficulty, bool[] whichTerritory)
     {
         customGame = true;
 
@@ -268,6 +268,43 @@ public class AssignLevel : MonoBehaviour
             data.position = chosenPosition[i];
 
             customData.terretories.Add(data);
+        }
+        //for the territory types
+        // 1. Build allowed types list
+        List<TerritoryType> allowedTypes = new List<TerritoryType>();
+        if (whichTerritory[0]) allowedTypes.Add(TerritoryType.SoldierProd);
+        if (whichTerritory[1]) allowedTypes.Add(TerritoryType.AssassinProd);
+        if (whichTerritory[2]) allowedTypes.Add(TerritoryType.DwarfProd);
+        if (whichTerritory[3]) allowedTypes.Add(TerritoryType.MageProd);
+        if (whichTerritory[4]) allowedTypes.Add(TerritoryType.RangerProd);
+
+        //reasign the index to truly randomize
+        List<int> allSlots = new List<int>();
+        for (int i = 0; i < territroyCount; i++)
+            allSlots.Add(i);
+        for (int i = 0; i < allSlots.Count; i++)
+        {
+            int rand = Random.Range(i, allSlots.Count);
+            int temp = allSlots[i];
+            allSlots[i] = allSlots[rand];
+            allSlots[rand] = temp;
+        }
+
+        //make sure at lest one ter of the selected 
+        int guaranteeCount = allowedTypes.Count;
+
+        for (int i = 0; i < guaranteeCount; i++)
+        {
+            int slot = allSlots[i];
+            customData.terretories[slot].Type = allowedTypes[i];
+        }
+
+        // 3. Randomize the rest among allowed types
+        for (int i = guaranteeCount; i < territroyCount; i++)
+        {
+            int slot = allSlots[i];
+            TerritoryType randomType = allowedTypes[Random.Range(0, allowedTypes.Count)];
+            customData.terretories[slot].Type = randomType;
         }
 
         if (customData.hasHazard)

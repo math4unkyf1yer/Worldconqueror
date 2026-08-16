@@ -34,7 +34,6 @@ public class ButtonLockController : MonoBehaviour
 
     public void CheckAllButtons(int levelCount)
     {
-        Debug.Log(levelCount);
         if(buttonsLocks.Count == 0)
         {
             foreach (GameObject button in allButtons)
