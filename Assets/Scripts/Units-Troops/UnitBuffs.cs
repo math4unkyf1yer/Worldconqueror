@@ -14,13 +14,19 @@ public class UnitBuffs : MonoBehaviour
     float globalSpeedMult = 1f;
     float ownerSpeedMult = 1f;
 
-    float multiplier = 1f;
+    float ownerHealthMult = 1f;
+
+    public bool insideAura = false;
 
     public void SetUp()
     {
         troop = GetComponent<UnitTroop>();
         baseSpeed = troop.speed;
         baseHealth = troop.health;
+        ownerHealthMult = 1f;
+        ownerSpeedMult = 1f;
+        globalSpeedMult = 1f;
+
     }
 
     // ---------------- SPEED ----------------
@@ -70,17 +76,24 @@ public class UnitBuffs : MonoBehaviour
     {
         if(troop.ownercl == own)
         {
-            multiplier *= healthChange;
-            troop.health = baseHealth * multiplier;
+            ownerHealthMult *= healthChange;
+            troop.health = baseHealth * ownerHealthMult;
         }
     }
     public void ResetHealth(float healthChange, Owner own)
     {
         if(troop.ownercl == own)
         {
-            multiplier /= healthChange;
-            troop.health = baseHealth * multiplier;
+            ownerHealthMult /= healthChange;
+            troop.health = baseHealth * ownerHealthMult;
         }
+    }
+
+    private void OnDisableBuff()
+    {
+        ownerHealthMult = 1f;
+        ownerSpeedMult = 1f;
+        globalSpeedMult = 1f;
     }
 
 }

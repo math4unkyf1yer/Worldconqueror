@@ -43,7 +43,6 @@ public class UnitTroop : MonoBehaviour
         isReturned = false;
         hasFought = false;
         StopAllCoroutines();
-
         
         unitType = stats.unitType;
         speed = stats.moveSpeed;

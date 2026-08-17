@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.Rendering.HableCurve;
@@ -129,6 +129,10 @@ public class TerAura : MonoBehaviour
         UnitBuffs troop = other.GetComponent<UnitBuffs>();
         if (troop == null || auraEffect == null) return;
 
+        if (troop.insideAura) return;   // ← prevents double buff
+
+        troop.insideAura = true;
+
         auraEffect.ApplyEffect(troop, currentOwner);
 
     }
@@ -137,6 +141,10 @@ public class TerAura : MonoBehaviour
     {
         UnitBuffs troop = collision.GetComponent<UnitBuffs>();
         if (troop == null || auraEffect == null) return;
+
+        if (!troop.insideAura) return;
+
+        troop.insideAura = false;
         //reamove the aura effect from the troops
         auraEffect.RemoveEffect(troop, currentOwner);
 

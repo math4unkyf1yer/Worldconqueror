@@ -175,7 +175,7 @@ public class TerretoryController : MonoBehaviour, IPointerDownHandler, IDragHand
         {
             //needs a few fix take production rate ofneutral and different for each territory
             neutralStats = neutralStats.WithTier(-10,-10,-10, unitType);
-            terretoryData = terretoryData.TerritoryTier(-17, -8, -1, terretoryData.Type);
+            terretoryData = terretoryData.TerritoryTier(-7, -5, -1, terretoryData.Type);
             StandardProductionRate = terretoryData.productionRate;
         }
         auraField.SetRadius(terretoryData.radiusSize,owner,terretoryData.Type);
