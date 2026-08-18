@@ -16,7 +16,7 @@ public class FireBallHitBox : MonoBehaviour
         {
             UnitTroop troopDamaged = collision.gameObject.GetComponent<UnitTroop>();
 
-            troopDamaged.TakeDamage(fireBallRef.damage); 
+            troopDamaged.TakeDamage(fireBallRef.damage,true); 
         }
     }
 

@@ -16,7 +16,7 @@ public class HazardZone
 
     public void Damage(UnitTroop troop)
     {
-        troop.TakeDamage(2);
+        troop.TakeDamage(2,true);
     }
 
     public float speedChange()

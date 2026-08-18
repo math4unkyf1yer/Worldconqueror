@@ -13,66 +13,95 @@ public class UnitStats
 
     public float strenght = 1;
 
-    public float attackPower = 1;
-
-    public float health = 1;
-
+    //this will be change to vigor 
+    //
+    public float vigor = 1;
     public float attackRange = 1;
+    public float critChances;        // Assassin
+    public float noDeathChances;     // Soldier
+    public float fireRate ;          // Ranger
+    public float specialFloat;
 
-    public UnitStats WithTier(int tierMoveSpeed,int tierAttacPower, int tierHealth , UnitType newType) // need to add attack power and health 
+    public UnitStats WithTier(int tierMoveSpeed,int tierVigor, int tierSpecial , UnitType newType) // need to add attack power and health 
     {
         float tMoveSpeed = tierMoveSpeed - 1;
-        float tAttackPower = tierAttacPower - 1;
-        float tHealth = tierHealth - 1;
+        float tVigor = tierVigor - 1;
+        float tSpecial = tierSpecial - 1;
 
         // Start from BASE values, not mutated ones
         float baseMoveSpeed = moveSpeed;
         float baseStrength = strenght;
+        float baseVigor = vigor;
+        float baseRange = attackRange;
 
-        if(newType == UnitType.Soldier)
+        float critChance = 0f;
+        float noDeathChance = 0f;
+        float baseFireRate = 1.7f;
+
+        switch (newType)
         {
-            baseMoveSpeed = 1f;
-            baseStrength = 1;
-            attackPower = 1;
-            health = 1f;
+            case UnitType.Soldier:
+                baseMoveSpeed = 1f;
+                baseStrength = 1f;
+                baseVigor = 1f;
+
+                // Soldier special: % chance to not die
+                noDeathChance = 0.05f + (tSpecial * 0.02f); // scales with tier
+                specialFloat = noDeathChance;
+                break;
+
+            case UnitType.Dwarf:
+                baseMoveSpeed = 0.65f;
+                baseStrength = 2f;
+                baseVigor = 2f;
+
+                baseStrength = baseStrength * (1f + tierSpecial * 0.1f);
+                specialFloat = baseStrength;
+                break;
+
+            case UnitType.Assassin:
+                baseMoveSpeed = 1.5f;
+                baseStrength = 0.5f;
+                baseVigor = 1f;
+
+                // Assassin special: crit chance
+                critChance = 0.05f + (tSpecial * 0.02f);
+                specialFloat = critChance;
+                break;
+
+            case UnitType.Mage:
+                baseMoveSpeed = 0.75f;
+                baseVigor = 0.3f;
+
+                baseRange = 1.35f;
+                // Mage special: attack range increase
+                baseRange = baseRange * (1f + tSpecial * 0.05f);
+                specialFloat = baseRange;
+                break;
+
+            case UnitType.Ranger:
+                baseMoveSpeed = 0.7f;
+                baseStrength = 1f;
+                baseVigor = 1f;
+
+                // Ranger special: fire rate && increase the 5 percent of the dire rate 
+                baseFireRate = baseFireRate * (1f - (tSpecial * 0.05f)); ;
+                specialFloat = baseFireRate;
+                break;
         }
-        // Apply unit type overrides
-        if (newType == UnitType.Dwarf)
+
+        return new UnitStats
         {
-            baseMoveSpeed = 0.65f;
-            baseStrength = 2;
-            attackPower = 2;
-            health = 2f;
-        }
-        else if (newType == UnitType.Assassin)
-        {
-            baseMoveSpeed = 1.5f;
-            baseStrength = 0.5f;
-            health = 0.5f;
-            attackPower = 1;
-        }
-        else if(newType == UnitType.Mage)
-        {
-            baseMoveSpeed = 0.75f;
-            attackPower = 0;
-            health = 0.5f;
-            attackRange = 1.3f;
-        }else if(newType == UnitType.Ranger)
-        {
-            baseMoveSpeed = 1f;
-            baseStrength = 1f;
-            attackPower = 0.5f;
-            health = 1;
-        }
-            return new UnitStats
-            {
-                unitType = newType,
-                strenght = baseStrength,//change for future(attack power) 
-                moveSpeed = baseMoveSpeed * (1f + tMoveSpeed * 0.1f),
-                attackRange = attackRange, //increase attack range 
-                attackPower = attackPower * (1f + tAttackPower * 0.1f), // increase attack power
-                health = health * (1f + tHealth * 0.1f) // increase health of troop 
-            };
+            unitType = newType,
+            strenght = baseStrength,//change for future(attack power) 
+            moveSpeed = baseMoveSpeed * (1f + tMoveSpeed * 0.1f),
+            attackRange = baseRange, //increase attack range 
+            vigor = baseVigor * (1f + tVigor * 0.1f), // increase attack power
+            fireRate = baseFireRate,
+            critChances = critChance,
+            noDeathChances = noDeathChance,
+            specialFloat = specialFloat,
+        };
     }
 
 

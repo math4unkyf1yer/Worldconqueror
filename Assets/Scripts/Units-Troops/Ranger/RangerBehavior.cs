@@ -5,7 +5,7 @@ using UnityEngine;
 public class RangerBehavior : IUnitBehavior
 {
     float nextAttackTime;
-    float attackDelay = 1.7f;
+    float attackDelay = 0;
     public UnitTroop enemyInRange;
     float nextScanTime = 0f;
     float scanDelay = 0.1f;
@@ -14,6 +14,7 @@ public class RangerBehavior : IUnitBehavior
     float fallbackDelay = 0.5f;
     public IEnumerator Move(UnitTroop troop)
     {
+        attackDelay = troop.fireRate;
         while (troop.isAlive)
         {
             UnitTroop currentEnemy = troop.GetCurrentEnemy();

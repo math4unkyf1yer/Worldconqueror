@@ -9,10 +9,12 @@ public class UnitTroop : MonoBehaviour
     private IUnitBehavior behavior;
 
     public float speed;
-    float strenght;
-    float attackPower;
-    public float health;
+    public float strenght;
+    public float vigor;
     public float range;
+    public float fireRate;
+    public float critRate;
+    public float noDeathChange;
     int index;
     UnitType unitType;
     public Owner ownercl;
@@ -27,7 +29,7 @@ public class UnitTroop : MonoBehaviour
     public bool isTargeted = false;//use to tell not to go after someone is already going fot him
     public float releasedRadius;
     public bool hasFought = false;
-    [SerializeField] float combatCooldown = 0.2f;
+    [SerializeField] float combatCooldown = 0.1f;
 
     [SerializeField] SpriteRenderer spriteRenderer;
     Rigidbody2D rb;
@@ -47,9 +49,11 @@ public class UnitTroop : MonoBehaviour
         unitType = stats.unitType;
         speed = stats.moveSpeed;
         strenght = stats.strenght;
-        attackPower = stats.attackPower;
-        health = stats.health;
+        vigor = stats.vigor;
         range = stats.attackRange;
+        fireRate = stats.fireRate;
+        noDeathChange = stats.noDeathChances;
+        critRate = stats.critChances;
         releasedRadius = range + 0.5f;
         location = targetLocation;
         territoryLocation = location;
@@ -101,14 +105,33 @@ public class UnitTroop : MonoBehaviour
         transform.position = Vector3.MoveTowards(transform.position, location.position, speed * Time.deltaTime);
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(float damage,bool lastStandActivate)
     {
-        health -= damage;
-        if( health <= 0)
+        bool lastStand = false;
+        if(noDeathChange > 0 && lastStandActivate)
         {
-            gameObject.transform.position = new Vector3(0, 0, 0);
-            ReturnToPool();
-            return;
+            float roll = Random.value;//0-1
+
+            if (roll <= noDeathChange)
+            {
+                Debug.Log("live again");
+                lastStand = true;
+            }
+        }
+
+        vigor -= damage;
+        if(vigor <= 0)
+        {
+            if (!lastStand) // not soldier or did not it the percentage
+            {
+                gameObject.transform.position = new Vector3(0, 0, 0);
+                ReturnToPool();
+                return;
+            }
+            else
+            {
+                vigor = 0.1f;
+            }
         }
 
         if (gameObject.activeInHierarchy)
@@ -130,7 +153,10 @@ public class UnitTroop : MonoBehaviour
     IEnumerator ReadyToFight()
     {
         yield return new WaitForSeconds(combatCooldown);
-        hasFought = false;
+        if (isAlive)
+        {
+            hasFought = false;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -153,25 +179,50 @@ public class UnitTroop : MonoBehaviour
                         //lose troops
                         terretory.TakeDamage(strenght, ownercl);
                     }
-                    TakeDamage(health);
+                    TakeDamage(vigor,false);
                 }
             }
-        }else if(collision.gameObject.tag == "Unit")
-        {
-            if (hasFought) return;
-            UnitTroop enemyTroop = collision.gameObject.GetComponent<UnitTroop>();
-
-            if (enemyTroop.ownercl != ownercl)
-            {
-                hasFought = true;
-                enemyTroop.hasFought = true;
-                float strenghtSave = enemyTroop.attackPower;
-                enemyTroop.TakeDamage(attackPower);
-                TakeDamage(strenghtSave);
-            }
-
         }
     }
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag != "Unit") return;
+
+        UnitTroop enemyTroop = collision.gameObject.GetComponent<UnitTroop>();
+        if (enemyTroop == null) return;
+
+        if (enemyTroop.ownercl == ownercl) return;
+
+        // Prevent double combat
+        if (hasFought || enemyTroop.hasFought) return;
+
+        hasFought = true;
+        enemyTroop.hasFought = true;
+
+        // -------------------------
+        // YOUR DAMAGE TO ENEMY
+        // -------------------------
+        float damageToEnemy = vigor;
+
+        if (critRate > 0f && Random.value <= critRate)
+        {
+            damageToEnemy = vigor * 2f; // YOUR CRIT
+        }
+
+
+        // ENEMY DAMAGE TO YOU
+        // -------------------------
+        float damageToSelf = enemyTroop.vigor;
+
+        if (enemyTroop.critRate > 0f && Random.value <= enemyTroop.critRate)
+        {
+            damageToSelf = enemyTroop.vigor * 2f; // ENEMY CRIT
+        }
+
+        enemyTroop.TakeDamage(damageToEnemy, true);
+        TakeDamage(damageToSelf, true);
+    }
+
 
     void AssignSpritesAndBeahviors()
     {
@@ -211,10 +262,6 @@ public class UnitTroop : MonoBehaviour
     public void SetCurrentEnemy(UnitTroop currentEnemy)
     {
         CurrentEnemy = currentEnemy;
-    }
-    public float GetSpeed()
-    {
-        return speed;
     }
     private void OnDrawGizmosSelected()
     {

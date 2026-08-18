@@ -27,9 +27,9 @@ public class SaveData
 public class TroopUpgradeSave
 {
     public UnitType type;
-    public int attack;
+    public int vigor;
     public int moveSpeed;
-    public int health;
+    public int specialBuff;
     public int[] cost;
 }
 

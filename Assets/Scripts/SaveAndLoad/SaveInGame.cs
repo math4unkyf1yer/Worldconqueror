@@ -47,9 +47,9 @@ public class SaveInGame : MonoBehaviour
         {
             TroopUpgradeSave save = new TroopUpgradeSave();
             save.type = kvp.Key;
-            save.attack = kvp.Value.Attack;
+            save.vigor = kvp.Value.Vigor;
             save.moveSpeed = kvp.Value.MoveSpeed;
-            save.health = kvp.Value.Health;
+            save.specialBuff = kvp.Value.SpecialBuff;
 
             data.troopUpgrades.Add(save);
         }
@@ -89,9 +89,9 @@ public class SaveInGame : MonoBehaviour
         foreach (var save in data.troopUpgrades)
         {
             TroopUpgradeStats stats = asssignLevelScript.troopUpgrades[save.type];
-            stats.Attack = save.attack;
+            stats.Vigor = save.vigor;
             stats.MoveSpeed = save.moveSpeed;
-            stats.Health = save.health;
+            stats.SpecialBuff = save.specialBuff;
 
             stats.cost[0] = asssignLevelScript.GetUpgradeCost(stats, null, 0);
             stats.cost[1] = asssignLevelScript.GetUpgradeCost(stats, null, 1);

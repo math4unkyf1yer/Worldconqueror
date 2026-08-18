@@ -1314,7 +1314,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.7, y: -19.769}
+  m_AnchoredPosition: {x: 0.7, y: -18.068989}
   m_SizeDelta: {x: 160, y: 49.615}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &110171630
@@ -6915,7 +6915,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -4.6, y: 9.7}
+  m_AnchoredPosition: {x: -4.6, y: 13.700087}
   m_SizeDelta: {x: 203.9972, y: 36.8385}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &490685971
@@ -11830,7 +11830,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -5.3, y: 10.399912}
+  m_AnchoredPosition: {x: -5.3, y: 14.4}
   m_SizeDelta: {x: 203.9972, y: 36.8385}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &778997700
@@ -16410,7 +16410,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Damage ++
+  m_text: Vigor ++
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6ea1868739b6b634abf890cb53037731, type: 2}
   m_sharedMaterial: {fileID: -4888725384743587844, guid: 6ea1868739b6b634abf890cb53037731, type: 2}
@@ -16875,7 +16875,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Health ++
+  m_text: Troop Buff ++
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6ea1868739b6b634abf890cb53037731, type: 2}
   m_sharedMaterial: {fileID: -4888725384743587844, guid: 6ea1868739b6b634abf890cb53037731, type: 2}
@@ -17047,9 +17047,12 @@ MonoBehaviour:
     unitType: 0
     moveSpeed: 1
     strenght: 1
-    attackPower: 1
-    health: 1
+    vigor: 1
     attackRange: 1
+    critChances: 0
+    noDeathChances: 0
+    fireRate: 0
+    specialFloat: 0
   terretoryData:
     TerretoryID: 0
     Type: 0
@@ -17060,7 +17063,6 @@ MonoBehaviour:
     maxCapacity: 50
     radiusSize: 0
     productionRate: 1
-  test: 0
 --- !u!4 &1120641415
 Transform:
   m_ObjectHideFlags: 0
@@ -20270,7 +20272,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1360599844}
   m_Layer: 5
-  m_Name: IncreaseHealth
+  m_Name: IncreaseSpecialBuff
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26092,7 +26094,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.7, y: -19.5}
+  m_AnchoredPosition: {x: 0.7, y: -17.8}
   m_SizeDelta: {x: 160, y: 56.76}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1808238969
@@ -27848,7 +27850,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.7, y: -18.6}
+  m_AnchoredPosition: {x: 0.7, y: -16.89999}
   m_SizeDelta: {x: 160, y: 56.75}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1930668535
@@ -28961,7 +28963,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -4.1, y: 10.899973}
+  m_AnchoredPosition: {x: -4.1, y: 14.900061}
   m_SizeDelta: {x: 203.9972, y: 36.8385}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2085147596

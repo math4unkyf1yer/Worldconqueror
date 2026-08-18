@@ -125,9 +125,9 @@ public class Cost : MonoBehaviour
             {
                 costtext[i].text = "Cost: " + assignLevelScript.troopUpgrades[type].cost[i].ToString();
             }
-            increaseAmountText[0].text = currentTroopStat.attackPower + " increase by: 10% ".ToString();
+            increaseAmountText[0].text = currentTroopStat.vigor + " increase by: 10% ".ToString();
             increaseAmountText[1].text = currentTroopStat.moveSpeed + " increase by: 10% ".ToString();
-            increaseAmountText[2].text = currentTroopStat.health + " increase by: 10% ".ToString();
+            increaseAmountText[2].text = currentTroopStat.specialFloat + assignLevelScript.troopUpgrades[type].specialBuffTroopText.ToString();
         }
         else
         {

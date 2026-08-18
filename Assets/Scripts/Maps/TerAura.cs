@@ -35,7 +35,7 @@ public class TerAura : MonoBehaviour
 
         while (true)
         {
-            bool hasTargets = (auraEffect is DwarfAura d && !d.IsEmpty) ||(auraEffect is MageAura m && !m.IsEmpty) || (auraEffect is RangerAura r && !r.IsEmpty);
+            bool hasTargets = (auraEffect is DwarfAura d && !d.IsEmpty) || (auraEffect is MageAura m && !m.IsEmpty) || (auraEffect is RangerAura r && !r.IsEmpty);
 
             if (cooldownTimer <= 0f)
             {
@@ -66,13 +66,13 @@ public class TerAura : MonoBehaviour
         {
             mageAura.TickShoot(gameObject.transform);
         }
-        if(auraEffect is RangerAura rageAura)
+        if (auraEffect is RangerAura rageAura)
         {
             rageAura.TickShoot(gameObject.transform);
         }
     }
 
-    public void SetRadius(float radius, Owner owner , TerritoryType type)
+    public void SetRadius(float radius, Owner owner, TerritoryType type)
     {
         lr = GetComponent<LineRenderer>();
         territoryRadius = radius;
@@ -113,7 +113,7 @@ public class TerAura : MonoBehaviour
                 break;
 
             case TerritoryType.MageProd:
-                auraEffect= (new MageAura());
+                auraEffect = (new MageAura());
                 lr.material = mageAuraMat;
                 break;
 
@@ -162,158 +162,167 @@ public class TerAura : MonoBehaviour
         }
     }
 
-}
+    private void OnDrawGizmosSelected()
+    {
+        
+            Gizmos.color = Color.cyan;
+            // Draw a wire circle for the radius
+            Gizmos.DrawWireSphere(transform.position, territoryRadius);
+        
+
+    }
 
 
 
-public class SoldierAura : IAuraEffect
-{
-    public float GetValue()
+    public class SoldierAura : IAuraEffect
     {
-        return 1.5f;
-    }
-    public void ApplyEffect(UnitBuffs troop, Owner territoryOwner)
-    {
-        troop.AddHealth(GetValue(),territoryOwner);
-    }
-    public void RemoveEffect(UnitBuffs troop, Owner territoryOwner)
-    {
-        troop.ResetHealth(GetValue(), territoryOwner);
-    }
-}
-public class AssassinAura : IAuraEffect
-{
-    public float GetValue()
-    {
-        return 0.65f;
-    }
-    public void ApplyEffect(UnitBuffs troop, Owner territoryOwner)
-    {
-        troop.AddOwnerSpeed(GetValue(),territoryOwner);
-    }
-    public void RemoveEffect(UnitBuffs troop, Owner territoryOwner)
-    {
-        //remove heal example
-        troop.RemoveOwnerSpeed(GetValue(), territoryOwner);
-    }
-}
-public class DwarfAura : IAuraEffect
-{
-    public List<UnitBuffs> troopsInDamage = new List<UnitBuffs>();
-
-    public float repeatRate = 1.0f;
-    public bool IsEmpty => troopsInDamage.Count == 0;
-
-    public float GetValue()
-    {
-        return 1.0f;
-    }
-    public void ApplyEffect(UnitBuffs troop, Owner territoryOwner)
-    {
-        if (!troopsInDamage.Contains(troop) && territoryOwner != troop.troop.ownercl)
-            troopsInDamage.Add(troop);
-    }
-    public void RemoveEffect(UnitBuffs troop, Owner territoryOwner)
-    {
-        troopsInDamage.Remove(troop);
-    }
-    public void TickDamage()
-    {
-        if (troopsInDamage.Count == 0) return;
-
-        int index = Random.Range(0, troopsInDamage.Count);
-        troopsInDamage[index].AddDamage(1);
-    }
-}
-public class MageAura : IAuraEffect
-{
-    private List<UnitBuffs> enemies = new List<UnitBuffs>();
-
-    public float repeatRate = 4f;
-    public bool IsEmpty => enemies.Count == 0;
-    public float GetValue()
-    {
-        return 0.5f;
-    }
-    public void ApplyEffect(UnitBuffs troop, Owner territoryOwner)
-    {
-        if (troop.troop.ownercl != territoryOwner)
+        public float GetValue()
         {
-            if (!enemies.Contains(troop))
-                enemies.Add(troop);
+            return 1.5f;
+        }
+        public void ApplyEffect(UnitBuffs troop, Owner territoryOwner)
+        {
+            troop.AddHealth(GetValue(), territoryOwner);
+        }
+        public void RemoveEffect(UnitBuffs troop, Owner territoryOwner)
+        {
+            troop.ResetHealth(GetValue(), territoryOwner);
         }
     }
-    public void RemoveEffect(UnitBuffs troop, Owner territoryOwner)
+    public class AssassinAura : IAuraEffect
     {
-        enemies.Remove(troop);
-    }
-
-    public void TickShoot(Transform startPos)
-    {
-        enemies.RemoveAll(t => t == null || t.troop.health <= 0);
-
-        if(enemies.Count > 0)
+        public float GetValue()
         {
-            int index = Random.Range(0, enemies.Count);
-            UnitBuffs target = enemies[index];
-
-            FireBall fireball = FireBallPool.Instance.GetFireBall().GetComponent<FireBall>();
-            fireball.gameObject.SetActive(true);
-
-            fireball.transform.position = startPos.position;
-            fireball.ScaleUp();
-            fireball.SetUp(target.troop.ownercl, target.transform, GetValue(), 1.5f);
+            return 0.65f;
+        }
+        public void ApplyEffect(UnitBuffs troop, Owner territoryOwner)
+        {
+            troop.AddOwnerSpeed(GetValue(), territoryOwner);
+        }
+        public void RemoveEffect(UnitBuffs troop, Owner territoryOwner)
+        {
+            //remove heal example
+            troop.RemoveOwnerSpeed(GetValue(), territoryOwner);
         }
     }
-}
-public class RangerAura : IAuraEffect
-{
-    private List<UnitBuffs> enemies = new List<UnitBuffs>();
+    public class DwarfAura : IAuraEffect
+    {
+        public List<UnitBuffs> troopsInDamage = new List<UnitBuffs>();
 
-    public float repeatRate = 2f;
-    public bool IsEmpty => enemies.Count == 0;
-    public float GetValue()
-    {
-        return 1.0f;
-    }
-    public void ApplyEffect(UnitBuffs troop, Owner territoryOwner)
-    {
-        if (troop.troop.ownercl != territoryOwner)
+        public float repeatRate = 1.0f;
+        public bool IsEmpty => troopsInDamage.Count == 0;
+
+        public float GetValue()
         {
-            if (!enemies.Contains(troop))
-                enemies.Add(troop);
+            return 1.0f;
+        }
+        public void ApplyEffect(UnitBuffs troop, Owner territoryOwner)
+        {
+            if (!troopsInDamage.Contains(troop) && territoryOwner != troop.troop.ownercl)
+                troopsInDamage.Add(troop);
+        }
+        public void RemoveEffect(UnitBuffs troop, Owner territoryOwner)
+        {
+            troopsInDamage.Remove(troop);
+        }
+        public void TickDamage()
+        {
+            if (troopsInDamage.Count == 0) return;
+
+            int index = Random.Range(0, troopsInDamage.Count);
+            troopsInDamage[index].AddDamage(1);
         }
     }
-    public void RemoveEffect(UnitBuffs troop, Owner territoryOwner)
+    public class MageAura : IAuraEffect
     {
-        enemies.Remove(troop);
-    }
+        private List<UnitBuffs> enemies = new List<UnitBuffs>();
 
-    public void TickShoot(Transform startPos)
-    {
-        enemies.RemoveAll(t => t == null || t.troop.health <= 0);
-
-        if (enemies.Count > 0)
+        public float repeatRate = 4f;
+        public bool IsEmpty => enemies.Count == 0;
+        public float GetValue()
         {
-           int index = Random.Range(0, enemies.Count);
-           UnitBuffs target = enemies[index];
+            return 0.5f;
+        }
+        public void ApplyEffect(UnitBuffs troop, Owner territoryOwner)
+        {
+            if (troop.troop.ownercl != territoryOwner)
+            {
+                if (!enemies.Contains(troop))
+                    enemies.Add(troop);
+            }
+        }
+        public void RemoveEffect(UnitBuffs troop, Owner territoryOwner)
+        {
+            enemies.Remove(troop);
+        }
 
-            GameObject Arrow = ArrowPool.Instance.GetFireBall();
-            Arrow ArrowRef = Arrow.GetComponent<Arrow>();
+        public void TickShoot(Transform startPos)
+        {
+            enemies.RemoveAll(t => t == null || t.troop.vigor <= 0);
 
-           ArrowRef.gameObject.SetActive(true);
-           ArrowRef.transform.position = startPos.transform.position;
-           ArrowRef.ScaleUp();
-           ArrowRef.SetUp(target.troop.ownercl, target.transform, GetValue(), 2f);
-            
+            if (enemies.Count > 0)
+            {
+                int index = Random.Range(0, enemies.Count);
+                UnitBuffs target = enemies[index];
+
+                FireBall fireball = FireBallPool.Instance.GetFireBall().GetComponent<FireBall>();
+                fireball.gameObject.SetActive(true);
+
+                fireball.transform.position = startPos.position;
+                fireball.ScaleUp();
+                fireball.SetUp(target.troop.ownercl, target.transform, GetValue(), 1.5f);
+            }
         }
     }
-}
-public interface IAuraEffect
-{
-    float GetValue();
-    void ApplyEffect(UnitBuffs troop, Owner territoryOwner);
-    void RemoveEffect(UnitBuffs troop, Owner territoryOwner);
+    public class RangerAura : IAuraEffect
+    {
+        private List<UnitBuffs> enemies = new List<UnitBuffs>();
+
+        public float repeatRate = 2f;
+        public bool IsEmpty => enemies.Count == 0;
+        public float GetValue()
+        {
+            return 1.0f;
+        }
+        public void ApplyEffect(UnitBuffs troop, Owner territoryOwner)
+        {
+            if (troop.troop.ownercl != territoryOwner)
+            {
+                if (!enemies.Contains(troop))
+                    enemies.Add(troop);
+            }
+        }
+        public void RemoveEffect(UnitBuffs troop, Owner territoryOwner)
+        {
+            enemies.Remove(troop);
+        }
+
+        public void TickShoot(Transform startPos)
+        {
+            enemies.RemoveAll(t => t == null || t.troop.vigor <= 0);
+
+            if (enemies.Count > 0)
+            {
+                int index = Random.Range(0, enemies.Count);
+                UnitBuffs target = enemies[index];
+
+                GameObject Arrow = ArrowPool.Instance.GetFireBall();
+                Arrow ArrowRef = Arrow.GetComponent<Arrow>();
+
+                ArrowRef.gameObject.SetActive(true);
+                ArrowRef.transform.position = startPos.transform.position;
+                ArrowRef.ScaleUp();
+                ArrowRef.SetUp(target.troop.ownercl, target.transform, GetValue(), 2f);
+
+            }
+        }
+    }
+    public interface IAuraEffect
+    {
+        float GetValue();
+        void ApplyEffect(UnitBuffs troop, Owner territoryOwner);
+        void RemoveEffect(UnitBuffs troop, Owner territoryOwner);
+    }
 }
 
 

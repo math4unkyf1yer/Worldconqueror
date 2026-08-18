@@ -36,14 +36,14 @@ public class AssignLevel : MonoBehaviour
 
     public Dictionary<UnitType, TroopUpgradeStats> troopUpgrades = new Dictionary<UnitType, TroopUpgradeStats>();
     public Dictionary<TerritoryType, TerritoryUpgradeStats> territoryUpgrades = new Dictionary<TerritoryType, TerritoryUpgradeStats>();
-    public int test;
-
 
     public class TroopUpgradeStats
     {
-        public int Attack = 0;
+        public int Vigor = 0;
         public int MoveSpeed = 0;
-        public int Health = 0;
+        public int SpecialBuff = 0;
+
+        public string specialBuffTroopText = " increase by: percent%";
 
         public int[] cost = new int[3];
     }
@@ -76,7 +76,29 @@ public class AssignLevel : MonoBehaviour
             stats.cost[0] = 15;
             stats.cost[1] = 15;
             stats.cost[2] = 15;
-            test = stats.cost[0];
+
+            switch (type)
+            {
+                case UnitType.Soldier:
+                    stats.specialBuffTroopText = " chance to survive lethal damage increase by 5%";
+                    break;
+
+                case UnitType.Assassin:
+                    stats.specialBuffTroopText = " critical strike chance increases by 5%";
+                    break;
+
+                case UnitType.Mage:
+                    stats.specialBuffTroopText = " attack range increases by 5%";
+                    break;
+
+                case UnitType.Ranger:
+                    stats.specialBuffTroopText = " Fire rate improves by 5%";
+                    break;
+
+                case UnitType.Dwarf:
+                    stats.specialBuffTroopText = " Capture power increases by 10%";
+                    break;
+            }
 
             troopUpgrades[type] = stats;
         }
@@ -110,7 +132,7 @@ public class AssignLevel : MonoBehaviour
     }
     public UnitStats GetCurrentStats(UnitType troopType)
     {
-        return currentTroopStats.WithTier(GetMoveSpeed(troopType), GetAttack(troopType), GetHealth(troopType), troopType);
+        return currentTroopStats.WithTier(GetMoveSpeed(troopType), GetAttack(troopType), GetSpecialBuff(troopType), troopType);
     }
     public TerretoryData GetCurrentTerStat(TerritoryType territoryType)
     {
@@ -128,9 +150,9 @@ public class AssignLevel : MonoBehaviour
 
         switch (whichUpgrade)
         {
-            case 0: stats.Attack++; break;
+            case 0: stats.Vigor++; break;
             case 1: stats.MoveSpeed++; break;
-            case 2: stats.Health++; break;
+            case 2: stats.SpecialBuff++; break;
         }
 
         stats.cost[whichUpgrade] = GetUpgradeCost(stats,null, whichUpgrade);
@@ -167,9 +189,9 @@ public class AssignLevel : MonoBehaviour
         {
             switch (upgradeInt)
             {
-                case 0: return Mathf.RoundToInt(baseCost * Mathf.Pow(growth, stats.Attack));
+                case 0: return Mathf.RoundToInt(baseCost * Mathf.Pow(growth, stats.Vigor));
                 case 1: return Mathf.RoundToInt(baseCost * Mathf.Pow(growth, stats.MoveSpeed));
-                case 2: return Mathf.RoundToInt(baseCost * Mathf.Pow(growth, stats.Health));
+                case 2: return Mathf.RoundToInt(baseCost * Mathf.Pow(growth, stats.SpecialBuff));
             }
         }
         else
@@ -199,9 +221,9 @@ public class AssignLevel : MonoBehaviour
     }
 
 
-    public int GetAttack(UnitType type) => troopUpgrades[type].Attack;
+    public int GetAttack(UnitType type) => troopUpgrades[type].Vigor;
     public int GetMoveSpeed(UnitType type) => troopUpgrades[type].MoveSpeed;
-    public int GetHealth(UnitType type) => troopUpgrades[type].Health;
+    public int GetSpecialBuff(UnitType type) => troopUpgrades[type].SpecialBuff;
 
     public int GetProduction(TerritoryType type) => territoryUpgrades[type].Production;
     public int GetCapacity(TerritoryType type) => territoryUpgrades[type].Capacity;

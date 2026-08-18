@@ -64,7 +64,7 @@ public class TerretoryController : MonoBehaviour, IPointerDownHandler, IDragHand
     {
         troopTiersScript = AssignLevel.Instance;
         buildRoad = GetComponentInChildren<TerBuildRoad>();
-        auraField = GetComponent<TerAura>();
+        auraField = GetComponentInChildren<TerAura>();
         buildRoad.SetUp();
         transform.localScale = new Vector3(data.scale, data.scale, data.scale);
 
@@ -159,14 +159,14 @@ public class TerretoryController : MonoBehaviour, IPointerDownHandler, IDragHand
         if (owner== Owner.Player)
         {
             //give its production rate == something different and its buff
-            troopsStatsPlayer = troopsStatsPlayer.WithTier(troopTiersScript.GetMoveSpeed(unitType), troopTiersScript.GetAttack(unitType), troopTiersScript.GetHealth(unitType), unitType);
+            troopsStatsPlayer = troopsStatsPlayer.WithTier(troopTiersScript.GetMoveSpeed(unitType), troopTiersScript.GetAttack(unitType), troopTiersScript.GetSpecialBuff(unitType), unitType);
             terretoryData = terretoryData.TerritoryTier(troopTiersScript.GetProduction(terretoryData.Type), troopTiersScript.GetCapacity(terretoryData.Type), troopTiersScript.GetRadius(terretoryData.Type), terretoryData.Type);
             StandardProductionRate = terretoryData.productionRate;
         }
         else if (owner != Owner.Neutral)
         {
        
-            EnemyTierSet enemyTier = Difficulty.GetEnemyTier(troopTiersScript.GetProduction(terretoryData.Type), troopTiersScript.GetCapacity(terretoryData.Type), troopTiersScript.GetRadius(terretoryData.Type), troopTiersScript.GetMoveSpeed(unitType),troopTiersScript.GetAttack(unitType), troopTiersScript.GetHealth(unitType));
+            EnemyTierSet enemyTier = Difficulty.GetEnemyTier(troopTiersScript.GetProduction(terretoryData.Type), troopTiersScript.GetCapacity(terretoryData.Type), troopTiersScript.GetRadius(terretoryData.Type), troopTiersScript.GetMoveSpeed(unitType),troopTiersScript.GetAttack(unitType), troopTiersScript.GetSpecialBuff(unitType));
             troopsStatsEnemy = troopsStatsEnemy.WithTier( enemyTier.moveSpeedTier, enemyTier.AttackPowerTier, enemyTier.healthTier, unitType);
             terretoryData = terretoryData.TerritoryTier(enemyTier.productionTier, enemyTier.capacityTier,enemyTier.buffTier, terretoryData.Type);
             StandardProductionRate = terretoryData.productionRate;

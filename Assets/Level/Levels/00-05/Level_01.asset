@@ -24,7 +24,7 @@ MonoBehaviour:
     scale: 1
     position: {x: -3, y: 1.5}
     maxCapacity: 40
-    radiusSize: 0
+    radiusSize: 1.1
     productionRate: 1.7
   - TerretoryID: 1
     Type: 0
@@ -33,7 +33,7 @@ MonoBehaviour:
     scale: 1
     position: {x: -1.7, y: -1}
     maxCapacity: 40
-    radiusSize: 0
+    radiusSize: 1.1
     productionRate: 1.7
   - TerretoryID: 2
     Type: 0
@@ -42,16 +42,16 @@ MonoBehaviour:
     scale: 1
     position: {x: 0.7, y: 1.5}
     maxCapacity: 40
-    radiusSize: 0
+    radiusSize: 1.1
     productionRate: 1.7
   - TerretoryID: 3
     Type: 0
-    Owner: 3
+    Owner: 4
     StartingUnits: 0
     scale: 1
     position: {x: 1.5, y: -1.7}
     maxCapacity: 40
-    radiusSize: 0
+    radiusSize: 1.1
     productionRate: 1.7
   DifficultyConfiguration:
     setting: 3

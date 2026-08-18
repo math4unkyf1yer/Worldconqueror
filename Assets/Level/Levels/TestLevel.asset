@@ -18,32 +18,32 @@ MonoBehaviour:
   Zones: []
   terretories:
   - TerretoryID: 0
-    Type: 0
+    Type: 2
     Owner: 1
     StartingUnits: 0
     scale: 1
     position: {x: 0, y: 1}
-    maxCapacity: 40
+    maxCapacity: 30
     radiusSize: 1.1
-    productionRate: 1.7
+    productionRate: 1.2
   - TerretoryID: 1
-    Type: 0
+    Type: 2
     Owner: 0
     StartingUnits: 0
     scale: 1
     position: {x: 0, y: -1}
-    maxCapacity: 40
+    maxCapacity: 30
     radiusSize: 1.1
-    productionRate: 1.7
+    productionRate: 1.2
   - TerretoryID: 2
-    Type: 0
-    Owner: 0
+    Type: 2
+    Owner: 4
     StartingUnits: 0
     scale: 1
     position: {x: 3, y: 0}
-    maxCapacity: 40
+    maxCapacity: 30
     radiusSize: 1.1
-    productionRate: 1.7
+    productionRate: 1.2
   DifficultyConfiguration:
     setting: 1
     levelDifficulty: 0

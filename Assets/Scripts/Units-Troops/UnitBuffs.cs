@@ -22,7 +22,7 @@ public class UnitBuffs : MonoBehaviour
     {
         troop = GetComponent<UnitTroop>();
         baseSpeed = troop.speed;
-        baseHealth = troop.health;
+        baseHealth = troop.vigor;
         ownerHealthMult = 1f;
         ownerSpeedMult = 1f;
         globalSpeedMult = 1f;
@@ -68,7 +68,7 @@ public class UnitBuffs : MonoBehaviour
 
     public void AddDamage(float damage)
     {
-        troop.TakeDamage(damage);
+        troop.TakeDamage(damage, true);
     }
 
     // ---------------- HEALTH ----------------
@@ -77,7 +77,7 @@ public class UnitBuffs : MonoBehaviour
         if(troop.ownercl == own)
         {
             ownerHealthMult *= healthChange;
-            troop.health = baseHealth * ownerHealthMult;
+            troop.vigor = baseHealth * ownerHealthMult;
         }
     }
     public void ResetHealth(float healthChange, Owner own)
@@ -85,15 +85,8 @@ public class UnitBuffs : MonoBehaviour
         if(troop.ownercl == own)
         {
             ownerHealthMult /= healthChange;
-            troop.health = baseHealth * ownerHealthMult;
+            troop.vigor = baseHealth * ownerHealthMult;
         }
-    }
-
-    private void OnDisableBuff()
-    {
-        ownerHealthMult = 1f;
-        ownerSpeedMult = 1f;
-        globalSpeedMult = 1f;
     }
 
 }

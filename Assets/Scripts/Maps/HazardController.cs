@@ -52,7 +52,7 @@ public class HazardController : MonoBehaviour
 
     public void DamageHazardActivated()
     {
-        troopsInDamage.RemoveAll(t => t == null || t.troop.health <= 0);
+        troopsInDamage.RemoveAll(t => t == null || t.troop.vigor <= 0);
 
         if (troopsInDamage.Count == 0)
         {

@@ -21,7 +21,7 @@ public class Arrow : Projectiles
             if(troopDamaged && troopDamaged.ownercl != owner)
             {
                 Debug.Log("Arrow hit");
-                troopDamaged.TakeDamage(damage);
+                troopDamaged.TakeDamage(damage, true);
 
                 CloseArrowProjectile();
             }
