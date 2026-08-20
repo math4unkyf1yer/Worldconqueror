@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class Menu : MonoBehaviour
 {
-    public TextMeshProUGUI coinText;
+    public TextMeshProUGUI[] coinText;
 
     [SerializeField] private GameObject playPage;
     [SerializeField] private GameObject storePage;
@@ -101,7 +101,10 @@ public class Menu : MonoBehaviour
         int currentLevel = AssignLevel.Instance.levelCount + 1;
         int coin = AssignLevel.Instance.GetCoin();
 
-        coinText.text = "Coin: " + coin;
+        for(int i = 0 ; i < coinText.Length; i++)
+        {
+            coinText[i].text = "Coin: " + coin;
+        }
         levelText.text = "Level " + currentLevel;
     }
 

@@ -17,9 +17,11 @@ public class UnitStats
     //
     public float vigor = 1;
     public float attackRange = 1;
+    public string abilityName;
+    
     public float critChances;        // Assassin
     public float noDeathChances;     // Soldier
-    public float fireRate ;          // Ranger
+    public float fireRate;          // Ranger
     public float specialFloat;
 
     public UnitStats WithTier(int tierMoveSpeed,int tierVigor, int tierSpecial , UnitType newType) // need to add attack power and health 
@@ -33,10 +35,10 @@ public class UnitStats
         float baseStrength = strenght;
         float baseVigor = vigor;
         float baseRange = attackRange;
+        float baseFireRate = fireRate;
 
         float critChance = 0f;
         float noDeathChance = 0f;
-        float baseFireRate = 1.7f;
 
         switch (newType)
         {
@@ -44,6 +46,7 @@ public class UnitStats
                 baseMoveSpeed = 1f;
                 baseStrength = 1f;
                 baseVigor = 1f;
+                abilityName = "Sturdy";
 
                 // Soldier special: % chance to not die
                 noDeathChance = 0.05f + (tSpecial * 0.02f); // scales with tier
@@ -54,6 +57,7 @@ public class UnitStats
                 baseMoveSpeed = 0.65f;
                 baseStrength = 2f;
                 baseVigor = 2f;
+                abilityName = "OverWork";
 
                 baseStrength = baseStrength * (1f + tierSpecial * 0.1f);
                 specialFloat = baseStrength;
@@ -63,6 +67,7 @@ public class UnitStats
                 baseMoveSpeed = 1.5f;
                 baseStrength = 0.5f;
                 baseVigor = 1f;
+                abilityName = "Weakpoint";
 
                 // Assassin special: crit chance
                 critChance = 0.05f + (tSpecial * 0.02f);
@@ -72,10 +77,12 @@ public class UnitStats
             case UnitType.Mage:
                 baseMoveSpeed = 0.75f;
                 baseVigor = 0.3f;
+                abilityName = "FireBall";
 
                 baseRange = 1.35f;
                 // Mage special: attack range increase
                 baseRange = baseRange * (1f + tSpecial * 0.05f);
+                baseFireRate = 1.3f;
                 specialFloat = baseRange;
                 break;
 
@@ -83,6 +90,7 @@ public class UnitStats
                 baseMoveSpeed = 0.7f;
                 baseStrength = 1f;
                 baseVigor = 1f;
+                abilityName = "Rapid Fire";
 
                 // Ranger special: fire rate && increase the 5 percent of the dire rate 
                 baseFireRate = baseFireRate * (1f - (tSpecial * 0.05f)); ;
@@ -101,6 +109,7 @@ public class UnitStats
             critChances = critChance,
             noDeathChances = noDeathChance,
             specialFloat = specialFloat,
+            abilityName = abilityName,
         };
     }
 

@@ -17,9 +17,10 @@ public class Cost : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI[] costtext;
     [SerializeField] private TextMeshProUGUI[] increaseAmountText;
+    [SerializeField] private TextMeshProUGUI[] topStatText;
     [SerializeField] private Button[] Buttons;
 
-    [SerializeField] private bool troopUpgrade;
+    public bool troopUpgrade;
 
 
     [SerializeField] private int whichUpgrade;
@@ -28,7 +29,8 @@ public class Cost : MonoBehaviour
     int whichType = 0;
     private int currentIndex = 0;
 
-
+    UnitStats currentTroopStat;
+    TerretoryData currentTerStat;
 
     // Start is called before the first frame update
     void Start()
@@ -40,7 +42,6 @@ public class Cost : MonoBehaviour
 
         ChangeText();
         selectionHighlighter.ChangeButtonColor(Buttons[whichType]);
-        spriteSwitcher.ChangeInfo(whichType);
     }
 
 
@@ -55,7 +56,6 @@ public class Cost : MonoBehaviour
 
         ChangeText();
         selectionHighlighter.ChangeButtonColor(Buttons[whichType]);
-        spriteSwitcher.ChangeInfo(whichType);
         
     }
 
@@ -69,7 +69,6 @@ public class Cost : MonoBehaviour
 
         ChangeText();
         selectionHighlighter.ChangeButtonColor(Buttons[whichType]);
-        spriteSwitcher.ChangeInfo(whichType);
     }
 
     bool isTerritoryUnlocked(int index)
@@ -119,19 +118,20 @@ public class Cost : MonoBehaviour
 
         if (troopUpgrade)
         {
-            UnitStats currentTroopStat = assignLevelScript.GetCurrentStats(type);
+            currentTroopStat = assignLevelScript.GetCurrentStats(type);
 
             for (int i = 0; i < costtext.Length; i++)
             {
                 costtext[i].text = "Cost: " + assignLevelScript.troopUpgrades[type].cost[i].ToString();
             }
-            increaseAmountText[0].text = currentTroopStat.vigor + " increase by: 10% ".ToString();
-            increaseAmountText[1].text = currentTroopStat.moveSpeed + " increase by: 10% ".ToString();
-            increaseAmountText[2].text = currentTroopStat.specialFloat + assignLevelScript.troopUpgrades[type].specialBuffTroopText.ToString();
+            increaseAmountText[0].text = " increase by: 10% ".ToString();
+            increaseAmountText[1].text = " increase by: 10% ".ToString();
+            increaseAmountText[2].text = assignLevelScript.troopUpgrades[type].specialBuffTroopText.ToString();
+            UpdateTopStats();
         }
         else
         {
-            TerretoryData currentTerStat = assignLevelScript.GetCurrentTerStat(territoryType);
+            currentTerStat = assignLevelScript.GetCurrentTerStat(territoryType);
 
             for (int i = 0; i < costtext.Length; i++)
             {
@@ -140,6 +140,35 @@ public class Cost : MonoBehaviour
             increaseAmountText[0].text = currentTerStat.productionRate + "sec decrease time by: 10% ".ToString();
             increaseAmountText[1].text = currentTerStat.maxCapacity + " increase capacity by: 10% ".ToString();
             increaseAmountText[2].text = currentTerStat.radiusSize + " increase radius effect by: 10% ".ToString();
+            UpdateTerritoryStat();
         }
     }
+
+    void UpdateTerritoryStat()
+    {
+        topStatText[0].text = "Production speed: " + currentTerStat.productionRate.ToString("F2");
+        topStatText[1].text = "Capacity: " + currentTerStat.maxCapacity.ToString("F2");
+        topStatText[2].text = "Size Radius: " + currentTerStat.radiusSize.ToString("F2");
+
+        spriteSwitcher.ChangeInfo(whichType);
+    }
+
+    void UpdateTopStats()
+    {
+         topStatText[0].text = "Move Speed: " + currentTroopStat.moveSpeed.ToString("F2");
+         topStatText[1].text = "Vigor: " + currentTroopStat.vigor.ToString("F2");
+         topStatText[2].text = assignLevelScript.troopUpgrades[type].specialBuffTroopName + currentTroopStat.specialFloat.ToString("F2");
+        
+        spriteSwitcher.ChangeInfo(whichType);
+    }
+
+    public UnitStats GetCurrentTroopStats()
+    {
+        return currentTroopStat;
+    }
+    public TerretoryData GetCurrentTerritoryData()
+    {
+        return currentTerStat;
+    }
+
 }

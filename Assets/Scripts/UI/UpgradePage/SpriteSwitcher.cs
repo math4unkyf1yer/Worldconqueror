@@ -7,11 +7,9 @@ using UnityEngine.UI;
 public class SpriteSwitcher : MonoBehaviour
 {
     public Image target;
-    public TextMeshProUGUI infoText;
     public TextMeshProUGUI infoNameText;
     public Sprite[] sprites;
     [TextArea]
-    public string[] info;
     public string[] infoName;
 
 
@@ -27,9 +25,8 @@ public class SpriteSwitcher : MonoBehaviour
     }
     public void SetInfo(int index)
     {
-        if(infoText == null || infoNameText == null) { return; }
+        if(infoNameText == null) { return; }
 
-        infoText.text = info[index].ToString();
         infoNameText.text = infoName[index].ToString();
     }
 }

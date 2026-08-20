@@ -6,7 +6,7 @@ using static UnityEngine.RuleTile.TilingRuleOutput;
 public class MageBehavior : IUnitBehavior
 {
     float nextAttackTime;
-    float attackDelay = 1;
+    float attackDelay = 0;
     public UnitTroop enemyInRange;
     float nextScanTime = 0f;
     float scanDelay = 0.1f;
@@ -15,6 +15,7 @@ public class MageBehavior : IUnitBehavior
     float fallbackDelay = 0.5f;
     public IEnumerator Move(UnitTroop troop)
     {
+        attackDelay = troop.fireRate;
         while (troop.isAlive)
         {
             UnitTroop currentEnemy = troop.GetCurrentEnemy();

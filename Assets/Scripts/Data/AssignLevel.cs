@@ -44,6 +44,8 @@ public class AssignLevel : MonoBehaviour
         public int SpecialBuff = 0;
 
         public string specialBuffTroopText = " increase by: percent%";
+        public string specialBuffTroopName = "";
+
 
         public int[] cost = new int[3];
     }
@@ -81,22 +83,27 @@ public class AssignLevel : MonoBehaviour
             {
                 case UnitType.Soldier:
                     stats.specialBuffTroopText = " chance to survive lethal damage increase by 5%";
+                    stats.specialBuffTroopName = "Sturdy Buff:";
                     break;
 
                 case UnitType.Assassin:
                     stats.specialBuffTroopText = " critical strike chance increases by 5%";
+                    stats.specialBuffTroopName = "Critical Buff:";
                     break;
 
                 case UnitType.Mage:
                     stats.specialBuffTroopText = " attack range increases by 5%";
+                    stats.specialBuffTroopName = "Attack Range:";
                     break;
 
                 case UnitType.Ranger:
                     stats.specialBuffTroopText = " Fire rate improves by 5%";
+                    stats.specialBuffTroopName = "Fire rate:";
                     break;
 
                 case UnitType.Dwarf:
                     stats.specialBuffTroopText = " Capture power increases by 10%";
+                    stats.specialBuffTroopName = "Strenght:";
                     break;
             }
 

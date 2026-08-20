@@ -28,6 +28,8 @@ public class TerretoryData
     [Tooltip("Units produced per second.")]
     public float productionRate = 1f;
 
+    public string radiusEffect = "";
+
     public TerretoryData TerritoryTier(int tierProduction, int tierCapacity,int tierRadius, TerritoryType terType)
     {
         float tProduction = tierProduction - 1;
@@ -40,30 +42,35 @@ public class TerretoryData
                 productionRate = 1.7f;
                 maxCapacity = 40;
                 radiusSize = 1.1f;
+                radiusEffect = "Give health to troops";
                 break;
             case TerritoryType.DwarfProd:
                 //half the production rate and lower capacity for it 
                 productionRate = 2.4f;
                 maxCapacity = 34;
                 radiusSize = 1.1f;
+                radiusEffect = "Damage Enemy troops";
                 break;
             case TerritoryType.AssassinProd:
                 // increase the production rate and lower    capacity for it 
                 productionRate = 1.2f;
                 maxCapacity = 30;
                 radiusSize = 1.1f;
+                radiusEffect = "Slow Enemy Troops";
                 break;
             case TerritoryType.MageProd:
                 //similar prod rate much lower capacity
                 productionRate = 2f;
                 maxCapacity = 30;
                 radiusSize = 1.1f;
+                radiusEffect = "fires projectile to enemies";
                 break;
             case TerritoryType.RangerProd:
                 // for now same as the others
                 productionRate = 1.7f;
                 maxCapacity = 40;
                 radiusSize = 1.1f;
+                radiusEffect = "Shotts arrow to enemies";
                 break;
             case TerritoryType.Fort:
                 productionRate = 2.5f;
@@ -92,6 +99,7 @@ public class TerretoryData
             maxCapacity = baseCapacity,
             productionRate = baseProduction,
             radiusSize = baseSize,
+            radiusEffect = radiusEffect
         };
     }
 }

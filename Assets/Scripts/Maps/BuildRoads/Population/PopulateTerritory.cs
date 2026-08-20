@@ -49,7 +49,6 @@ public class PopulateTerritory : MonoBehaviour
         if (menuTerritory)
         {
             StartCoroutine(WaiABit(0.1f));
-            //PopulateTerritories();
         }
         else
         {
