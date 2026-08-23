@@ -15,6 +15,7 @@ MonoBehaviour:
   levelIndex: 3
   enemyCount: 1
   hasHazard: 1
+  tutoType: 3
   Zones:
   - Type: 0
     Position: {x: 0, y: 0}
@@ -34,6 +35,7 @@ MonoBehaviour:
     maxCapacity: 40
     radiusSize: 0
     productionRate: 1.7
+    radiusEffect: 
   - TerretoryID: 1
     Type: 0
     Owner: 0
@@ -43,6 +45,7 @@ MonoBehaviour:
     maxCapacity: 40
     radiusSize: 0
     productionRate: 1.7
+    radiusEffect: 
   - TerretoryID: 2
     Type: 0
     Owner: 0
@@ -52,6 +55,7 @@ MonoBehaviour:
     maxCapacity: 40
     radiusSize: 0
     productionRate: 1.7
+    radiusEffect: 
   - TerretoryID: 3
     Type: 0
     Owner: 0
@@ -61,6 +65,7 @@ MonoBehaviour:
     maxCapacity: 40
     radiusSize: 0
     productionRate: 1.7
+    radiusEffect: 
   - TerretoryID: 4
     Type: 0
     Owner: 0
@@ -70,6 +75,7 @@ MonoBehaviour:
     maxCapacity: 40
     radiusSize: 0
     productionRate: 1.7
+    radiusEffect: 
   - TerretoryID: 5
     Type: 0
     Owner: 0
@@ -79,6 +85,7 @@ MonoBehaviour:
     maxCapacity: 40
     radiusSize: 0
     productionRate: 1.7
+    radiusEffect: 
   - TerretoryID: 6
     Type: 0
     Owner: 0
@@ -88,6 +95,7 @@ MonoBehaviour:
     maxCapacity: 40
     radiusSize: 0
     productionRate: 1.7
+    radiusEffect: 
   - TerretoryID: 7
     Type: 0
     Owner: 3
@@ -97,6 +105,7 @@ MonoBehaviour:
     maxCapacity: 40
     radiusSize: 0
     productionRate: 1.7
+    radiusEffect: 
   DifficultyConfiguration:
     setting: 3
     levelDifficulty: 0

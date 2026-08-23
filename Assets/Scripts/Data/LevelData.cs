@@ -35,6 +35,9 @@ public class LevelData : ScriptableObject
     [Header("Hazard")]
     public bool hasHazard;
 
+    //add tutorial if needed for it 
+    public TutorialType tutoType;
+
     public List<HazardZone> Zones = new List<HazardZone>();
 
     [Header("Map Layout")]

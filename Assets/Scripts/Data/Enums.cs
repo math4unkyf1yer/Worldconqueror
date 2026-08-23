@@ -64,3 +64,13 @@ public enum MapSize
     large,
     super
 }
+public enum TutorialType
+{
+    none,
+    handDrag,
+    newAssassin,
+    newDwarf,
+    newMage,
+    newRanger,
+    newHazard
+}

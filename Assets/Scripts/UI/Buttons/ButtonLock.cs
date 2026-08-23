@@ -14,12 +14,14 @@ public class ButtonLock : MonoBehaviour
 
     private bool isUnlocked;
 
+    //make it pop
+
     private void Start()
     {
         if(butHovering == null) { butHovering = GetComponent<ButtonHovering>(); }
     }
 
-    public void CanUnlockedButton(int level)
+    public void CanUnlockedButton(int level) // need to add the tutorial button looks 
     {
         if (!isUnlocked)
         {
@@ -32,6 +34,7 @@ public class ButtonLock : MonoBehaviour
             }
         }
     }
+
     public int GetLevel()
     {
         return unlockedLevel;

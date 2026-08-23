@@ -26,6 +26,7 @@ MonoBehaviour:
     maxCapacity: 30
     radiusSize: 1.1
     productionRate: 1.2
+    radiusEffect: Slow Enemy Troops
   - TerretoryID: 1
     Type: 2
     Owner: 0
@@ -35,15 +36,7 @@ MonoBehaviour:
     maxCapacity: 30
     radiusSize: 1.1
     productionRate: 1.2
-  - TerretoryID: 2
-    Type: 2
-    Owner: 4
-    StartingUnits: 0
-    scale: 1
-    position: {x: 3, y: 0}
-    maxCapacity: 30
-    radiusSize: 1.1
-    productionRate: 1.2
+    radiusEffect: Slow Enemy Troops
   DifficultyConfiguration:
     setting: 1
     levelDifficulty: 0

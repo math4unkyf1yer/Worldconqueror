@@ -44,6 +44,7 @@ public class TerretoryController : MonoBehaviour, IPointerDownHandler, IDragHand
     private Camera mainCamera;
     [SerializeField] private Transform circleTransform;
     [SerializeField] private GameObject[] sprites;
+    public event System.Action OnDragEvent;
 
     //MapGenerator
     MapGenerator mapGenerator;
@@ -84,7 +85,7 @@ public class TerretoryController : MonoBehaviour, IPointerDownHandler, IDragHand
         InvokeRepeating("OnUnitCountUp", 0, StandardProductionRate);
     }
     void OnUnitCountUp()
-    {
+    {                                                                      
         int cap = terretoryData.maxCapacity;
 
         if (amountOfTroops >= cap) return;
@@ -275,6 +276,8 @@ public class TerretoryController : MonoBehaviour, IPointerDownHandler, IDragHand
     public void OnDrag(PointerEventData eventData)
     {
         if (!isDragging) return;
+
+        OnDragEvent?.Invoke();
 
         Vector3 mouseWorld = mainCamera.ScreenToWorldPoint(eventData.position);
         mouseWorld.z = 0;
