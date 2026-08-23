@@ -172,6 +172,7 @@ public class Menu : MonoBehaviour
             return;
         }
 
+        buttonLock.CloseTutorial();
         ShowPage(upgradePage);
 
         selectedButton = buttonsInHolder[1];
@@ -184,7 +185,7 @@ public class Menu : MonoBehaviour
             PreventSelection();
             return;
         }
-
+        buttonLock.CloseTutorial();
         ShowPage(terUpgradePage);
 
         selectedButton = buttonsInHolder[2];

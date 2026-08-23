@@ -19,6 +19,11 @@ public class ButtonLockController : MonoBehaviour
     [SerializeField] private List<GameObject> allButtons = new List<GameObject>();
     private List<ButtonLock> buttonsLocks = new List<ButtonLock>();
 
+    TutorialButton tutorial;
+    [SerializeField] GameObject upgradeTroopTutorial;
+    [SerializeField] GameObject upgradeTerritoryTutorial;
+    [SerializeField] GameObject upgradeShopTutorial;
+
     public static ButtonLockController Instance { get; private set; }
 
     private void Awake()
@@ -30,6 +35,7 @@ public class ButtonLockController : MonoBehaviour
             return;
         }
         Instance = this;
+        tutorial = GetComponent<TutorialButton>();
     }
 
     public void CheckAllButtons(int levelCount)
@@ -57,7 +63,8 @@ public class ButtonLockController : MonoBehaviour
         switch (whichButton)
         {
             case "troopUpgrade": 
-                SetTroopUpgradesPage(); break;
+                SetTroopUpgradesPage();   
+                break;
             case "territoryUpgrade":
                 SetTerritoryUpgradesPage(); break;
             case "AssassinTroops":
@@ -75,13 +82,19 @@ public class ButtonLockController : MonoBehaviour
                 
         }
     }
+    public void CloseTutorial()
+    {
+        tutorial.CloseTutorial();
+    }
     private void SetTroopUpgradesPage()
     {
         unlockTroopUpgrades = true;
+        tutorial.OpenTutorial(upgradeTroopTutorial);
     }
     private void SetTerritoryUpgradesPage()
     {
         unlockTerritoryUpgrades = true;
+        tutorial.OpenTutorial(upgradeTerritoryTutorial);
     }
     private void SetAssassinPage()
     {
@@ -108,6 +121,7 @@ public class ButtonLockController : MonoBehaviour
     private void SetShop()
     {
         unlockShop = true;
+        tutorial.OpenTutorial(upgradeShopTutorial);
     }
 
 }

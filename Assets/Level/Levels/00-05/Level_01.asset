@@ -15,6 +15,7 @@ MonoBehaviour:
   levelIndex: 0
   enemyCount: 1
   hasHazard: 0
+  tutoType: 1
   Zones: []
   terretories:
   - TerretoryID: 0
@@ -26,6 +27,7 @@ MonoBehaviour:
     maxCapacity: 40
     radiusSize: 1.1
     productionRate: 1.7
+    radiusEffect: 
   - TerretoryID: 1
     Type: 0
     Owner: 0
@@ -35,6 +37,7 @@ MonoBehaviour:
     maxCapacity: 40
     radiusSize: 1.1
     productionRate: 1.7
+    radiusEffect: 
   - TerretoryID: 2
     Type: 0
     Owner: 0
@@ -44,6 +47,7 @@ MonoBehaviour:
     maxCapacity: 40
     radiusSize: 1.1
     productionRate: 1.7
+    radiusEffect: 
   - TerretoryID: 3
     Type: 0
     Owner: 4
@@ -53,6 +57,7 @@ MonoBehaviour:
     maxCapacity: 40
     radiusSize: 1.1
     productionRate: 1.7
+    radiusEffect: 
   DifficultyConfiguration:
     setting: 3
     levelDifficulty: 0

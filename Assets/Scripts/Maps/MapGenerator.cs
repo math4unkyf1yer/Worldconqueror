@@ -9,6 +9,7 @@ public class MapGenerator : MonoBehaviour
 
     [SerializeField] LevelData levelData;
     [SerializeField] GameObject terretoryPrefab;
+    [SerializeField] TutorialGame tutoRef;
     [SerializeField] Transform projectileFireParent;
     [SerializeField] Transform projectileArrowParent;
     [SerializeField] GameObject fireBallObject;
@@ -143,6 +144,11 @@ public class MapGenerator : MonoBehaviour
             levelData.terretories.Clear();
             levelData.Zones.Clear();
         }
+        //tutorial 
+        if(levelData.tutoType != TutorialType.none)
+        {
+            tutoRef.SetTutorialType(levelData.tutoType,spawnedTerretories);
+        }
     }
     void PlaceHazards(List<TerretoryController> territories)
     {
@@ -224,6 +230,7 @@ public class MapGenerator : MonoBehaviour
 
     void Win()
     {
+        if (winPage.activeInHierarchy) { return; }
         Debug.Log("Win");
         // win page
         winPage.SetActive(true);
@@ -231,6 +238,7 @@ public class MapGenerator : MonoBehaviour
     }
     void Lose()
     {
+        if (losePage.activeInHierarchy) { return; }
         Debug.Log("Lose");
         //lose page 
         losePage.SetActive(true);

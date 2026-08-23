@@ -15,6 +15,7 @@ MonoBehaviour:
   levelIndex: 6
   enemyCount: 3
   hasHazard: 0
+  tutoType: 2
   Zones: []
   terretories:
   - TerretoryID: 0
@@ -24,8 +25,9 @@ MonoBehaviour:
     scale: 1
     position: {x: 0, y: 3}
     maxCapacity: 40
-    buffPercentage: 2.5
+    radiusSize: 0
     productionRate: 1.7
+    radiusEffect: 
   - TerretoryID: 1
     Type: 2
     Owner: 0
@@ -33,8 +35,9 @@ MonoBehaviour:
     scale: 1
     position: {x: 3, y: 1.5}
     maxCapacity: 30
-    buffPercentage: 2.5
+    radiusSize: 0
     productionRate: 1.2
+    radiusEffect: 
   - TerretoryID: 2
     Type: 0
     Owner: 0
@@ -42,8 +45,9 @@ MonoBehaviour:
     scale: 1
     position: {x: 5, y: 0}
     maxCapacity: 40
-    buffPercentage: 2.5
+    radiusSize: 0
     productionRate: 1.7
+    radiusEffect: 
   - TerretoryID: 3
     Type: 2
     Owner: 0
@@ -51,8 +55,9 @@ MonoBehaviour:
     scale: 1
     position: {x: 3, y: -1.5}
     maxCapacity: 30
-    buffPercentage: 2.5
+    radiusSize: 0
     productionRate: 1.2
+    radiusEffect: 
   - TerretoryID: 4
     Type: 0
     Owner: 2
@@ -60,8 +65,9 @@ MonoBehaviour:
     scale: 1
     position: {x: 0, y: -3}
     maxCapacity: 40
-    buffPercentage: 2.5
+    radiusSize: 0
     productionRate: 1.7
+    radiusEffect: 
   - TerretoryID: 5
     Type: 2
     Owner: 0
@@ -69,8 +75,9 @@ MonoBehaviour:
     scale: 1
     position: {x: -3, y: -1.5}
     maxCapacity: 30
-    buffPercentage: 2.5
+    radiusSize: 0
     productionRate: 1.2
+    radiusEffect: 
   - TerretoryID: 6
     Type: 0
     Owner: 0
@@ -78,8 +85,9 @@ MonoBehaviour:
     scale: 1
     position: {x: -5, y: 0}
     maxCapacity: 40
-    buffPercentage: 2.5
+    radiusSize: 0
     productionRate: 1.7
+    radiusEffect: 
   - TerretoryID: 7
     Type: 2
     Owner: 0
@@ -87,8 +95,9 @@ MonoBehaviour:
     scale: 1
     position: {x: -3, y: 1.5}
     maxCapacity: 30
-    buffPercentage: 2.5
+    radiusSize: 0
     productionRate: 1.2
+    radiusEffect: 
   - TerretoryID: 8
     Type: 0
     Owner: 0
@@ -96,8 +105,9 @@ MonoBehaviour:
     scale: 1
     position: {x: 0, y: 0}
     maxCapacity: 40
-    buffPercentage: 2.5
+    radiusSize: 0
     productionRate: 1.7
+    radiusEffect: 
   DifficultyConfiguration:
     setting: 1
     levelDifficulty: 1
