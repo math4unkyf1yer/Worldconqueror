@@ -27,7 +27,7 @@ MonoBehaviour:
     maxCapacity: 40
     radiusSize: 1.1
     productionRate: 1.7
-    radiusEffect: 
+    radiusEffect: Give health to troops
   - TerretoryID: 1
     Type: 0
     Owner: 0
@@ -37,7 +37,7 @@ MonoBehaviour:
     maxCapacity: 40
     radiusSize: 1.1
     productionRate: 1.7
-    radiusEffect: 
+    radiusEffect: Give health to troops
   - TerretoryID: 2
     Type: 0
     Owner: 0
@@ -47,7 +47,7 @@ MonoBehaviour:
     maxCapacity: 40
     radiusSize: 1.1
     productionRate: 1.7
-    radiusEffect: 
+    radiusEffect: Give health to troops
   - TerretoryID: 3
     Type: 0
     Owner: 4
@@ -57,7 +57,7 @@ MonoBehaviour:
     maxCapacity: 40
     radiusSize: 1.1
     productionRate: 1.7
-    radiusEffect: 
+    radiusEffect: Give health to troops
   DifficultyConfiguration:
     setting: 3
     levelDifficulty: 0
@@ -69,7 +69,7 @@ MonoBehaviour:
     scaleY: 0.6
   - sprite: {fileID: 21300000, guid: 35892777aca14f2498962d3c2a99b4ae, type: 3}
     radius: 0.26
-    maxCount: 50
+    maxCount: 70
     scaleX: 0.35
     scaleY: 0.6
   - sprite: {fileID: 21300000, guid: 561f782e9c0cbd74696455a8e90d9d5b, type: 3}
