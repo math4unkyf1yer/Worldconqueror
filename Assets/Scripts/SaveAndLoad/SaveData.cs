@@ -19,9 +19,15 @@ public class SaveData
     public List<TroopUpgradeSave> troopUpgrades = new List<TroopUpgradeSave>();
     public List<TerritoryUpgradeSave> territoryUpgrade = new List<TerritoryUpgradeSave>();
 
-    public string objectName;
+    public List<TutorialFlag> tutorialFlag = new List<TutorialFlag>();
 }
 
+[System.Serializable]
+public class TutorialFlag
+{
+    public string id;
+    public bool completed;
+}
 
 [System.Serializable]
 public class TroopUpgradeSave

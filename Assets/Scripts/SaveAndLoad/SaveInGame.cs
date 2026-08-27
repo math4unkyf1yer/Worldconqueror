@@ -66,7 +66,14 @@ public class SaveInGame : MonoBehaviour
             data.territoryUpgrade.Add(save);
         }
 
-        testSaveData = data;
+        //Save which tutorial is done 
+        data.tutorialFlag.Clear();
+
+        foreach (var kvp in asssignLevelScript.tutorialMenu.tutorialCompleted)
+        {
+            data.tutorialFlag.Add(new TutorialFlag { id = kvp.Key, completed = kvp.Value });
+        }
+
         SaveSystem.Save(data);
     }
 
@@ -110,6 +117,17 @@ public class SaveInGame : MonoBehaviour
             stats.cost[1] = asssignLevelScript.GetUpgradeCost(null, stats, 1);
             stats.cost[2] = asssignLevelScript.GetUpgradeCost(null, stats, 2);
         }
+
+        if(asssignLevelScript.tutorialMenu.tutorialCompleted != null)
+        {
+            asssignLevelScript.tutorialMenu.tutorialCompleted.Clear();
+
+            foreach (var flag in data.tutorialFlag)
+            {
+                asssignLevelScript.tutorialMenu.tutorialCompleted[flag.id] = flag.completed;
+            }
+        }
+
         Menu.Instance.SetCoinText();
         Menu.Instance.SetUp();
         levelUiScript.RefreshMap(true);

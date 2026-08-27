@@ -19,10 +19,12 @@ public class ButtonLockController : MonoBehaviour
     [SerializeField] private List<GameObject> allButtons = new List<GameObject>();
     private List<ButtonLock> buttonsLocks = new List<ButtonLock>();
 
-    TutorialButton tutorial;
+    TutorialManager tutorial;
     [SerializeField] GameObject upgradeTroopTutorial;
     [SerializeField] GameObject upgradeTerritoryTutorial;
     [SerializeField] GameObject upgradeShopTutorial;
+
+    string WhichTutorialOpen;
 
     public static ButtonLockController Instance { get; private set; }
 
@@ -35,11 +37,11 @@ public class ButtonLockController : MonoBehaviour
             return;
         }
         Instance = this;
-        tutorial = GetComponent<TutorialButton>();
     }
 
     public void CheckAllButtons(int levelCount)
     {
+        if(tutorial == null) { tutorial = AssignLevel.Instance.tutorialMenu; }
         if(buttonsLocks.Count == 0)
         {
             foreach (GameObject button in allButtons)
@@ -84,17 +86,19 @@ public class ButtonLockController : MonoBehaviour
     }
     public void CloseTutorial()
     {
-        tutorial.CloseTutorial();
+        tutorial.CloseTutorial(WhichTutorialOpen);
     }
     private void SetTroopUpgradesPage()
     {
+        WhichTutorialOpen = "UpgradeTroop";
         unlockTroopUpgrades = true;
-        tutorial.OpenTutorial(upgradeTroopTutorial);
+        tutorial.OpenTutorial(upgradeTroopTutorial, WhichTutorialOpen);
     }
     private void SetTerritoryUpgradesPage()
     {
+        WhichTutorialOpen = "UpgradeTerritory";
         unlockTerritoryUpgrades = true;
-        tutorial.OpenTutorial(upgradeTerritoryTutorial);
+        tutorial.OpenTutorial(upgradeTerritoryTutorial, WhichTutorialOpen);
     }
     private void SetAssassinPage()
     {
@@ -120,8 +124,9 @@ public class ButtonLockController : MonoBehaviour
 
     private void SetShop()
     {
+        WhichTutorialOpen = "Shop";
         unlockShop = true;
-        tutorial.OpenTutorial(upgradeShopTutorial);
+        tutorial.OpenTutorial(upgradeShopTutorial,WhichTutorialOpen);
     }
 
 }

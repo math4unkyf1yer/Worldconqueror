@@ -17,6 +17,7 @@ public class AssignLevel : MonoBehaviour
 
     public LevelData[] LevelData;
     public LevelData customData;
+    public TutorialManager tutorialMenu;
     public bool customGame;
     public int levelCount = 0;
     private int coin = 20;

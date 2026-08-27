@@ -23,7 +23,8 @@ public class ButtonHovering : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         {
             // hovering image appears
             image.SetActive(true);
-            buttonText.text = "Unlock at Level "+ scriptlock.GetLevel().ToString(); 
+            int levelShow = scriptlock.GetLevel() + 1;
+            buttonText.text = "Unlock at Level "+ levelShow.ToString(); 
         }
     }
 

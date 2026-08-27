@@ -14,6 +14,7 @@ public class Menu : MonoBehaviour
     [SerializeField] private GameObject upgradePage;
     [SerializeField] private GameObject customGamePage;
     [SerializeField] private GameObject terUpgradePage;
+    [SerializeField] private GameObject settingPage;
     [SerializeField] private GameObject playButton;
     [SerializeField] private TextMeshProUGUI levelText; 
     [SerializeField] private LevelUI levelUI;
@@ -160,6 +161,7 @@ public class Menu : MonoBehaviour
             return;
         }
 
+        buttonLock.CloseTutorial();
         ShowPage(storePage);
         selectedButton = buttonsInHolder[3];
     }
@@ -196,6 +198,16 @@ public class Menu : MonoBehaviour
         ShowPage(customGamePage);
     }
 
+    public void SettingPage()
+    {
+        holderTer.SetActive(false);
+        settingPage.SetActive(true);
+    }
+    public void CloseSettingPage()
+    {
+        settingPage.SetActive(false);
+        PlayPageOpen();
+    }
 
     // ---------------------------------------------------------
     // QUIT

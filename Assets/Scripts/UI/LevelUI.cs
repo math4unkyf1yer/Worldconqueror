@@ -52,8 +52,8 @@ public class LevelUI : MonoBehaviour
         Instance = this;
 
         roadScript = GetComponent<UIRoads>();
-        DontDestroyOnLoad(parentToObjects);
     }
+
 
     public void RefreshMap(bool firsttime)
     {

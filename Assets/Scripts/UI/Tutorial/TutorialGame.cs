@@ -13,10 +13,12 @@ public class TutorialGame : MonoBehaviour
     private Transform pointB;
     Coroutine handCoruntine;
 
+    private TutorialManager tutorialRef;
     public void SetTutorialType(TutorialType typeCl, List<TerretoryController> game)
     {
         type = typeCl;
         territories = game;
+        tutorialRef = AssignLevel.Instance.tutorialMenu;
         StartTutorial();    
     }
 
@@ -25,7 +27,9 @@ public class TutorialGame : MonoBehaviour
         switch(type)
         {
             case TutorialType.handDrag:
+                if(tutorialRef.tutorialCompleted.ContainsKey("DragTroop") && tutorialRef.tutorialCompleted["DragTroop"]) { return; }
                 HandTutorial();
+                tutorialRef.tutorialCompleted["DragTroop"] = true;
                 break;
             case TutorialType.newAssassin:
                 break;

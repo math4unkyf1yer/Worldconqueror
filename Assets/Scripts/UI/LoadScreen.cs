@@ -70,6 +70,8 @@ public class LoadScreen : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
             LoadingScreen.SetActive(false);
             loadingBarSlider.value = 0;
+            //uniy adds plays
+
         }
     }
 }
