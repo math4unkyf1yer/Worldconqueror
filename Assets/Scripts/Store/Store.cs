@@ -13,3 +13,4 @@ public class Store : MonoBehaviour
         Debug.Log("Coins");
     }
 }
+
