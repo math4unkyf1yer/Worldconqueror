@@ -15,6 +15,8 @@ public class RangerBehavior : IUnitBehavior
     public IEnumerator Move(UnitTroop troop)
     {
         attackDelay = troop.fireRate;
+        troop.State = TroopState.Objective;
+
         while (troop.isAlive)
         {
             UnitTroop currentEnemy = troop.GetCurrentEnemy();
@@ -52,13 +54,15 @@ public class RangerBehavior : IUnitBehavior
 
     public void Attack(UnitTroop troop)
     {
-        //spawn object(will pool later)
         GameObject Arrow = ArrowPool.Instance.GetFireBall();
         Arrow ArrowRef = Arrow.GetComponent<Arrow>();
         if (ArrowRef != null)
         {
+            troop.troopAudio.pitch = 0.8f;
+            troop.TroopPlayAudio(troop.audioManager.arrowLoose, 0.2f);
+            troop.troopAudio.pitch = 1;
             Arrow.transform.position = troop.transform.position;
-            ArrowRef.SetUp(troop.ownercl, troop.GetCurrentEnemy().transform, 0.7f, 1.5f);
+            ArrowRef.SetUp(troop.ownercl, troop.GetCurrentEnemy().transform, 0.7f, 1.5f,1);
         }
     }
     void HandleObjective(UnitTroop troop, UnitTroop enemy)

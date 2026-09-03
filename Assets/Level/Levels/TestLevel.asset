@@ -15,28 +15,39 @@ MonoBehaviour:
   levelIndex: 0
   enemyCount: 1
   hasHazard: 0
+  tutoType: 0
   Zones: []
   terretories:
   - TerretoryID: 0
-    Type: 2
+    Type: 4
     Owner: 1
     StartingUnits: 0
     scale: 1
     position: {x: 0, y: 1}
-    maxCapacity: 30
+    maxCapacity: 40
     radiusSize: 1.1
-    productionRate: 1.2
-    radiusEffect: Slow Enemy Troops
+    productionRate: 1.7
+    radiusEffect: Shotts arrow to enemies
   - TerretoryID: 1
-    Type: 2
+    Type: 0
     Owner: 0
     StartingUnits: 0
     scale: 1
     position: {x: 0, y: -1}
-    maxCapacity: 30
+    maxCapacity: 40
     radiusSize: 1.1
-    productionRate: 1.2
-    radiusEffect: Slow Enemy Troops
+    productionRate: 1.7
+    radiusEffect: Give health to troops
+  - TerretoryID: 2
+    Type: 0
+    Owner: 2
+    StartingUnits: 0
+    scale: 1
+    position: {x: 3, y: -1}
+    maxCapacity: 40
+    radiusSize: 1.1
+    productionRate: 1.7
+    radiusEffect: Give health to troops
   DifficultyConfiguration:
     setting: 1
     levelDifficulty: 0

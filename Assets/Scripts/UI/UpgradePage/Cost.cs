@@ -98,6 +98,7 @@ public class Cost : MonoBehaviour
                 costtext[Upgrade].text = "Cost: " + assignLevelScript.troopUpgrades[type].cost[Upgrade].ToString();
                 Menu.Instance.SetCoinText();
                 ChangeText();
+                assignLevelScript.audioManager.PlayButtonCoinSound();
             }
             else { Debug.Log("not enough coins"); }
         }
@@ -108,6 +109,7 @@ public class Cost : MonoBehaviour
                 costtext[Upgrade].text = "Cost: " + assignLevelScript.territoryUpgrades[territoryType].cost[Upgrade].ToString();
                 Menu.Instance.SetCoinText();
                 ChangeText();
+                assignLevelScript.audioManager.PlayButtonCoinSound();
             }
             else { Debug.Log("not enough coins"); }
         }

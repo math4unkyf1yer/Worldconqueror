@@ -24,6 +24,8 @@ public class TerAura : MonoBehaviour
     [SerializeField] Material mageAuraMat;
     [SerializeField] Material rangerAuraMat;
 
+    private AudioManager audioManager;
+
     void StartTick(float rp)
     {
         if (tickRoutine == null)
@@ -163,13 +165,10 @@ public class TerAura : MonoBehaviour
     }
 
     private void OnDrawGizmosSelected()
-    {
-        
-            Gizmos.color = Color.cyan;
-            // Draw a wire circle for the radius
-            Gizmos.DrawWireSphere(transform.position, territoryRadius);
-        
-
+    {     
+       Gizmos.color = Color.cyan;
+       // Draw a wire circle for the radius
+       Gizmos.DrawWireSphere(transform.position, territoryRadius);
     }
 
 
@@ -235,6 +234,7 @@ public class TerAura : MonoBehaviour
     }
     public class MageAura : IAuraEffect
     {
+        Owner ownerCl;
         private List<UnitBuffs> enemies = new List<UnitBuffs>();
 
         public float repeatRate = 4f;
@@ -245,6 +245,7 @@ public class TerAura : MonoBehaviour
         }
         public void ApplyEffect(UnitBuffs troop, Owner territoryOwner)
         {
+            ownerCl = territoryOwner;
             if (troop.troop.ownercl != territoryOwner)
             {
                 if (!enemies.Contains(troop))
@@ -269,13 +270,13 @@ public class TerAura : MonoBehaviour
                 fireball.gameObject.SetActive(true);
 
                 fireball.transform.position = startPos.position;
-                fireball.ScaleUp();
-                fireball.SetUp(target.troop.ownercl, target.transform, GetValue(), 1.5f);
+                fireball.SetUp( ownerCl, target.transform, GetValue(), 1.5f, 2f);
             }
         }
     }
     public class RangerAura : IAuraEffect
     {
+        Owner ownerCl;
         private List<UnitBuffs> enemies = new List<UnitBuffs>();
 
         public float repeatRate = 2f;
@@ -286,6 +287,7 @@ public class TerAura : MonoBehaviour
         }
         public void ApplyEffect(UnitBuffs troop, Owner territoryOwner)
         {
+            ownerCl = territoryOwner;
             if (troop.troop.ownercl != territoryOwner)
             {
                 if (!enemies.Contains(troop))
@@ -311,8 +313,7 @@ public class TerAura : MonoBehaviour
 
                 ArrowRef.gameObject.SetActive(true);
                 ArrowRef.transform.position = startPos.transform.position;
-                ArrowRef.ScaleUp();
-                ArrowRef.SetUp(target.troop.ownercl, target.transform, GetValue(), 2f);
+                ArrowRef.SetUp( ownerCl, target.transform, GetValue(), 2f,2f);
 
             }
         }

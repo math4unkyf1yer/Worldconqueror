@@ -16,6 +16,8 @@ public class MageBehavior : IUnitBehavior
     public IEnumerator Move(UnitTroop troop)
     {
         attackDelay = troop.fireRate;
+        troop.State = TroopState.Objective;
+
         while (troop.isAlive)
         {
             UnitTroop currentEnemy = troop.GetCurrentEnemy();
@@ -60,8 +62,9 @@ public class MageBehavior : IUnitBehavior
         {
             // might need to make sure its active
             fireball.SetActive(true);
+            troop.TroopPlayAudio(troop.audioManager.mageFire,1);
             fireball.transform.position = troop.transform.position;
-            fireBallRef.SetUp(troop.ownercl, troop.GetCurrentEnemy().transform,  0.4f, 1.5f);
+            fireBallRef.SetUp(troop.ownercl, troop.GetCurrentEnemy().transform,  0.4f, 1.5f, 1);
         }
     }
     void HandleObjective(UnitTroop troop, UnitTroop enemy)

@@ -76,7 +76,7 @@ public class UnitStats
 
             case UnitType.Mage:
                 baseMoveSpeed = 0.75f;
-                baseVigor = 0.3f;
+                baseVigor = 0.2f;
                 abilityName = "FireBall";
 
                 baseRange = 1.35f;
@@ -89,7 +89,8 @@ public class UnitStats
             case UnitType.Ranger:
                 baseMoveSpeed = 0.7f;
                 baseStrength = 1f;
-                baseVigor = 1f;
+                baseVigor = 0.4f;
+                baseFireRate = 1f;
                 abilityName = "Rapid Fire";
 
                 // Ranger special: fire rate && increase the 5 percent of the dire rate 

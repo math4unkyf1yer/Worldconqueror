@@ -12,7 +12,7 @@ public class ButtonLock : MonoBehaviour
 
     [SerializeField] ButtonHovering butHovering;
 
-    private bool isUnlocked;
+    public bool isUnlocked;
 
     //make it pop
 

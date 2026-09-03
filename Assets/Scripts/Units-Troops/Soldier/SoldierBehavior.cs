@@ -8,7 +8,8 @@ public class SoldierBehavior : IUnitBehavior
     float nextScanTime = 0f;
     float scanDelay = 0.1f;
     public IEnumerator Move(UnitTroop troop)
-    {     
+    {
+        troop.State = TroopState.Objective;
 
         while (troop.isAlive)
         {

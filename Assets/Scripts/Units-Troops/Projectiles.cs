@@ -7,27 +7,31 @@ public class Projectiles : MonoBehaviour
     [SerializeField] protected Transform target;
     protected float speed;
     public float damage;
+    public AudioManager audioM;
     protected Owner owner;
     protected bool attackOver;
     protected SpriteRenderer spriteRenderer;
     protected Vector3 lastKnownTargetPos;
 
-    protected Transform oldScale;
-    bool scaleUp;
+    public Vector3 originalScale;
 
     private void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        if(spriteRenderer == null) {spriteRenderer = GetComponentInChildren<SpriteRenderer>();}
     }
 
-    public void SetUp(Owner ownerref, Transform targetCl , float damageG , float speedG)
+    public void SetUp(Owner ownercl, Transform targetCl , float damageG , float speedG, float scaleMulti)
     {
         if (targetCl != null)
         {
+            if(audioM == null) { audioM = AssignLevel.Instance.audioManager; }
+            Vector3 scale = originalScale;
+            transform.localScale = scale *scaleMulti;
             damage = damageG;
             speed = speedG;
             attackOver = false;
-            owner = ownerref;
+            owner = ownercl;
             target = targetCl;
             StartCoroutine(MoveToTarget());
         }
@@ -45,7 +49,7 @@ public class Projectiles : MonoBehaviour
 
             // Move toward last known position
             Vector2 dir = (lastKnownTargetPos - transform.position).normalized;
-            float angle = Mathf.Atan2(dir.x, dir.y) * Mathf.Rad2Deg;
+            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
             transform.position = Vector3.MoveTowards(transform.position, lastKnownTargetPos, speed * Time.deltaTime);
 
@@ -63,20 +67,5 @@ public class Projectiles : MonoBehaviour
     public virtual void ReachTarget()
     {
         //others will override
-    }
-
-    public void ScaleUp()
-    {
-        oldScale = transform;
-        transform.localScale *= 2f;
-        scaleUp = true;
-    }
-    public void ScaleDown()
-    {
-        if (scaleUp)
-        {
-            transform.localScale = oldScale.localScale;
-            scaleUp = false;
-        }
     }
 }

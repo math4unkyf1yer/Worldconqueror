@@ -14,7 +14,7 @@ public class MapGenerator : MonoBehaviour
     [SerializeField] Transform projectileArrowParent;
     [SerializeField] GameObject fireBallObject;
     [SerializeField] GameObject arrowObject;
-    int mageProjectileMax = 20;
+    int mageProjectileMax = 30;
     [SerializeField] GameObject[] AiControllers;
     public BulletPool bulletPool;
 
@@ -41,14 +41,17 @@ public class MapGenerator : MonoBehaviour
     private bool playerWin;
 
 
+    private AssignLevel gameManager;
+
+
     void Start()
     {
         if (AssignLevel.Instance != null)
         {
-            levelData = AssignLevel.Instance.WhichLevel();
+            gameManager = AssignLevel.Instance;
+            levelData = gameManager.WhichLevel();
             SetUp();
-        }
-        
+        }  
     }
 
     void SetUp()
@@ -139,7 +142,7 @@ public class MapGenerator : MonoBehaviour
 
         populatedScript.Setup(levelData.populatedItem);
 
-        if (AssignLevel.Instance.customGame)
+        if (gameManager.customGame)
         {
             levelData.terretories.Clear();
             levelData.Zones.Clear();
@@ -231,7 +234,8 @@ public class MapGenerator : MonoBehaviour
     void Win()
     {
         if (winPage.activeInHierarchy) { return; }
-        Debug.Log("Win");
+
+        gameManager.audioManager.PlayWinSound();
         // win page
         winPage.SetActive(true);
         playerWin = true;
@@ -239,7 +243,7 @@ public class MapGenerator : MonoBehaviour
     void Lose()
     {
         if (losePage.activeInHierarchy) { return; }
-        Debug.Log("Lose");
+        gameManager.audioManager.PlayLoseSound();
         //lose page 
         losePage.SetActive(true);
         playerWin = false;
@@ -251,7 +255,7 @@ public class MapGenerator : MonoBehaviour
         {
             //gives coin
             //change level
-            AssignLevel.Instance.NewLevel(levelData.coinReward);
+            gameManager.NewLevel(levelData.coinReward);
 
         }
         losePage.SetActive(false);

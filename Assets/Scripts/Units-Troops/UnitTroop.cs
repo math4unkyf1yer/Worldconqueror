@@ -35,12 +35,26 @@ public class UnitTroop : MonoBehaviour
     Rigidbody2D rb;
     bool isReturned = false;
 
+    //Audio
+    public AudioSource troopAudio;
+    public AudioManager audioManager;
+
     //look 
     [SerializeField] Sprite[] troopSprites;
     private Sprite unitSprite;
 
     public void SetUp(UnitStats stats,Transform targetLocation,int ID,Owner owner)
     {
+
+        if (troopAudio == null)
+        {
+            troopAudio = gameObject.GetComponent<AudioSource>();
+            audioManager = AssignLevel.Instance.audioManager;
+
+            troopAudio.pitch = Random.Range(0.95f, 1.05f);
+            TroopPlayAudio(audioManager.SpawnSound,1);
+        } 
+
         //get buff without changing the actuals stats of the troops
         isReturned = false;
         hasFought = false;
@@ -124,8 +138,11 @@ public class UnitTroop : MonoBehaviour
         {
             if (!lastStand) // not soldier or did not it the percentage
             {
-                gameObject.transform.position = new Vector3(0, 0, 0);
-                ReturnToPool();
+                if(troopAudio != null)//audio
+                {  
+                   TroopPlayAudio(audioManager.teritoryAttack,1);
+                   StartCoroutine(DelayedReturnToPool(audioManager.teritoryAttack.length));
+                }
                 return;
             }
             else
@@ -139,6 +156,13 @@ public class UnitTroop : MonoBehaviour
             StartCoroutine(ReadyToFight());
         }
 
+    }
+
+    IEnumerator DelayedReturnToPool(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        gameObject.transform.position = new Vector3(0, 0, 0);
+        ReturnToPool();
     }
     public void ReturnToPool()
     {
@@ -267,6 +291,14 @@ public class UnitTroop : MonoBehaviour
     {
         Gizmos.color = Color.cyan;
         Gizmos.DrawWireSphere(transform.position, range);
+    }
+
+    public void TroopPlayAudio(AudioClip clip, float strenght)
+    {
+        if (audioManager.GetSfx())
+        {
+            troopAudio.PlayOneShot(clip, strenght);
+        }
     }
 
 }

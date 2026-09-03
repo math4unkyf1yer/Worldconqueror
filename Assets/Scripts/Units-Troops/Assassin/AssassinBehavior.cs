@@ -10,6 +10,7 @@ public class AssassinBehavior : IUnitBehavior
     public IEnumerator Move(UnitTroop troop)
     {
 
+        troop.State = TroopState.Objective;
         while (troop.isAlive)
         {
             UnitTroop currentEnemy = troop.GetCurrentEnemy();

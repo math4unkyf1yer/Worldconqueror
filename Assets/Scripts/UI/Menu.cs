@@ -1,4 +1,5 @@
 
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -20,6 +21,8 @@ public class Menu : MonoBehaviour
     [SerializeField] private LevelUI levelUI;
     [SerializeField] private GameObject holderTer;
 
+    private GameObject behindSettingPage;
+
     [SerializeField] private Cost costScript;
     [SerializeField] private Cost costTerScript;
 
@@ -30,6 +33,9 @@ public class Menu : MonoBehaviour
     private List<Button> buttonsInHolder = new List<Button>();
     //selected Button
     private Button selectedButton;
+    //game manager 
+    AssignLevel gameManager;
+
     int oldButtonId;
     public static Menu Instance { get; private set; }
 
@@ -80,13 +86,13 @@ public class Menu : MonoBehaviour
 
     public void SetUp()
     {
-        buttonLock.CheckAllButtons(AssignLevel.Instance.levelCount);
+        buttonLock.CheckAllButtons(gameManager.levelCount);
     }
 
     public void BackToMenu()
     {
         customLevelConfig.CheckIfUnlocked();
-        buttonLock.CheckAllButtons(AssignLevel.Instance.levelCount);
+        buttonLock.CheckAllButtons(gameManager.levelCount);
 
         gameObject.SetActive(true);
         holderTer.SetActive(true);
@@ -99,8 +105,12 @@ public class Menu : MonoBehaviour
 
     public void SetCoinText()
     {
-        int currentLevel = AssignLevel.Instance.levelCount + 1;
-        int coin = AssignLevel.Instance.GetCoin();
+        if (gameManager == null)
+        {
+            gameManager = AssignLevel.Instance;
+        }
+        int currentLevel = gameManager.levelCount + 1;
+        int coin = gameManager.GetCoin();
 
         for(int i = 0 ; i < coinText.Length; i++)
         {
@@ -124,6 +134,7 @@ public class Menu : MonoBehaviour
         holderTer.SetActive(false);
         playButton.SetActive(true);
 
+        behindSettingPage = targetPage;
         targetPage.SetActive(true);
     }
 
@@ -138,8 +149,15 @@ public class Menu : MonoBehaviour
 
     public void PlayButton()
     {
+        //wait for sound to play 
+        StartCoroutine(DelayedPlay(gameManager.audioManager.ButtonSound.length));
+    }
+
+    IEnumerator DelayedPlay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
         holderTer.SetActive(false);
-        AssignLevel.Instance.customGame = false;
+        gameManager.customGame = false;
 
         gameObject.SetActive(false);
         LoadScreen.Instance.LoadScene(1);
@@ -206,7 +224,14 @@ public class Menu : MonoBehaviour
     public void CloseSettingPage()
     {
         settingPage.SetActive(false);
-        PlayPageOpen();
+        if (playPage.activeInHierarchy)
+        {
+            PlayPageOpen();
+        }
+        else
+        {
+            ShowPage(behindSettingPage);
+        }
     }
 
     // ---------------------------------------------------------

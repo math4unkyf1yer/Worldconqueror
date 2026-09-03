@@ -12,6 +12,14 @@ public class SettingUI : MonoBehaviour
 
     private bool musicOn = true;
     private bool sfxOn = true;
+
+    AssignLevel GameManager;
+
+
+    private void Start()
+    {
+        GameManager = AssignLevel.Instance;    
+    }
     public void MusicClick()
     {
         Debug.Log("Click");
@@ -52,5 +60,7 @@ public class SettingUI : MonoBehaviour
             sfxBut.colors = cb;
             sfxOn = true;
         }
+
+        GameManager.audioManager.ChangeSfxStatus(sfxOn);
     }
 }

@@ -361,6 +361,7 @@ GameObject:
   - component: {fileID: 16750264}
   - component: {fileID: 16750268}
   - component: {fileID: 16750267}
+  - component: {fileID: 16750269}
   m_Layer: 5
   m_Name: MageButton
   m_TagString: Untagged
@@ -503,6 +504,7 @@ MonoBehaviour:
   unlockedLevel: 8
   whichButton: MageTroops
   butHovering: {fileID: 16750268}
+  isUnlocked: 0
 --- !u!114 &16750268
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -518,6 +520,18 @@ MonoBehaviour:
   image: {fileID: 991215102}
   buttonText: {fileID: 83897259}
   canHover: 1
+--- !u!114 &16750269
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16750262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 914451a9b579d5f4ab18e0335202da5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &17458588
 GameObject:
   m_ObjectHideFlags: 0
@@ -2858,6 +2872,7 @@ GameObject:
   - component: {fileID: 160897819}
   - component: {fileID: 160897822}
   - component: {fileID: 160897823}
+  - component: {fileID: 160897824}
   m_Layer: 5
   m_Name: UpgradeTroopPageButton
   m_TagString: Untagged
@@ -2999,6 +3014,7 @@ MonoBehaviour:
   unlockedLevel: 1
   whichButton: troopUpgrade
   butHovering: {fileID: 0}
+  isUnlocked: 0
 --- !u!114 &160897823
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3014,6 +3030,18 @@ MonoBehaviour:
   image: {fileID: 1877597418}
   buttonText: {fileID: 1317915593}
   canHover: 1
+--- !u!114 &160897824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 160897817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 914451a9b579d5f4ab18e0335202da5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &162362983
 GameObject:
   m_ObjectHideFlags: 0
@@ -3487,8 +3515,9 @@ GameObject:
   - component: {fileID: 202740421}
   - component: {fileID: 202740420}
   - component: {fileID: 202740419}
+  - component: {fileID: 202740424}
   m_Layer: 5
-  m_Name: RangerHose
+  m_Name: RangerHouse
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3549,6 +3578,7 @@ MonoBehaviour:
   unlockedLevel: 9
   whichButton: RangerTroops
   butHovering: {fileID: 202740419}
+  isUnlocked: 0
 --- !u!114 &202740421
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3643,6 +3673,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 202740417}
   m_CullTransparentMesh: 1
+--- !u!114 &202740424
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 202740417}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 914451a9b579d5f4ab18e0335202da5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &204837283
 GameObject:
   m_ObjectHideFlags: 0
@@ -3791,6 +3833,7 @@ GameObject:
   - component: {fileID: 214457440}
   - component: {fileID: 214457439}
   - component: {fileID: 214457438}
+  - component: {fileID: 214457443}
   m_Layer: 5
   m_Name: MageTower
   m_TagString: Untagged
@@ -3853,6 +3896,7 @@ MonoBehaviour:
   unlockedLevel: 8
   whichButton: MageTroops
   butHovering: {fileID: 214457438}
+  isUnlocked: 0
 --- !u!114 &214457440
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3947,6 +3991,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 214457436}
   m_CullTransparentMesh: 1
+--- !u!114 &214457443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214457436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 914451a9b579d5f4ab18e0335202da5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &215249923
 GameObject:
   m_ObjectHideFlags: 0
@@ -11118,6 +11174,7 @@ GameObject:
   - component: {fileID: 613177343}
   - component: {fileID: 613177347}
   - component: {fileID: 613177346}
+  - component: {fileID: 613177348}
   m_Layer: 5
   m_Name: StorePageButton
   m_TagString: Untagged
@@ -11274,6 +11331,19 @@ MonoBehaviour:
   unlockedLevel: 3
   whichButton: Shop
   butHovering: {fileID: 0}
+  isUnlocked: 0
+--- !u!114 &613177348
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 613177341}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 914451a9b579d5f4ab18e0335202da5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &615352591
 GameObject:
   m_ObjectHideFlags: 0
@@ -11842,6 +11912,7 @@ GameObject:
   - component: {fileID: 629878266}
   - component: {fileID: 629878265}
   - component: {fileID: 629878264}
+  - component: {fileID: 629878267}
   m_Layer: 5
   m_Name: SettingButton
   m_TagString: Untagged
@@ -11963,6 +12034,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 629878262}
   m_CullTransparentMesh: 1
+--- !u!114 &629878267
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 629878262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 914451a9b579d5f4ab18e0335202da5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &639153752
 GameObject:
   m_ObjectHideFlags: 0
@@ -12052,6 +12135,7 @@ GameObject:
   - component: {fileID: 643327433}
   - component: {fileID: 643327432}
   - component: {fileID: 643327431}
+  - component: {fileID: 643327436}
   m_Layer: 5
   m_Name: Forge
   m_TagString: Untagged
@@ -12114,6 +12198,7 @@ MonoBehaviour:
   unlockedLevel: 7
   whichButton: DwarfTroops
   butHovering: {fileID: 643327431}
+  isUnlocked: 0
 --- !u!114 &643327433
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12208,6 +12293,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 643327429}
   m_CullTransparentMesh: 1
+--- !u!114 &643327436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 643327429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 914451a9b579d5f4ab18e0335202da5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &645271677
 GameObject:
   m_ObjectHideFlags: 0
@@ -13163,6 +13260,7 @@ GameObject:
   - component: {fileID: 690431239}
   - component: {fileID: 690431238}
   - component: {fileID: 690431237}
+  - component: {fileID: 690431242}
   m_Layer: 5
   m_Name: Fort
   m_TagString: Untagged
@@ -13225,6 +13323,7 @@ MonoBehaviour:
   unlockedLevel: 2
   whichButton: Fort
   butHovering: {fileID: 690431237}
+  isUnlocked: 0
 --- !u!114 &690431239
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13319,6 +13418,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 690431235}
   m_CullTransparentMesh: 1
+--- !u!114 &690431242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 690431235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 914451a9b579d5f4ab18e0335202da5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &690444463
 GameObject:
   m_ObjectHideFlags: 0
@@ -14905,6 +15016,7 @@ GameObject:
   - component: {fileID: 733020265}
   - component: {fileID: 733020264}
   - component: {fileID: 733020263}
+  - component: {fileID: 733020267}
   m_Layer: 5
   m_Name: Village
   m_TagString: Untagged
@@ -15027,6 +15139,18 @@ RectTransform:
   m_AnchoredPosition: {x: -475.8, y: 384.03}
   m_SizeDelta: {x: 211.4, y: 115.22}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &733020267
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 733020262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 914451a9b579d5f4ab18e0335202da5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &751668478
 GameObject:
   m_ObjectHideFlags: 0
@@ -16073,6 +16197,7 @@ GameObject:
   - component: {fileID: 768200039}
   - component: {fileID: 768200038}
   - component: {fileID: 768200037}
+  - component: {fileID: 768200040}
   m_Layer: 5
   m_Name: PlayButton
   m_TagString: Untagged
@@ -16195,6 +16320,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 768200035}
   m_CullTransparentMesh: 1
+--- !u!114 &768200040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 768200035}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 914451a9b579d5f4ab18e0335202da5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &778997698
 GameObject:
   m_ObjectHideFlags: 0
@@ -17635,6 +17772,7 @@ GameObject:
   - component: {fileID: 830263574}
   - component: {fileID: 830263578}
   - component: {fileID: 830263577}
+  - component: {fileID: 830263579}
   m_Layer: 5
   m_Name: AssassinButton
   m_TagString: Untagged
@@ -17777,6 +17915,7 @@ MonoBehaviour:
   unlockedLevel: 6
   whichButton: AssassinTroops
   butHovering: {fileID: 830263578}
+  isUnlocked: 0
 --- !u!114 &830263578
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17792,6 +17931,18 @@ MonoBehaviour:
   image: {fileID: 949955334}
   buttonText: {fileID: 2013948221}
   canHover: 1
+--- !u!114 &830263579
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 830263572}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 914451a9b579d5f4ab18e0335202da5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &830501432
 GameObject:
   m_ObjectHideFlags: 0
@@ -18281,6 +18432,7 @@ GameObject:
   - component: {fileID: 860202366}
   - component: {fileID: 860202365}
   - component: {fileID: 860202364}
+  - component: {fileID: 860202367}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -18402,6 +18554,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 860202362}
   m_CullTransparentMesh: 1
+--- !u!114 &860202367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 860202362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 914451a9b579d5f4ab18e0335202da5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &866153956
 GameObject:
   m_ObjectHideFlags: 0
@@ -20476,6 +20640,7 @@ GameObject:
   - component: {fileID: 976496274}
   - component: {fileID: 976496277}
   - component: {fileID: 976496278}
+  - component: {fileID: 976496279}
   m_Layer: 5
   m_Name: UpgradeTerritory
   m_TagString: Untagged
@@ -20617,6 +20782,7 @@ MonoBehaviour:
   unlockedLevel: 2
   whichButton: territoryUpgrade
   butHovering: {fileID: 0}
+  isUnlocked: 0
 --- !u!114 &976496278
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20632,6 +20798,18 @@ MonoBehaviour:
   image: {fileID: 968955066}
   buttonText: {fileID: 764896042}
   canHover: 1
+--- !u!114 &976496279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 976496272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 914451a9b579d5f4ab18e0335202da5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &980911397
 GameObject:
   m_ObjectHideFlags: 0
@@ -22702,6 +22880,7 @@ GameObject:
   - component: {fileID: 1090460213}
   - component: {fileID: 1090460212}
   - component: {fileID: 1090460211}
+  - component: {fileID: 1090460214}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -22823,6 +23002,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1090460209}
   m_CullTransparentMesh: 1
+--- !u!114 &1090460214
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1090460209}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 914451a9b579d5f4ab18e0335202da5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1107745537
 GameObject:
   m_ObjectHideFlags: 0
@@ -23181,6 +23372,7 @@ GameObject:
   - component: {fileID: 1120641417}
   - component: {fileID: 1120641418}
   - component: {fileID: 1120641419}
+  - component: {fileID: 1120641420}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -23252,7 +23444,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 72a78d66824957d4e83370750641304e, type: 2}
   - {fileID: 11400000, guid: 626de857e0a4b404493ed7a0a5d9d62c, type: 2}
   - {fileID: 11400000, guid: cfc115d969faf4b45b1bba7cb448ad54, type: 2}
-  - {fileID: 11400000, guid: cd21b42a7bbdee848ad855a2ffb0d8b4, type: 2}
+  - {fileID: 11400000, guid: 1e111a22e462c3743beee223c70f9269, type: 2}
   - {fileID: 11400000, guid: c967595ed09e2574597bc759a9d6271a, type: 2}
   - {fileID: 11400000, guid: d110fda51265e7a49bcbc4bf0fcb1a41, type: 2}
   - {fileID: 11400000, guid: c184c3bedebf1dd4ab019519d9b867a7, type: 2}
@@ -23260,6 +23452,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a1cc1964d51d99c429eb44b0b1ce0a09, type: 2}
   customData: {fileID: 11400000, guid: 0a0a70ecc19bc3745a518df119140045, type: 2}
   tutorialMenu: {fileID: 1120641417}
+  audioManager: {fileID: 1120641419}
   customGame: 0
   levelCount: 0
   currentTroopStats:
@@ -23364,6 +23557,111 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 116f5fe041256694a95a4c640917e4a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ButtonSound: {fileID: 8300000, guid: c36ce9c0b7d27e0429005be7adf25fdf, type: 3}
+  ButtonCoinSound: {fileID: 8300000, guid: 51e14bc0f624d4c4a8201225e8d59858, type: 3}
+  SpawnSound: {fileID: 8300000, guid: 24dcf885a021841488144cd3dbf72f4c, type: 3}
+  teritoryAttack: {fileID: 8300000, guid: 41d2d82753ad7104580661b60f75a3f7, type: 3}
+  winSound: {fileID: 8300000, guid: 93615492a645873499d9b2bc965c66c7, type: 3}
+  loseSound: {fileID: 8300000, guid: e28a6ab96e9de2f4f8f774d3d77ed491, type: 3}
+  arrowLoose: {fileID: 8300000, guid: 39e2d4081d14b61488c06661fbeb81d3, type: 3}
+  mageFire: {fileID: 8300000, guid: 74a9b037dc5fa934aacea3b7289cbec8, type: 3}
+  explosion: {fileID: 8300000, guid: af3345fedff6028489203188e556a25c, type: 3}
+--- !u!82 &1120641420
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1120641413}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1130033766
 GameObject:
   m_ObjectHideFlags: 0
@@ -26721,6 +27019,7 @@ GameObject:
   - component: {fileID: 1271312010}
   - component: {fileID: 1271312009}
   - component: {fileID: 1271312008}
+  - component: {fileID: 1271312011}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -26841,6 +27140,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1271312006}
   m_CullTransparentMesh: 1
+--- !u!114 &1271312011
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1271312006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 914451a9b579d5f4ab18e0335202da5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1281174306
 GameObject:
   m_ObjectHideFlags: 0
@@ -27400,7 +27711,7 @@ GameObject:
   - component: {fileID: 1326665710}
   - component: {fileID: 1326665709}
   m_Layer: 5
-  m_Name: ProductionIncreaseBut
+  m_Name: RadiusIncreaseBut
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28304,6 +28615,7 @@ GameObject:
   - component: {fileID: 1359342145}
   - component: {fileID: 1359342144}
   - component: {fileID: 1359342143}
+  - component: {fileID: 1359342146}
   m_Layer: 5
   m_Name: PlayButtonPage
   m_TagString: Untagged
@@ -28426,6 +28738,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1359342141}
   m_CullTransparentMesh: 1
+--- !u!114 &1359342146
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1359342141}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 914451a9b579d5f4ab18e0335202da5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1360599843
 GameObject:
   m_ObjectHideFlags: 0
@@ -29798,6 +30122,7 @@ GameObject:
   - component: {fileID: 1436548204}
   - component: {fileID: 1436548203}
   - component: {fileID: 1436548202}
+  - component: {fileID: 1436548205}
   m_Layer: 5
   m_Name: CustomGamePage
   m_TagString: Untagged
@@ -29919,6 +30244,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1436548200}
   m_CullTransparentMesh: 1
+--- !u!114 &1436548205
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1436548200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 914451a9b579d5f4ab18e0335202da5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1440933728
 GameObject:
   m_ObjectHideFlags: 0
@@ -32008,6 +32345,7 @@ GameObject:
   - component: {fileID: 1524931568}
   - component: {fileID: 1524931572}
   - component: {fileID: 1524931571}
+  - component: {fileID: 1524931573}
   m_Layer: 5
   m_Name: DwarfButton
   m_TagString: Untagged
@@ -32150,6 +32488,7 @@ MonoBehaviour:
   unlockedLevel: 7
   whichButton: DwarfTroops
   butHovering: {fileID: 1524931572}
+  isUnlocked: 0
 --- !u!114 &1524931572
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32165,6 +32504,18 @@ MonoBehaviour:
   image: {fileID: 919392691}
   buttonText: {fileID: 1490896934}
   canHover: 1
+--- !u!114 &1524931573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1524931566}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 914451a9b579d5f4ab18e0335202da5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1528710418
 GameObject:
   m_ObjectHideFlags: 0
@@ -32300,6 +32651,7 @@ GameObject:
   - component: {fileID: 1548331589}
   - component: {fileID: 1548331588}
   - component: {fileID: 1548331587}
+  - component: {fileID: 1548331590}
   m_Layer: 5
   m_Name: SoldierButton
   m_TagString: Untagged
@@ -32423,6 +32775,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1548331585}
   m_CullTransparentMesh: 1
+--- !u!114 &1548331590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1548331585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 914451a9b579d5f4ab18e0335202da5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1552182773
 GameObject:
   m_ObjectHideFlags: 0
@@ -32839,6 +33203,7 @@ GameObject:
   - component: {fileID: 1578872772}
   - component: {fileID: 1578872771}
   - component: {fileID: 1578872770}
+  - component: {fileID: 1578872773}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -32960,6 +33325,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1578872768}
   m_CullTransparentMesh: 1
+--- !u!114 &1578872773
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1578872768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 914451a9b579d5f4ab18e0335202da5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1579955403
 GameObject:
   m_ObjectHideFlags: 0
@@ -33239,6 +33616,7 @@ GameObject:
   - component: {fileID: 1590518508}
   - component: {fileID: 1590518507}
   - component: {fileID: 1590518506}
+  - component: {fileID: 1590518509}
   m_Layer: 5
   m_Name: SetBack
   m_TagString: Untagged
@@ -33359,6 +33737,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1590518504}
   m_CullTransparentMesh: 1
+--- !u!114 &1590518509
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1590518504}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 914451a9b579d5f4ab18e0335202da5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1610396674
 GameObject:
   m_ObjectHideFlags: 0
@@ -35075,6 +35465,7 @@ GameObject:
   - component: {fileID: 1695306704}
   - component: {fileID: 1695306703}
   - component: {fileID: 1695306702}
+  - component: {fileID: 1695306705}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -35196,6 +35587,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1695306700}
   m_CullTransparentMesh: 1
+--- !u!114 &1695306705
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1695306700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 914451a9b579d5f4ab18e0335202da5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1703607325
 GameObject:
   m_ObjectHideFlags: 0
@@ -37459,6 +37862,7 @@ GameObject:
   - component: {fileID: 1818840542}
   - component: {fileID: 1818840541}
   - component: {fileID: 1818840540}
+  - component: {fileID: 1818840545}
   m_Layer: 5
   m_Name: Hideout
   m_TagString: Untagged
@@ -37521,6 +37925,7 @@ MonoBehaviour:
   unlockedLevel: 6
   whichButton: AssassinTroops
   butHovering: {fileID: 1818840540}
+  isUnlocked: 0
 --- !u!114 &1818840542
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -37615,6 +38020,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1818840538}
   m_CullTransparentMesh: 1
+--- !u!114 &1818840545
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1818840538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 914451a9b579d5f4ab18e0335202da5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1821947071
 GameObject:
   m_ObjectHideFlags: 0
@@ -37852,6 +38269,7 @@ GameObject:
   - component: {fileID: 1847695804}
   - component: {fileID: 1847695803}
   - component: {fileID: 1847695802}
+  - component: {fileID: 1847695805}
   m_Layer: 5
   m_Name: CustomBackground
   m_TagString: Untagged
@@ -37875,7 +38293,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 3.395026, y: -38.64848}
+  m_AnchoredPosition: {x: 8, y: -41}
   m_SizeDelta: {x: 2442.5, y: 1374.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1847695802
@@ -37972,6 +38390,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1847695800}
   m_CullTransparentMesh: 1
+--- !u!114 &1847695805
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1847695800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 914451a9b579d5f4ab18e0335202da5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1847803139
 GameObject:
   m_ObjectHideFlags: 0
@@ -38252,6 +38682,7 @@ GameObject:
   - component: {fileID: 1856952991}
   - component: {fileID: 1856952995}
   - component: {fileID: 1856952994}
+  - component: {fileID: 1856952996}
   m_Layer: 5
   m_Name: RangerButton
   m_TagString: Untagged
@@ -38394,6 +38825,7 @@ MonoBehaviour:
   unlockedLevel: 9
   whichButton: RangerTroops
   butHovering: {fileID: 1856952995}
+  isUnlocked: 0
 --- !u!114 &1856952995
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -38409,6 +38841,18 @@ MonoBehaviour:
   image: {fileID: 233687280}
   buttonText: {fileID: 1519004076}
   canHover: 1
+--- !u!114 &1856952996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1856952989}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 914451a9b579d5f4ab18e0335202da5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1857055975
 GameObject:
   m_ObjectHideFlags: 0
@@ -40146,7 +40590,7 @@ GameObject:
   - component: {fileID: 1930668536}
   - component: {fileID: 1930668535}
   m_Layer: 5
-  m_Name: ProductionIncreaseBut
+  m_Name: MoveIncreaseBut
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -42119,6 +42563,7 @@ GameObject:
   - component: {fileID: 2091200791}
   - component: {fileID: 2091200790}
   - component: {fileID: 2091200789}
+  - component: {fileID: 2091200792}
   m_Layer: 5
   m_Name: StatButton
   m_TagString: Untagged
@@ -42240,6 +42685,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2091200787}
   m_CullTransparentMesh: 1
+--- !u!114 &2091200792
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2091200787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 914451a9b579d5f4ab18e0335202da5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2097481307
 GameObject:
   m_ObjectHideFlags: 0

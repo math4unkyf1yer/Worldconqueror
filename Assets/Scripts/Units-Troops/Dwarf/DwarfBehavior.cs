@@ -9,6 +9,7 @@ public class DwarfBehavior : IUnitBehavior
     float scanDelay = 0.1f;
     public IEnumerator Move(UnitTroop troop)
     {
+        troop.State = TroopState.Objective;
 
         while (troop.isAlive)
         {

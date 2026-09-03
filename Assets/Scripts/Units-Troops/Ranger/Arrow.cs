@@ -28,6 +28,7 @@ public class Arrow : Projectiles
         }
     }
 
+
     IEnumerator ActivetoLong()
     {
         yield return new WaitForSeconds(0.2f);
