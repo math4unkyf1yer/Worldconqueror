@@ -6,9 +6,6 @@ using UnityEngine.UI;
 public class SelectionHighlighter : MonoBehaviour
 {
 
-    public Color activeColor;
-    public Color inactiveColor;
-
     private Button oldActivatedButton;
     private GameObject oldOverlay;
 

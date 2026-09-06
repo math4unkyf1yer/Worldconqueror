@@ -32,15 +32,15 @@ public class HazardController : MonoBehaviour
         {
             case HazardType.Slow:
                 hazardImage.color = slowColor;
-                imageSprite.sprite = hazardSprites[0];
+              //  imageSprite.sprite = hazardSprites[0];
                 break;
             case HazardType.Speed:
                 hazardImage.color = speedColor;
-                imageSprite.sprite = hazardSprites[1];
+             //   imageSprite.sprite = hazardSprites[1];
                 break;
             case HazardType.Damage:
                 hazardImage.color = damageColor;
-                imageSprite.sprite = hazardSprites[2];
+             //   imageSprite.sprite = hazardSprites[2];
                 break;
 
         }

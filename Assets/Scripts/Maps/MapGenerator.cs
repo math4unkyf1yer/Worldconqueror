@@ -14,6 +14,7 @@ public class MapGenerator : MonoBehaviour
     [SerializeField] Transform projectileArrowParent;
     [SerializeField] GameObject fireBallObject;
     [SerializeField] GameObject arrowObject;
+    [SerializeField] GameObject hazardHolder;
     int mageProjectileMax = 30;
     [SerializeField] GameObject[] AiControllers;
     public BulletPool bulletPool;
@@ -172,7 +173,7 @@ public class MapGenerator : MonoBehaviour
         Vector2 randomOffset = Random.insideUnitCircle * hazardSpreadRadius;
         Vector3 hazardPosition = territory.transform.position + new Vector3(randomOffset.x, randomOffset.y, 0);
 
-        GameObject hazardClone = Instantiate(hazardPrefab, hazardPosition, Quaternion.identity, territory.transform);
+        GameObject hazardClone = Instantiate(hazardPrefab, hazardPosition, Quaternion.identity, hazardHolder.transform);
 
         HazardController hazardCtrl = hazardClone.GetComponent<HazardController>();
 

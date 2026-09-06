@@ -43,8 +43,8 @@ public class StatPanel : MonoBehaviour
 
     void ChangeTroopStatText()
     {
-        float critPercentage = currentTroopStat.critChances *= 100;
-        float noDeathPercentage = currentTroopStat.noDeathChances *= 100;
+        float critPercentage = currentTroopStat.critChances * 100;
+        float noDeathPercentage = currentTroopStat.noDeathChances * 100;
 
         statsAmount[0].text = currentTroopStat.moveSpeed.ToString();
         statsAmount[1].text = currentTroopStat.vigor.ToString();
@@ -60,6 +60,8 @@ public class StatPanel : MonoBehaviour
         statsAmount[1].text = currentTerrainData.maxCapacity.ToString();
         statsAmount[2].text = currentTerrainData.radiusSize.ToString();
         statsAmount[3].text = currentTerrainData.radiusEffect.ToString();
+        //add the explanation for the effect that the radius does 
+        statsExplenation[statsExplenation.Length - 1] = currentTerrainData.effectDescription;
     }
 
     public void HideStats()

@@ -45,14 +45,13 @@ public class UnitTroop : MonoBehaviour
 
     public void SetUp(UnitStats stats,Transform targetLocation,int ID,Owner owner)
     {
-
-        if (troopAudio == null)
+        if(troopAudio == null) { troopAudio = gameObject.GetComponent<AudioSource>(); }
+        if (troopAudio != null)
         {
-            troopAudio = gameObject.GetComponent<AudioSource>();
             audioManager = AssignLevel.Instance.audioManager;
 
             troopAudio.pitch = Random.Range(0.95f, 1.05f);
-            TroopPlayAudio(audioManager.SpawnSound,1);
+            TroopPlayAudio(audioManager.SpawnSound,0.8f);
         } 
 
         //get buff without changing the actuals stats of the troops
@@ -140,7 +139,7 @@ public class UnitTroop : MonoBehaviour
             {
                 if(troopAudio != null)//audio
                 {  
-                   TroopPlayAudio(audioManager.teritoryAttack,1);
+                   TroopPlayAudio(audioManager.teritoryAttack,0.8f);
                    StartCoroutine(DelayedReturnToPool(audioManager.teritoryAttack.length));
                 }
                 return;

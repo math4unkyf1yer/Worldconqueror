@@ -17,6 +17,7 @@ public class TutorialManager : MonoBehaviour
         tutorialCompleted["DragTroop"] = false;
         tutorialCompleted["UpgradeTroop"] = false;
         tutorialCompleted["UpgradeTerritory"] = false;
+        tutorialCompleted["Shop"] = false;
     }
     public void OpenTutorial(GameObject tutorialPage,string tutoID)
     {

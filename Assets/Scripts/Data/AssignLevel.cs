@@ -84,17 +84,17 @@ public class AssignLevel : MonoBehaviour
             switch (type)
             {
                 case UnitType.Soldier:
-                    stats.specialBuffTroopText = " chance to survive lethal damage increase by 5%";
+                    stats.specialBuffTroopText = " Chance to survive lethal damage increase by 5%";
                     stats.specialBuffTroopName = "Sturdy Buff:";
                     break;
 
                 case UnitType.Assassin:
-                    stats.specialBuffTroopText = " critical strike chance increases by 5%";
+                    stats.specialBuffTroopText = " Critical strike chance increases by 5%";
                     stats.specialBuffTroopName = "Critical Buff:";
                     break;
 
                 case UnitType.Mage:
-                    stats.specialBuffTroopText = " attack range increases by 5%";
+                    stats.specialBuffTroopText = " Attack range increases by 5%";
                     stats.specialBuffTroopName = "Attack Range:";
                     break;
 

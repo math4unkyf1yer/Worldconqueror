@@ -12,7 +12,6 @@ public class LevelUI : MonoBehaviour
     [SerializeField] private GameObject levelImage;
     [SerializeField] private GameObject lineImage;
     [SerializeField] private GameObject hazardImage;
-    [SerializeField] private Sprite normalMark;
 
     public int howManyLevelHolder = 5;
     public int mapCount;

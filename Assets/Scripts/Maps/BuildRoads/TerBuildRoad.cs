@@ -13,8 +13,6 @@ public class TerBuildRoad : MonoBehaviour
         
     public float range = 1.5f; 
 
-    [SerializeField] float push = 50;
-
     public void SetUp()
     {
         roadManager = RoadManager.Instance;
