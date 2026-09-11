@@ -10,6 +10,7 @@ TagManager:
   - Wall
   - wall
   - Overlay
+  - HandSpot
   layers:
   - Default
   - TransparentFX

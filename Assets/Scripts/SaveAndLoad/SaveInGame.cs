@@ -81,7 +81,7 @@ public class SaveInGame : MonoBehaviour
     {
         SaveData data = SaveSystem.Load();
 
-        if (data == null) { Menu.Instance.SetCoinText(); levelUiScript.RefreshMap(true); return; }
+        if (data == null) { Menu.Instance.SetText(); levelUiScript.RefreshMap(true); return; }
 
         asssignLevelScript.SetCoin(data.coins);
         asssignLevelScript.levelCount = data.level;
@@ -128,7 +128,7 @@ public class SaveInGame : MonoBehaviour
             }
         }
 
-        Menu.Instance.SetCoinText();
+        Menu.Instance.SetText();
         Menu.Instance.SetUp();
         levelUiScript.RefreshMap(true);
     }

@@ -16,7 +16,9 @@ public class Cost : MonoBehaviour
     private SpriteSwitcher spriteSwitcher;
 
     [SerializeField] private TextMeshProUGUI[] costtext;
-    [SerializeField] private TextMeshProUGUI[] increaseAmountText;
+    [SerializeField] private TextMeshProUGUI buffTroopText;
+    [SerializeField] private TextMeshProUGUI[] currentAmountText;
+    [SerializeField] private TextMeshProUGUI[] newAmountText;
     [SerializeField] private TextMeshProUGUI[] topStatText;
     [SerializeField] private Button[] Buttons;
 
@@ -47,7 +49,6 @@ public class Cost : MonoBehaviour
 
     public void ClickTroopType(int typeInt)
     {
-
         if (!IsTroopUnlocked(typeInt)) return;
 
         whichType = typeInt;
@@ -96,7 +97,7 @@ public class Cost : MonoBehaviour
             if (assignLevelScript.TryUpgradeTroop(Upgrade, type))
             {
                 costtext[Upgrade].text = "Cost: " + assignLevelScript.troopUpgrades[type].cost[Upgrade].ToString();
-                Menu.Instance.SetCoinText();
+                Menu.Instance.SetText();
                 ChangeText();
                 assignLevelScript.audioManager.PlayButtonCoinSound();
             }
@@ -107,7 +108,7 @@ public class Cost : MonoBehaviour
             if (assignLevelScript.TryUpgradeTerritory(Upgrade, territoryType))
             {
                 costtext[Upgrade].text = "Cost: " + assignLevelScript.territoryUpgrades[territoryType].cost[Upgrade].ToString();
-                Menu.Instance.SetCoinText();
+                Menu.Instance.SetText();
                 ChangeText();
                 assignLevelScript.audioManager.PlayButtonCoinSound();
             }
@@ -117,7 +118,6 @@ public class Cost : MonoBehaviour
 
     void ChangeText()
     {
-
         if (troopUpgrade)
         {
             currentTroopStat = assignLevelScript.GetCurrentStats(type);
@@ -126,9 +126,6 @@ public class Cost : MonoBehaviour
             {
                 costtext[i].text = "Cost: " + assignLevelScript.troopUpgrades[type].cost[i].ToString();
             }
-            increaseAmountText[0].text = " Increase by: 10% ".ToString();
-            increaseAmountText[1].text = " Increase by: 10% ".ToString();
-            increaseAmountText[2].text = assignLevelScript.troopUpgrades[type].specialBuffTroopText.ToString();
             UpdateTopStats();
         }
         else
@@ -139,9 +136,7 @@ public class Cost : MonoBehaviour
             {
                 costtext[i].text = "Cost: " + assignLevelScript.territoryUpgrades[territoryType].cost[i].ToString();
             }
-            increaseAmountText[0].text = currentTerStat.productionRate + "sec decrease time by: 10% ".ToString();
-            increaseAmountText[1].text = currentTerStat.maxCapacity + " increase capacity by: 10% ".ToString();
-            increaseAmountText[2].text = currentTerStat.radiusSize + " increase radius effect by: 10% ".ToString();
+
             UpdateTerritoryStat();
         }
     }
@@ -149,18 +144,40 @@ public class Cost : MonoBehaviour
     void UpdateTerritoryStat()
     {
         topStatText[0].text = "Production speed: " + currentTerStat.productionRate.ToString("F2");
-        topStatText[1].text = "Capacity: " + currentTerStat.maxCapacity.ToString("F2");
+        currentAmountText[0].text = currentTerStat.productionRate.ToString("F2");
+        topStatText[1].text = "Capacity: " + currentTerStat.maxCapacity.ToString("F1");
+        currentAmountText[1].text = currentTerStat.maxCapacity.ToString("F1");
         topStatText[2].text = "Size Radius: " + currentTerStat.radiusSize.ToString("F2");
+        currentAmountText[2].text = currentTerStat.radiusSize.ToString("F2");
+
+        TerretoryData nextStats = new TerretoryData().TerritoryTier(assignLevelScript.GetProduction(territoryType) + 1,assignLevelScript.GetCapacity(territoryType) + 1,assignLevelScript.GetRadius(territoryType) + 1,territoryType);
+
+        newAmountText[0].text = nextStats.productionRate.ToString("F2");
+        newAmountText[1].text = nextStats.maxCapacity.ToString("F1");
+        newAmountText[2].text = nextStats.radiusSize.ToString("F2");
 
         spriteSwitcher.ChangeInfo(whichType);
     }
 
     void UpdateTopStats()
     {
-         topStatText[0].text = "Move Speed: " + currentTroopStat.moveSpeed.ToString("F2");
-         topStatText[1].text = "Vigor: " + currentTroopStat.vigor.ToString("F2");
-         topStatText[2].text = assignLevelScript.troopUpgrades[type].specialBuffTroopName + currentTroopStat.specialFloat.ToString("F2");
-        
+        topStatText[0].text = "Move Speed: " + currentTroopStat.moveSpeed.ToString("F2");
+        currentAmountText[0].text = currentTroopStat.moveSpeed.ToString("F2");
+
+        topStatText[1].text = "Vigor: " + currentTroopStat.vigor.ToString("F2");
+        currentAmountText[1].text = currentTroopStat.vigor.ToString("F2");
+
+        topStatText[2].text = assignLevelScript.troopUpgrades[type].specialBuffTroopName + ": " + currentTroopStat.specialFloat.ToString("F2");
+        currentAmountText[2].text = currentTroopStat.specialFloat.ToString("F2");
+
+        buffTroopText.text = assignLevelScript.troopUpgrades[type].specialBuffTroopName + "++".ToString();
+
+        UnitStats nextStats = assignLevelScript.GetCurrentStats(type).WithTier(assignLevelScript.GetMoveSpeed(type) + 1, assignLevelScript.GetAttack(type) + 1, assignLevelScript.GetSpecialBuff(type) + 1, type);
+
+        newAmountText[0].text = nextStats.moveSpeed.ToString("F2");
+        newAmountText[1].text = nextStats.vigor.ToString("F2");
+        newAmountText[2].text = nextStats.specialFloat.ToString("F2");
+
         spriteSwitcher.ChangeInfo(whichType);
     }
 

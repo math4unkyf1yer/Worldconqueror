@@ -89,9 +89,9 @@ public class TerretoryData
         }
 
         //need fix increase by 10 percent
-        float baseProduction = productionRate * (1f + tProduction * -0.1f);
-        int baseCapacity = Mathf.RoundToInt(maxCapacity * (1f + tCapacity * 0.1f));
-        float baseSize = radiusSize * (1f + tRadius * 0.1f);
+        float baseProduction = productionRate * (1f + tProduction * -0.05f);
+        int baseCapacity = Mathf.RoundToInt(maxCapacity * (1f + tCapacity * 0.05f));
+        float baseSize = radiusSize * (1f + tRadius * 0.05f);
 
         //assign value base on the type that it starts with 
         return new TerretoryData

@@ -7,6 +7,8 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] Transform hand;
     GameObject currentTutorialPage;
 
+    Transform handPosition;
+
     public Dictionary<string, bool> tutorialCompleted;
 
     private void Start()
@@ -31,8 +33,21 @@ public class TutorialManager : MonoBehaviour
             currentTutorialPage = tutorialPage;
             currentTutorialPage.SetActive(true);
             hand.gameObject.SetActive(true);
-            hand.SetParent(currentTutorialPage.transform);
-            hand.transform.position = currentTutorialPage.transform.position;
+
+            //hand position
+            foreach (Transform child in currentTutorialPage.transform)
+            {
+                if (child.CompareTag("HandSpot"))
+                {
+                    handPosition = child;
+                    break;
+                }
+            }
+            if( handPosition != null )
+            {
+                hand.SetParent(handPosition);
+                hand.transform.position = handPosition.position;
+            }
         }
     }
     public void CloseTutorial(string tutoID)

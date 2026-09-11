@@ -22,6 +22,7 @@ public class AssignLevel : MonoBehaviour
     public bool customGame;
     public int levelCount = 0;
     private int coin = 20;
+    private int Diamonds = 0;
     int territroyCount;
     int hazardCount;
 
@@ -85,27 +86,27 @@ public class AssignLevel : MonoBehaviour
             {
                 case UnitType.Soldier:
                     stats.specialBuffTroopText = " Chance to survive lethal damage increase by 5%";
-                    stats.specialBuffTroopName = "Sturdy Buff:";
+                    stats.specialBuffTroopName = "Sturdy Buff";
                     break;
 
                 case UnitType.Assassin:
                     stats.specialBuffTroopText = " Critical strike chance increases by 5%";
-                    stats.specialBuffTroopName = "Critical Buff:";
+                    stats.specialBuffTroopName = "Critical Buff";
                     break;
 
                 case UnitType.Mage:
                     stats.specialBuffTroopText = " Attack range increases by 5%";
-                    stats.specialBuffTroopName = "Attack Range:";
+                    stats.specialBuffTroopName = "Attack Range";
                     break;
 
                 case UnitType.Ranger:
                     stats.specialBuffTroopText = " Fire rate improves by 5%";
-                    stats.specialBuffTroopName = "Fire rate:";
+                    stats.specialBuffTroopName = "Fire rate";
                     break;
 
                 case UnitType.Dwarf:
                     stats.specialBuffTroopText = " Capture power increases by 10%";
-                    stats.specialBuffTroopName = "Strenght:";
+                    stats.specialBuffTroopName = "Strenght";
                     break;
             }
 
@@ -227,6 +228,15 @@ public class AssignLevel : MonoBehaviour
     public void SetCoin(int coinCl)
     {
         coin = coinCl;
+    }
+
+    public int GetDiamond()
+    {
+        return Diamonds;
+    }
+    public void SetDiamonds(int diamondCl)
+    {
+        Diamonds = diamondCl;
     }
 
 

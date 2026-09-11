@@ -14,6 +14,7 @@ public class CustomLevelConfig : MonoBehaviour
     public DifficultyConfiguration difficulty;
 
     [SerializeField] private GameObject menuObj;
+    [SerializeField] private GameObject playPage;
     [SerializeField] private TMP_Dropdown sizeMapDropdown;
     [SerializeField] private TMP_Dropdown enemyDropdown;
     [SerializeField] private TMP_Dropdown difficultyDropdown;
@@ -51,6 +52,11 @@ public class CustomLevelConfig : MonoBehaviour
         {
             blockade[3].SetActive(false);
         }
+        if(levelScript.levelCount >= 4)
+        {
+            blockade[4].SetActive(false);
+        }
+
     }
 
     public void SetEnemyCount()
@@ -111,6 +117,7 @@ public class CustomLevelConfig : MonoBehaviour
         levelScript.SetupLevel(enemyCount,hasHazard,mapSize,difficulty,territoryTypes);
         gameObject.SetActive(false);
         menuObj.SetActive(false);
+        playPage.SetActive(true);
         LoadScreen.Instance.LoadScene(1);
     }
 }

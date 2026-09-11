@@ -54,8 +54,8 @@ public enum UnitType
     Soldier,
     Assassin,
     Dwarf,
-    Ranger,
-    Mage
+    Mage,
+    Ranger
 }
 public enum MapSize
 {

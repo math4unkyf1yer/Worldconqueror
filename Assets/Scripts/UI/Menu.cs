@@ -9,6 +9,7 @@ using UnityEngine.UI;
 public class Menu : MonoBehaviour
 {
     public TextMeshProUGUI coinText;
+    public TextMeshProUGUI diamondText;
 
     [SerializeField] private GameObject playPage;
     [SerializeField] private GameObject storePage;
@@ -20,8 +21,11 @@ public class Menu : MonoBehaviour
     [SerializeField] private TextMeshProUGUI levelText; 
     [SerializeField] private LevelUI levelUI;
     [SerializeField] private GameObject holderTer;
+    [SerializeField] private GameObject terCamera;
+    private Vector3 terCameraPos;
 
     private GameObject behindSettingPage;
+    GameObject currentPage;
 
     [SerializeField] private Cost costScript;
     [SerializeField] private Cost costTerScript;
@@ -56,6 +60,7 @@ public class Menu : MonoBehaviour
     {
         buttonLock = GetComponent<ButtonLockController>();
         CacheButtons();
+        terCameraPos = terCamera.transform.position;
     }
 
     private void Update()
@@ -76,7 +81,7 @@ public class Menu : MonoBehaviour
             buttonsInHolder.Add(child);
 
         // Select first button by default
-        selectedButton = buttonsInHolder[0];
+        selectedButton = buttonsInHolder[1];
         EventSystem.current.SetSelectedGameObject(selectedButton.gameObject);
     }
 
@@ -97,42 +102,139 @@ public class Menu : MonoBehaviour
         gameObject.SetActive(true);
         holderTer.SetActive(true);
 
-        SetCoinText();
+        SetText();
         levelUI.RefreshMap(false);
 
         EventSystem.current.SetSelectedGameObject(selectedButton.gameObject);
     }
 
-    public void SetCoinText()
+    public void SetText()
     {
         if (gameManager == null)
         {
             gameManager = AssignLevel.Instance;
         }
         int currentLevel = gameManager.levelCount + 1;
+        levelText.text = "Level " + currentLevel;
+        SetCoinTexts();
+        SetDiamondText();
+    }
+    void SetCoinTexts()
+    {
         int coin = gameManager.GetCoin();
 
         coinText.text = " " + coin;
-        levelText.text = "Level " + currentLevel;
+    }
+     void SetDiamondText()
+    {
+        int diam = gameManager.GetDiamond();
+
+        diamondText.text = " " + diam;
     }
 
     // ---------------------------------------------------------
     // PAGE SWITCHING (CENTRALIZED)
     // ---------------------------------------------------------
 
+    //for the setting and the custom page(we don't want them to transition)
     private void ShowPage(GameObject targetPage)
     {
         playPage.SetActive(false);
-        storePage.SetActive(false);
-        upgradePage.SetActive(false);
-        customGamePage.SetActive(false);
-        terUpgradePage.SetActive(false);
-
         holderTer.SetActive(false);
-        playButton.SetActive(true);
+        targetPage.SetActive(true);
+    }
+    private void HidePage(GameObject targetPage)
+    {
+        targetPage.SetActive(false);
+        playPage.SetActive(true);
+        holderTer.SetActive(true);  
+    }
+    
+
+    //Only for pages that will transition
+    private void ShowPageSlide(GameObject targetPage, int targetButtonIndex)
+    {
+        if(targetPage == behindSettingPage)
+        {
+            return;
+        }
+        currentPage = null;
+
+        if (playPage.activeInHierarchy) currentPage = playPage;
+        else if (storePage.activeInHierarchy) currentPage = storePage;
+        else if (upgradePage.activeInHierarchy) currentPage = upgradePage;
+        else if (customGamePage.activeInHierarchy) currentPage = customGamePage;
+        else if (terUpgradePage.activeInHierarchy) currentPage = terUpgradePage;
 
         behindSettingPage = targetPage;
-        targetPage.SetActive(true);
+
+
+        // First time opening menu
+        if (currentPage == null)
+        {
+            targetPage.SetActive(true);
+            return;
+        }
+
+        int currentIndex = buttonsInHolder.IndexOf(selectedButton);
+        bool slideRight = targetButtonIndex > currentIndex;
+
+        StartCoroutine(SlideTransition(currentPage, targetPage, slideRight, 0.25f));
+
+        selectedButton = buttonsInHolder[targetButtonIndex];
+        EventSystem.current.SetSelectedGameObject(selectedButton.gameObject);
+    }
+
+    private IEnumerator SlideTransition(GameObject fromPage, GameObject toPage, bool slideRight, float duration)
+    {
+        RectTransform fromRect = fromPage.GetComponent<RectTransform>();
+        RectTransform toRect = toPage.GetComponent<RectTransform>();
+
+        float screenWidth = Screen.width;
+
+        Vector2 fromStart = Vector2.zero;
+        Vector2 fromEnd = slideRight ? new Vector2(-screenWidth, 0) : new Vector2(screenWidth, 0);
+
+        Vector2 toStart = slideRight ? new Vector2(screenWidth, 0) : new Vector2(-screenWidth, 0);
+        Vector2 toEnd = Vector2.zero;
+
+        toPage.SetActive(true);
+        toRect.anchoredPosition = toStart;
+
+        //move the territories sideways
+        Transform holderTransform = terCamera.transform;
+
+        Vector3 holderEnd = terCameraPos + (slideRight ? Vector3.right : Vector3.left) * screenWidth * 0.01f;
+        Vector3 holderEndPlay = terCameraPos + (slideRight ? Vector3.left : Vector3.right) * screenWidth * 0.01f;
+
+        float t = 0f;
+        while (t < duration)
+        {
+            t += Time.deltaTime;
+            float normalized = t / duration;
+
+            fromRect.anchoredPosition = Vector2.Lerp(fromStart, fromEnd, normalized);
+            toRect.anchoredPosition = Vector2.Lerp(toStart, toEnd, normalized);
+
+            if (fromPage == playPage)
+            {
+                holderTransform.position = Vector3.Lerp(terCameraPos, holderEnd, normalized);
+            }
+
+            if (toPage == playPage)
+            {
+                holderTransform.position = Vector3.Lerp(holderEndPlay, terCameraPos, normalized);
+            }
+
+            yield return null;
+        }
+
+        fromPage.SetActive(false);
+        if (toPage == playPage)
+            holderTransform.position = terCameraPos;
+        else
+            holderTransform.position = holderEnd;
+        toRect.anchoredPosition = Vector2.zero;
     }
 
     private void PreventSelection()
@@ -162,10 +264,10 @@ public class Menu : MonoBehaviour
 
     public void PlayPageOpen()
     {
-        ShowPage(playPage);
+        ShowPageSlide(playPage,1);
         holderTer.SetActive(true);
 
-        selectedButton = buttonsInHolder[0];
+        selectedButton = buttonsInHolder[1];
     }
 
     public void StorePage()
@@ -177,8 +279,8 @@ public class Menu : MonoBehaviour
         }
 
         buttonLock.CloseTutorial();
-        ShowPage(storePage);
-        selectedButton = buttonsInHolder[3];
+        ShowPageSlide(storePage,0);
+        selectedButton = buttonsInHolder[0];
     }
 
     public void UpgradePage()
@@ -190,9 +292,9 @@ public class Menu : MonoBehaviour
         }
 
         buttonLock.CloseTutorial();
-        ShowPage(upgradePage);
+        ShowPageSlide(upgradePage,2);
 
-        selectedButton = buttonsInHolder[1];
+        selectedButton = buttonsInHolder[2];
     }
 
     public void TerUpgradePage()
@@ -203,14 +305,18 @@ public class Menu : MonoBehaviour
             return;
         }
         buttonLock.CloseTutorial();
-        ShowPage(terUpgradePage);
+        ShowPageSlide(terUpgradePage, 3);
 
-        selectedButton = buttonsInHolder[2];
+        selectedButton = buttonsInHolder[3];
     }
 
     public void CustomGamePageOpen()
     {
         ShowPage(customGamePage);
+    }
+    public void CustomGameClose()
+    {
+        HidePage(customGamePage);
     }
 
     public void SettingPage()
@@ -223,7 +329,7 @@ public class Menu : MonoBehaviour
         settingPage.SetActive(false);
         if (playPage.activeInHierarchy)
         {
-            PlayPageOpen();
+            HidePage(settingPage);
         }
         else
         {

@@ -19,7 +19,7 @@ MonoBehaviour:
   Zones: []
   terretories:
   - TerretoryID: 0
-    Type: 4
+    Type: 5
     Owner: 1
     StartingUnits: 0
     scale: 1
@@ -27,7 +27,10 @@ MonoBehaviour:
     maxCapacity: 40
     radiusSize: 1.1
     productionRate: 1.7
-    radiusEffect: Shotts arrow to enemies
+    radiusEffect: Sharpshot
+    effectDescription: "Sharpshot: Enemy troops entering this territory\u2019s radius
+      trigger an automatic defense response, firing a precise arrow that strikes
+      the intruder on impact."
   - TerretoryID: 1
     Type: 0
     Owner: 0
@@ -37,7 +40,10 @@ MonoBehaviour:
     maxCapacity: 40
     radiusSize: 1.1
     productionRate: 1.7
-    radiusEffect: Give health to troops
+    radiusEffect: Health Buff
+    effectDescription: "Health Buff: Within this territory\u2019s radius, troops
+      are infused with Vigor, bolstering their vitality and allowing them to withstand
+      far more damage."
   - TerretoryID: 2
     Type: 0
     Owner: 2
@@ -47,7 +53,10 @@ MonoBehaviour:
     maxCapacity: 40
     radiusSize: 1.1
     productionRate: 1.7
-    radiusEffect: Give health to troops
+    radiusEffect: Health Buff
+    effectDescription: "Health Buff: Within this territory\u2019s radius, troops
+      are infused with Vigor, bolstering their vitality and allowing them to withstand
+      far more damage."
   DifficultyConfiguration:
     setting: 1
     levelDifficulty: 0
