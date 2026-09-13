@@ -389,7 +389,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cffd16dbc23114043a95b58b529ec7cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  size: {x: 16.5, y: 8.43}
+  size: {x: 18, y: 8.43}
   minSpacing: 0.3
   number: 30
   displayRadius: 0.09
@@ -408,7 +408,7 @@ Transform:
   m_GameObject: {fileID: 590921481}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.25, y: -4.32, z: -2.565865}
+  m_LocalPosition: {x: -9.03, y: -4.32, z: -2.39}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -671,8 +671,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -49.813232}
-  m_SizeDelta: {x: 0, y: 83.1012}
+  m_AnchoredPosition: {x: 0, y: -58.218018}
+  m_SizeDelta: {x: 0, y: 112.2606}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &865843346
 MonoBehaviour:
@@ -1488,7 +1488,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -39.778397, y: -6.5841064}
+  m_AnchoredPosition: {x: -39.778442, y: -6.5841064}
   m_SizeDelta: {x: 1749.324, y: 977.8936}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1303973244
@@ -1563,8 +1563,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -8.040039, y: -7.9000244}
-  m_SizeDelta: {x: 92.12, y: 78.67}
+  m_AnchoredPosition: {x: -3.5800781, y: -7.9000244}
+  m_SizeDelta: {x: 172.38, y: 78.67}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1413259398
 MonoBehaviour:
@@ -2001,6 +2001,7 @@ GameObject:
   - component: {fileID: 1596678070}
   - component: {fileID: 1596678074}
   - component: {fileID: 1596678075}
+  - component: {fileID: 1596678076}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -2142,6 +2143,21 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+--- !u!114 &1596678076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1596678069}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a5d1c35ee7528c4399a074537fa2af5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  referenceAspect: 1.7777778
+  referenceSize: 5
+  mobileScale: 1.1
 --- !u!1 &1651821635
 GameObject:
   m_ObjectHideFlags: 0
