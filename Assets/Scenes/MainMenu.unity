@@ -8887,7 +8887,6 @@ GameObject:
   - component: {fileID: 388852616}
   - component: {fileID: 388852619}
   - component: {fileID: 388852618}
-  - component: {fileID: 388852620}
   m_Layer: 5
   m_Name: Background
   m_TagString: Untagged
@@ -8935,11 +8934,14 @@ MonoBehaviour:
   troopUpgrade: 0
   whichUpgrade: 0
   whichType: 0
-  statObject: {fileID: 0}
-  statName: {fileID: 0}
-  statLevel: {fileID: 0}
-  explanationText: {fileID: 0}
-  statsExplenation: []
+  statObject: {fileID: 1151829297}
+  statName: {fileID: 1943347029}
+  statLevel: {fileID: 57903771}
+  explanationText: {fileID: 1550367300}
+  statsExplenation:
+  - Production
+  - Capacity
+  - Radius
 --- !u!224 &388852617
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9000,34 +9002,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d3db9a1f519cc745939467502280ec0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &388852620
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 388852615}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b7b4cb9c6a57ee45a863276f4902831, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  statObject: {fileID: 1559492543}
-  explanationObject: {fileID: 1345815317}
-  statsAmount:
-  - {fileID: 751668480}
-  - {fileID: 706854367}
-  - {fileID: 390152892}
-  - {fileID: 82236240}
-  explanationText: {fileID: 1242702560}
-  statsExplenation:
-  - 'Production speed: The speed has which you produce troops'
-  - 'Max Capacity: The max amount of troop a territory can produce will stop at max
-    capacity'
-  - 'Radius: The size of the area around the territory where its effect is applied.'
-  - 
-  statName: {fileID: 0}
-  statLevel: {fileID: 0}
 --- !u!1 &390152890
 GameObject:
   m_ObjectHideFlags: 0
@@ -10268,7 +10242,6 @@ GameObject:
   - component: {fileID: 452118686}
   - component: {fileID: 452118687}
   - component: {fileID: 452118688}
-  - component: {fileID: 452118689}
   m_Layer: 5
   m_Name: Background
   m_TagString: Untagged
@@ -10387,39 +10360,6 @@ MonoBehaviour:
   - Dwarf Troop
   - Mage Troop
   - Ranger Troop
---- !u!114 &452118689
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 452118684}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b7b4cb9c6a57ee45a863276f4902831, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  statObject: {fileID: 1151829297}
-  explanationObject: {fileID: 0}
-  statsAmount:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  explanationText: {fileID: 0}
-  statsExplenation:
-  - 'Movement Speed: This controls the speed of your troop'
-  - 'Vigor: Use in combat to control health and damage you do to other troops'
-  - 'Strenght: Is use to take over other territories'
-  - 'Attack Range: Troop range to start attacking other troop'
-  - 'Fire Rate: How fast projectile can be thrown at '
-  - 'Crit Chance: Chance to do double the damage'
-  - 'Sturdy Chance: On death chance to stay alive.'
-  statName: {fileID: 0}
-  statLevel: {fileID: 0}
 --- !u!1001 &457771652
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13071,8 +13011,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 388852620}
-        m_TargetAssemblyTypeName: StatPanel, Assembly-CSharp
+      - m_Target: {fileID: 388852616}
+        m_TargetAssemblyTypeName: Cost, Assembly-CSharp
         m_MethodName: ShowStats
         m_Mode: 3
         m_Arguments:
@@ -19050,7 +18990,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 388852620}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: StatPanel, Assembly-CSharp
         m_MethodName: DetailStat
         m_Mode: 3
@@ -20795,7 +20735,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 388852620}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: StatPanel, Assembly-CSharp
         m_MethodName: DetailStat
         m_Mode: 3
@@ -24090,7 +24030,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 356.5, y: -37.34}
+  m_AnchoredPosition: {x: 356.5, y: -37.340088}
   m_SizeDelta: {x: -844.9, y: -375.89}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &911808661
@@ -29235,6 +29175,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4303cc52c73ece246be8be45b3455969, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  androidGameId: 6191215
+  androidAdUnitID: Interstitial_Android
 --- !u!1 &1130033766
 GameObject:
   m_ObjectHideFlags: 0
@@ -30195,6 +30137,7 @@ MonoBehaviour:
   critTerritory2: {fileID: 169162821}
   critTroop: {fileID: 605617513}
   critTroop2: {fileID: 1145273230}
+  terPreview: {fileID: 2006614774}
 --- !u!1 &1155999127
 GameObject:
   m_ObjectHideFlags: 0
@@ -33851,7 +33794,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 388852620}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: StatPanel, Assembly-CSharp
         m_MethodName: DetailStat
         m_Mode: 3
@@ -40803,6 +40746,7 @@ RectTransform:
   - {fileID: 95516046}
   - {fileID: 89344038}
   - {fileID: 1508954931}
+  - {fileID: 2006614775}
   m_Father: {fileID: 1506480397}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -42785,7 +42729,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 388852620}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: StatPanel, Assembly-CSharp
         m_MethodName: HideStats
         m_Mode: 1
@@ -43504,8 +43448,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 388852620}
-        m_TargetAssemblyTypeName: StatPanel, Assembly-CSharp
+      - m_Target: {fileID: 388852616}
+        m_TargetAssemblyTypeName: Cost, Assembly-CSharp
         m_MethodName: ShowStats
         m_Mode: 3
         m_Arguments:
@@ -47378,7 +47322,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 388852620}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: StatPanel, Assembly-CSharp
         m_MethodName: DetailStat
         m_Mode: 3
@@ -49242,7 +49186,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 388852620}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: StatPanel, Assembly-CSharp
         m_MethodName: ShowStats
         m_Mode: 1
@@ -50317,8 +50261,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 388852620}
-        m_TargetAssemblyTypeName: StatPanel, Assembly-CSharp
+      - m_Target: {fileID: 388852616}
+        m_TargetAssemblyTypeName: Cost, Assembly-CSharp
         m_MethodName: ShowStats
         m_Mode: 3
         m_Arguments:
@@ -50576,6 +50520,41 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1996366682}
   m_CullTransparentMesh: 1
+--- !u!1 &2006614774
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2006614775}
+  m_Layer: 5
+  m_Name: AllTerritoryPreview
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &2006614775
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2006614774}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1567607267}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2013948219
 GameObject:
   m_ObjectHideFlags: 0
@@ -52233,7 +52212,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 452118689}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: StatPanel, Assembly-CSharp
         m_MethodName: ShowStats
         m_Mode: 1

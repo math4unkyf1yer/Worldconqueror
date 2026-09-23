@@ -15,6 +15,7 @@ public class Cost : MonoBehaviour
     private SelectionHighlighter selectionHighlighter;
     private SpriteSwitcher spriteSwitcher;
 
+    [Header("Troops")]
     [SerializeField] private TextMeshProUGUI[] costtext;
     [SerializeField] private TextMeshProUGUI buffTroopText;
     [SerializeField] private TextMeshProUGUI[] currentAmountText;
@@ -213,59 +214,79 @@ public class Cost : MonoBehaviour
         }
 
         previewManager.SetData(currentTroopStat, currentTerStat);
-        ChangeText(whichStats);
+        RefreshText(whichStats);
     }
 
-    void ChangeText(int whichStats)
+    void RefreshText(int whichStats)
     {
-        int specialLevel = assignLevelScript.GetSpecialBuff(type) + 1;
-        if(whichStats == 2)
+        if (troopUpgrade)
         {
-            whichStats += whichType;
+            int specialLevel = assignLevelScript.GetSpecialBuff(type) + 1;
+            if (whichStats == 2)
+            {
+                whichStats += whichType;
+            }
+            switch (whichStats)
+            {
+                case 0:
+                    int moveSpeedlevel = assignLevelScript.GetMoveSpeed(type) + 1;
+                    statName.text = "Speed";
+                    statLevel.text = "Level " + moveSpeedlevel.ToString();
+                    //preview manager set up
+                    previewManager.SpeedPreview(territoryType);
+                    break;
+                case 1:
+                    int vigorLevel = assignLevelScript.GetAttack(type) + 1;
+                    statName.text = "Vigor";
+                    statLevel.text = "Level " + vigorLevel.ToString();
+                    previewManager.VigorPreview(territoryType);
+                    break;
+                case 2:
+                    statName.text = "Sturdy";
+                    statLevel.text = "Level " + specialLevel.ToString();
+                    previewManager.SturdyPreview(territoryType);
+                    break;
+                case 3:
+                    statName.text = "Critical Chance";
+                    statLevel.text = "Level " + specialLevel.ToString();
+                    previewManager.CriticalPreview(territoryType);
+                    break;
+                case 4:
+                    statName.text = "Strength";
+                    statLevel.text = "Level " + specialLevel.ToString();
+                    previewManager.StrengthPreview(territoryType);
+                    break;
+                case 5:
+                    statName.text = "Attack Range";
+                    statLevel.text = "Level " + specialLevel.ToString();
+                    previewManager.AttackRangePreview();
+                    break;
+                case 6:
+                    statName.text = "Fire Rate";
+                    statLevel.text = "Level " + specialLevel.ToString();
+                    previewManager.FireRatePreview();
+                    break;
+            }
+            explanationText.text = statsExplenation[whichStats].ToString();
         }
-        switch (whichStats)
+        else
         {
-            
-            case 0:
-                int moveSpeedlevel = assignLevelScript.GetMoveSpeed(type) + 1;
-                statName.text = "Speed";
-                statLevel.text = "Level " + moveSpeedlevel.ToString();
-                //preview manager set up
-                previewManager.SpeedPreview(territoryType);
-                break;
-            case 1:
-                int vigorLevel = assignLevelScript.GetAttack(type) + 1;
-                statName.text = "Vigor";
-                statLevel.text = "Level " + vigorLevel.ToString();
-                previewManager.VigorPreview(territoryType);
-                break;
-            case 2:
-                statName.text = "Sturdy";
-                statLevel.text = "Level "+ specialLevel.ToString();
-                previewManager.SturdyPreview(territoryType);
-                break;
-            case 3:
-                statName.text = "Critical Chance";
-                statLevel.text = "Level " + specialLevel.ToString();
-                previewManager.CriticalPreview(territoryType);
-                break;
-            case 4:
-                statName.text = "Strength";
-                statLevel.text = "Level " + specialLevel.ToString();
-                previewManager.StrengthPreview(territoryType);
-                break;
-            case 5:
-                statName.text = "Attack Range";
-                statLevel.text = "Level " + specialLevel.ToString();
-                previewManager.AttackRangePreview();
-                break;
-            case 6:
-                statName.text = "Fire Rate";
-                statLevel.text = "Level " + specialLevel.ToString();
-                previewManager.FireRatePreview();
-                break;
+            switch (whichStats)
+            {
+                case 0:
+                    int prodLevel = assignLevelScript.GetProduction(territoryType) + 1;
+                    statName.text = "Production";
+                    statLevel.text = "Level " + prodLevel.ToString();
+                    break;
+                case 1:
+                    break;
+                case 2:
+                    break;
+            }
+
+            previewManager.TerritoryPreview(territoryType);
+            explanationText.text = statsExplenation[whichStats].ToString();
         }
-        explanationText.text = statsExplenation[whichStats].ToString();
     }
 
     public void HideStats()

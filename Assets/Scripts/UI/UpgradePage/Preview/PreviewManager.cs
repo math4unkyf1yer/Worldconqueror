@@ -52,6 +52,9 @@ public class PreviewManager : MonoBehaviour
     [SerializeField] GameObject critTroop;
     [SerializeField] GameObject critTroop2;
 
+    [Header("Territory Preview")]
+    [SerializeField] GameObject terPreview;
+
     private UnitStats statsTroop;
     private TerretoryData statsTer;
 
@@ -153,6 +156,33 @@ public class PreviewManager : MonoBehaviour
         PreviewProjectileManager.Instance.StartFireRatePreview( projectilesFireRate, fireRateTroop.transform,targets,statsTroop.fireRate );
     }
 
+    public void TerritoryPreview(TerritoryType territoryType)
+    {
+        //call whichever we want right now 
+    }
+    void ProductionSpeedPreview() 
+    {
+        // preview territory 
+        // production speed preview set amount to 0 
+        //as you start start the unit count (need the production speed)
+
+    }
+     void CapacityPreview()
+    {
+        //preview territory 
+        //max capacity right away and just shows on the set up 
+    }
+     void RadiusPreview()
+    {
+        //territory preview 
+        //troop preview
+
+        //set look for them
+
+        //troop speed preview target territory and start the start 
+
+        //territory set up do the effect base on type 
+    }
     public void ClosePreview()
     {
         speedPreview.SetActive(false);
