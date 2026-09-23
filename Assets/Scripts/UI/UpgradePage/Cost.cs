@@ -10,7 +10,7 @@ using UnityEngine.UI;
 public class Cost : MonoBehaviour
 {
     //scripts
-    private AssignLevel assignLevelScript;
+    public AssignLevel assignLevelScript;
     private ButtonLockController buttonController;
     private SelectionHighlighter selectionHighlighter;
     private SpriteSwitcher spriteSwitcher;
@@ -28,11 +28,21 @@ public class Cost : MonoBehaviour
     [SerializeField] private int whichUpgrade;
     UnitType type = UnitType.Soldier;
     TerritoryType territoryType = TerritoryType.SoldierProd;
-    int whichType = 0;
+    public int whichType = 0;
     private int currentIndex = 0;
 
     UnitStats currentTroopStat;
     TerretoryData currentTerStat;
+
+    [Header("Stats")]
+    //stats panel 
+    [SerializeField] GameObject statObject;
+    [SerializeField] TextMeshProUGUI statName;
+    [SerializeField] TextMeshProUGUI statLevel;
+    [SerializeField] TextMeshProUGUI explanationText;
+
+    public string[] statsExplenation;
+    private PreviewManager previewManager;
 
     // Start is called before the first frame update
     void Start()
@@ -54,6 +64,7 @@ public class Cost : MonoBehaviour
         whichType = typeInt;
         currentIndex = typeInt;
         type = (UnitType)typeInt;
+        territoryType = (TerritoryType)typeInt;
 
         ChangeText();
         selectionHighlighter.ChangeButtonColor(Buttons[whichType]);
@@ -69,16 +80,16 @@ public class Cost : MonoBehaviour
         territoryType = (TerritoryType)typeint;
 
         ChangeText();
+        //change last help button to take a different int
         selectionHighlighter.ChangeButtonColor(Buttons[whichType]);
     }
 
     bool isTerritoryUnlocked(int index)
     {
-        if(index == 1) return buttonController.unlockFortUpgrades;
-        if (index == 2) return buttonController.unlockAssassinUpgrades;
-        if (index == 3) return buttonController.unlockDwarfUpgrades;
-        if (index == 4) return buttonController.unlockMageUpgrades;
-        if (index == 5) return buttonController.unlockRangerUpgrades;
+        if(index == 1) return buttonController.unlockAssassinUpgrades;
+        if (index == 2) return buttonController.unlockDwarfUpgrades;
+        if (index == 3) return buttonController.unlockMageUpgrades;
+        if (index == 4) return buttonController.unlockRangerUpgrades;
         return true;
     }
     bool IsTroopUnlocked(int index)
@@ -190,4 +201,76 @@ public class Cost : MonoBehaviour
         return currentTerStat;
     }
 
+
+    //stats panels
+
+    public void ShowStats(int whichStats)
+    {
+        statObject.SetActive(true);
+        if(previewManager == null)
+        {
+            previewManager = statObject.GetComponent<PreviewManager>();
+        }
+
+        previewManager.SetData(currentTroopStat, currentTerStat);
+        ChangeText(whichStats);
+    }
+
+    void ChangeText(int whichStats)
+    {
+        int specialLevel = assignLevelScript.GetSpecialBuff(type) + 1;
+        if(whichStats == 2)
+        {
+            whichStats += whichType;
+        }
+        switch (whichStats)
+        {
+            
+            case 0:
+                int moveSpeedlevel = assignLevelScript.GetMoveSpeed(type) + 1;
+                statName.text = "Speed";
+                statLevel.text = "Level " + moveSpeedlevel.ToString();
+                //preview manager set up
+                previewManager.SpeedPreview(territoryType);
+                break;
+            case 1:
+                int vigorLevel = assignLevelScript.GetAttack(type) + 1;
+                statName.text = "Vigor";
+                statLevel.text = "Level " + vigorLevel.ToString();
+                previewManager.VigorPreview(territoryType);
+                break;
+            case 2:
+                statName.text = "Sturdy";
+                statLevel.text = "Level "+ specialLevel.ToString();
+                previewManager.SturdyPreview(territoryType);
+                break;
+            case 3:
+                statName.text = "Critical Chance";
+                statLevel.text = "Level " + specialLevel.ToString();
+                previewManager.CriticalPreview(territoryType);
+                break;
+            case 4:
+                statName.text = "Strength";
+                statLevel.text = "Level " + specialLevel.ToString();
+                previewManager.StrengthPreview(territoryType);
+                break;
+            case 5:
+                statName.text = "Attack Range";
+                statLevel.text = "Level " + specialLevel.ToString();
+                previewManager.AttackRangePreview();
+                break;
+            case 6:
+                statName.text = "Fire Rate";
+                statLevel.text = "Level " + specialLevel.ToString();
+                previewManager.FireRatePreview();
+                break;
+        }
+        explanationText.text = statsExplenation[whichStats].ToString();
+    }
+
+    public void HideStats()
+    {
+        statObject.SetActive(false);
+        previewManager.ClosePreview();
+    }
 }

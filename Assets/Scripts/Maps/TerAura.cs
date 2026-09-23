@@ -131,11 +131,11 @@ public class TerAura : MonoBehaviour
         UnitBuffs troop = other.GetComponent<UnitBuffs>();
         if (troop == null || auraEffect == null) return;
 
-        if (troop.insideAura) return;   // ← prevents double buff
+     //   if (troop.insideAura) return;   // ← prevents double buff
 
         troop.insideAura = true;
 
-        auraEffect.ApplyEffect(troop, currentOwner);
+        auraEffect.ApplyEffect(troop, currentOwner,this);
 
     }
 
@@ -144,11 +144,11 @@ public class TerAura : MonoBehaviour
         UnitBuffs troop = collision.GetComponent<UnitBuffs>();
         if (troop == null || auraEffect == null) return;
 
-        if (!troop.insideAura) return;
+      //  if (!troop.insideAura) return;
 
         troop.insideAura = false;
         //reamove the aura effect from the troops
-        auraEffect.RemoveEffect(troop, currentOwner);
+        auraEffect.RemoveEffect(troop, currentOwner, this);
 
     }
 
@@ -179,13 +179,17 @@ public class TerAura : MonoBehaviour
         {
             return 1.5f;
         }
-        public void ApplyEffect(UnitBuffs troop, Owner territoryOwner)
+        public void ApplyEffect(UnitBuffs troop, Owner territoryOwner, TerAura ters)
         {
-            troop.AddHealth(GetValue(), territoryOwner);
+            troop.AddHealth(GetValue(), territoryOwner, ters);
         }
-        public void RemoveEffect(UnitBuffs troop, Owner territoryOwner)
+        public void RemoveEffect(UnitBuffs troop, Owner territoryOwner, TerAura ters)
         {
-            troop.ResetHealth(GetValue(), territoryOwner);
+            if(troop.currentAura.Contains(ters))
+            {
+                troop.currentAura.Remove(ters);
+                troop.ResetHealth(GetValue(), territoryOwner);
+            }
         }
     }
     public class AssassinAura : IAuraEffect
@@ -194,14 +198,18 @@ public class TerAura : MonoBehaviour
         {
             return 0.65f;
         }
-        public void ApplyEffect(UnitBuffs troop, Owner territoryOwner)
+        public void ApplyEffect(UnitBuffs troop, Owner territoryOwner, TerAura ters)
         {
-            troop.AddOwnerSpeed(GetValue(), territoryOwner);
+            troop.AddOwnerSpeed(GetValue(), territoryOwner, ters);
         }
-        public void RemoveEffect(UnitBuffs troop, Owner territoryOwner)
+        public void RemoveEffect(UnitBuffs troop, Owner territoryOwner, TerAura ters)
         {
-            //remove heal example
-            troop.RemoveOwnerSpeed(GetValue(), territoryOwner);
+            if(troop.currentAura.Contains(ters))
+            {
+                troop.currentAura.Remove(ters);
+                //remove heal example
+                troop.RemoveOwnerSpeed(GetValue(), territoryOwner);
+            }
         }
     }
     public class DwarfAura : IAuraEffect
@@ -215,14 +223,20 @@ public class TerAura : MonoBehaviour
         {
             return 1.0f;
         }
-        public void ApplyEffect(UnitBuffs troop, Owner territoryOwner)
+        public void ApplyEffect(UnitBuffs troop, Owner territoryOwner, TerAura ters)
         {
             if (!troopsInDamage.Contains(troop) && territoryOwner != troop.troop.ownercl)
+            {
+                troop.currentAura.Add(ters);
                 troopsInDamage.Add(troop);
+                troop.DamageEffect(true);
+            }
         }
-        public void RemoveEffect(UnitBuffs troop, Owner territoryOwner)
+        public void RemoveEffect(UnitBuffs troop, Owner territoryOwner, TerAura ters)
         {
             troopsInDamage.Remove(troop);
+            troop.currentAura.Remove(ters);
+            troop.DamageEffect(false);
         }
         public void TickDamage()
         {
@@ -243,7 +257,7 @@ public class TerAura : MonoBehaviour
         {
             return 0.5f;
         }
-        public void ApplyEffect(UnitBuffs troop, Owner territoryOwner)
+        public void ApplyEffect(UnitBuffs troop, Owner territoryOwner, TerAura ters)
         {
             ownerCl = territoryOwner;
             if (troop.troop.ownercl != territoryOwner)
@@ -252,7 +266,7 @@ public class TerAura : MonoBehaviour
                     enemies.Add(troop);
             }
         }
-        public void RemoveEffect(UnitBuffs troop, Owner territoryOwner)
+        public void RemoveEffect(UnitBuffs troop, Owner territoryOwner, TerAura ters)
         {
             enemies.Remove(troop);
         }
@@ -285,7 +299,7 @@ public class TerAura : MonoBehaviour
         {
             return 1.0f;
         }
-        public void ApplyEffect(UnitBuffs troop, Owner territoryOwner)
+        public void ApplyEffect(UnitBuffs troop, Owner territoryOwner, TerAura ters)
         {
             ownerCl = territoryOwner;
             if (troop.troop.ownercl != territoryOwner)
@@ -294,7 +308,7 @@ public class TerAura : MonoBehaviour
                     enemies.Add(troop);
             }
         }
-        public void RemoveEffect(UnitBuffs troop, Owner territoryOwner)
+        public void RemoveEffect(UnitBuffs troop, Owner territoryOwner, TerAura ters)
         {
             enemies.Remove(troop);
         }
@@ -321,8 +335,8 @@ public class TerAura : MonoBehaviour
     public interface IAuraEffect
     {
         float GetValue();
-        void ApplyEffect(UnitBuffs troop, Owner territoryOwner);
-        void RemoveEffect(UnitBuffs troop, Owner territoryOwner);
+        void ApplyEffect(UnitBuffs troop, Owner territoryOwner, TerAura ters);
+        void RemoveEffect(UnitBuffs troop, Owner territoryOwner, TerAura ters);
     }
 }
 

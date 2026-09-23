@@ -54,5 +54,5 @@ public class LevelData : ScriptableObject
 
     public int Cost = 1;
 
-
+    public bool ads = false;
 }

@@ -21,6 +21,7 @@ public class UnitTroop : MonoBehaviour
     public LayerMask troopLayer;
 
     UnitTroop CurrentEnemy;
+    UnitBuffs buffs;
     public Transform location;
     public Transform territoryLocation;
     public bool chasingEnemy;// for attackers enemy in range
@@ -45,6 +46,7 @@ public class UnitTroop : MonoBehaviour
 
     public void SetUp(UnitStats stats,Transform targetLocation,int ID,Owner owner)
     {
+        buffs = GetComponent<UnitBuffs>();
         if(troopAudio == null) { troopAudio = gameObject.GetComponent<AudioSource>(); }
         if (troopAudio != null)
         {
@@ -127,7 +129,6 @@ public class UnitTroop : MonoBehaviour
 
             if (roll <= noDeathChange)
             {
-                Debug.Log("live again");
                 lastStand = true;
             }
         }
@@ -146,7 +147,8 @@ public class UnitTroop : MonoBehaviour
             }
             else
             {
-                vigor = 0.1f;
+                vigor = 1f;
+                buffs.SturdyEffect();
             }
         }
 
@@ -229,6 +231,7 @@ public class UnitTroop : MonoBehaviour
 
         if (critRate > 0f && Random.value <= critRate)
         {
+            buffs.CritEffect();
             damageToEnemy = vigor * 2f; // YOUR CRIT
         }
 

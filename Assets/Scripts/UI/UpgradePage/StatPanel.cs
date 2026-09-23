@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 public class StatPanel : MonoBehaviour
@@ -16,32 +17,56 @@ public class StatPanel : MonoBehaviour
     private UnitStats currentTroopStat;
     private TerretoryData currentTerrainData;
 
+    private AssignLevel gameManager;
+    private TutorialManager tutorialManager;
+
+    [SerializeField] TextMeshProUGUI statName;
+    [SerializeField] TextMeshProUGUI statLevel;
+
     private void Start()
     {
+        gameManager = AssignLevel.Instance;
         upgradePageScript = GetComponent<Cost>();
+        tutorialManager = gameManager.GetComponent<TutorialManager>();
     }
-    public void ShowStats()
+    public void ShowStats(int whichStats)
     {
         statObject.SetActive(true);
 
+        
         if(upgradePageScript != null)
         {
+            currentTroopStat = upgradePageScript.GetCurrentTroopStats();
+            /*
             if (upgradePageScript.troopUpgrade)
             {
                 currentTroopStat = upgradePageScript.GetCurrentTroopStats();
                 //reveal the stats to the world 
-                ChangeTroopStatText();
+                ChangeTroopStatText(whichStats);
+                tutorialManager.CloseTutorial("UpgradeTroop");
             }
             else
             {
                 currentTerrainData = upgradePageScript.GetCurrentTerritoryData();
-                ChangeTerritoryStatsText();
-            }
+                ChangeTerritoryStatsText(whichStats);
+                tutorialManager.CloseTutorial("UpgradeTerritory");
+            }*/
         }
 
     }
 
-    void ChangeTroopStatText()
+    void ChangeText(int whichStats)
+    {
+        switch (whichStats)
+        {
+            case 0:
+                statName.text = "Speed";
+                statLevel.text = upgradePageScript.assignLevelScript.GetMoveSpeed((UnitType)upgradePageScript.whichType).ToString();
+                break;
+        }
+    }
+
+    void ChangeTroopStatText(int whichStats)
     {
         float critPercentage = currentTroopStat.critChances * 100;
         float noDeathPercentage = currentTroopStat.noDeathChances * 100;
@@ -53,8 +78,10 @@ public class StatPanel : MonoBehaviour
         statsAmount[4].text = currentTroopStat.fireRate + "sec".ToString();
         statsAmount[5].text = critPercentage + "%".ToString();
         statsAmount[6].text = noDeathPercentage + "%".ToString();
+
+        DetailStat(whichStats);
     }
-    void ChangeTerritoryStatsText()
+    void ChangeTerritoryStatsText(int whichStats)
     {
         statsAmount[0].text = currentTerrainData.productionRate.ToString();
         statsAmount[1].text = currentTerrainData.maxCapacity.ToString();
@@ -62,6 +89,8 @@ public class StatPanel : MonoBehaviour
         statsAmount[3].text = currentTerrainData.radiusEffect.ToString();
         //add the explanation for the effect that the radius does 
         statsExplenation[statsExplenation.Length - 1] = currentTerrainData.effectDescription;
+
+        DetailStat(whichStats);
     }
 
     public void HideStats()

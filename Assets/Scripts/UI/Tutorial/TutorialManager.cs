@@ -2,6 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+[System.Serializable]
+public class TutorialSequence
+{
+    public List<GameObject> pages = new List<GameObject>();
+    public int currentIndex = 0;
+    public bool completed = false;
+}
+
 public class TutorialManager : MonoBehaviour
 {
     [SerializeField] Transform hand;
@@ -9,30 +18,43 @@ public class TutorialManager : MonoBehaviour
 
     Transform handPosition;
 
-    public Dictionary<string, bool> tutorialCompleted;
+    public Dictionary<string, TutorialSequence> tutorials;
 
     private void Start()
     {
-        tutorialCompleted = new Dictionary<string, bool>();
+        tutorials = new Dictionary<string, TutorialSequence>();
 
         // Add your tutorial IDs here
-        tutorialCompleted["DragTroop"] = false;
-        tutorialCompleted["UpgradeTroop"] = false;
-        tutorialCompleted["UpgradeTerritory"] = false;
-        tutorialCompleted["Shop"] = false;
+        tutorials["DragTroop"] = new TutorialSequence();
+        tutorials["UpgradeTroop"] = new TutorialSequence();
+        tutorials["UpgradeTerritory"] = new TutorialSequence();
+        tutorials["Shop"] = new TutorialSequence();
     }
-    public void OpenTutorial(GameObject tutorialPage,string tutoID)
-    {
-        if(tutorialCompleted != null)
-        {
-            if (tutorialCompleted.ContainsKey(tutoID) && tutorialCompleted[tutoID])
-            {
-                return;
-            }
 
-            currentTutorialPage = tutorialPage;
+    public void RegisterPage(string tutoID,GameObject page)
+    {
+        if (tutorials.ContainsKey(tutoID))
+        {
+            tutorials[tutoID].pages.Add(page);
+        }
+    }
+    public void OpenTutorial(string tutoID)
+    {
+        if(tutorials != null)
+        {
+            if (!tutorials.ContainsKey(tutoID))
+                return;
+
+            var seq = tutorials[tutoID];
+
+            if (seq.completed)
+                return;
+
+            if (seq.currentIndex >= seq.pages.Count)
+                return;
+
+            currentTutorialPage = seq.pages[seq.currentIndex];
             currentTutorialPage.SetActive(true);
-            hand.gameObject.SetActive(true);
 
             //hand position
             foreach (Transform child in currentTutorialPage.transform)
@@ -45,6 +67,7 @@ public class TutorialManager : MonoBehaviour
             }
             if( handPosition != null )
             {
+                hand.gameObject.SetActive(true);
                 hand.SetParent(handPosition);
                 hand.transform.position = handPosition.position;
             }
@@ -52,18 +75,29 @@ public class TutorialManager : MonoBehaviour
     }
     public void CloseTutorial(string tutoID)
     {
+
+        if (!tutorials.ContainsKey(tutoID))
+                return;
+        var seq = tutorials[tutoID];
+
         if(currentTutorialPage != null)
         {
-            if (currentTutorialPage.activeInHierarchy)
-            {
-                currentTutorialPage.SetActive(false);
-                hand.gameObject.SetActive(false);
-
-                if (tutorialCompleted.ContainsKey(tutoID))
-                {
-                    tutorialCompleted[tutoID] = true;
-                }
-            }
+            currentTutorialPage.SetActive(false);
         }
+
+        hand.gameObject.SetActive(false);
+
+        seq.currentIndex++;
+
+        if (seq.currentIndex >= seq.pages.Count)
+        {
+            seq.completed = true;
+        }
+        else
+        {
+            // Open next page automatically
+            OpenTutorial(tutoID);
+        }
+
     }
 }

@@ -48,17 +48,17 @@ public class Store : MonoBehaviour
     {
         if(gameManager.GetDiamond() >= packCoinCost[whichPack])
         {
-            Debug.Log("enough diamound");
             int newDiamond = gameManager.GetDiamond() - packCoinCost[whichPack];
             gameManager.SetDiamonds(newDiamond);
             //gain coin
             int newCoinAmount = gameManager.GetCoin() + goldGain[whichPack];
             gameManager.SetCoin(newCoinAmount);
+            gameManager.audioManager.PlayButtonCoinSound();
             menu.SetText();
         }
         else
         {
-            DiamondStore();
+            OpenStore(1);
         }
     }
 

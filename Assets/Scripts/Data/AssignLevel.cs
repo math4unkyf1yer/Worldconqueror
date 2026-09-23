@@ -280,8 +280,8 @@ public class AssignLevel : MonoBehaviour
                 hazardCount = 4;
                 chosenPosition = largePosition;
                 enemyPosition[0] = 11;
-                enemyPosition[1] = 5;
-                enemyPosition[2] = 6;
+                enemyPosition[1] = 3;
+                enemyPosition[2] = 8;
                 break;
             case MapSize.super:
                 territroyCount = 16;

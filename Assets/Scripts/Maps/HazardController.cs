@@ -16,7 +16,6 @@ public class HazardController : MonoBehaviour
     [SerializeField] Color FogColor;
 
     [SerializeField] SpriteRenderer imageSprite;
-    [SerializeField] Sprite[] hazardSprites;
 
     private List<UnitBuffs> troopsInDamage = new List<UnitBuffs>();
     bool isrepeating;
@@ -32,15 +31,12 @@ public class HazardController : MonoBehaviour
         {
             case HazardType.Slow:
                 hazardImage.color = slowColor;
-              //  imageSprite.sprite = hazardSprites[0];
                 break;
             case HazardType.Speed:
                 hazardImage.color = speedColor;
-             //   imageSprite.sprite = hazardSprites[1];
                 break;
             case HazardType.Damage:
                 hazardImage.color = damageColor;
-             //   imageSprite.sprite = hazardSprites[2];
                 break;
 
         }
@@ -83,6 +79,7 @@ public class HazardController : MonoBehaviour
                 case HazardType.Damage:
                     //chance to damage
                     troopsInDamage.Add(troopBuff);
+                    troopBuff.DamageEffect(true);
                     if (!isrepeating) { InvokeRepeating("DamageHazardActivated", 0.8f, 1); isrepeating = true; }
                     break;
 
@@ -107,7 +104,8 @@ public class HazardController : MonoBehaviour
                     break;
                 case HazardType.Damage:
                     troopsInDamage.Remove(troopBuff);
-                    if(troopsInDamage.Count == 0) { CancelInvoke("DamageHazardActivated"); isrepeating = false; }
+                    troopBuff.DamageEffect(false);
+                    if (troopsInDamage.Count == 0) { CancelInvoke("DamageHazardActivated"); isrepeating = false; }
                     break;
 
             }

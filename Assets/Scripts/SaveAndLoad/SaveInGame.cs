@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -69,9 +69,16 @@ public class SaveInGame : MonoBehaviour
         //Save which tutorial is done 
         data.tutorialFlag.Clear();
 
-        foreach (var kvp in asssignLevelScript.tutorialMenu.tutorialCompleted)
+        foreach (var kvp in asssignLevelScript.tutorialMenu.tutorials)
         {
-            data.tutorialFlag.Add(new TutorialFlag { id = kvp.Key, completed = kvp.Value });
+            var seq = kvp.Value;
+
+            data.tutorialFlag.Add(new TutorialFlag
+            {
+                id = kvp.Key,
+                currentIndex = seq.currentIndex,
+                completed = seq.completed
+            });
         }
 
         SaveSystem.Save(data);
@@ -118,13 +125,27 @@ public class SaveInGame : MonoBehaviour
             stats.cost[2] = asssignLevelScript.GetUpgradeCost(null, stats, 2);
         }
 
-        if(asssignLevelScript.tutorialMenu.tutorialCompleted != null)
+        if(asssignLevelScript.tutorialMenu.tutorials != null)
         {
-            asssignLevelScript.tutorialMenu.tutorialCompleted.Clear();
 
             foreach (var flag in data.tutorialFlag)
             {
-                asssignLevelScript.tutorialMenu.tutorialCompleted[flag.id] = flag.completed;
+                if (asssignLevelScript.tutorialMenu.tutorials.ContainsKey(flag.id))
+                {
+                    var seq = asssignLevelScript.tutorialMenu.tutorials[flag.id];
+                    seq.completed = flag.completed;
+
+                    if (seq.completed)
+                    {
+                        // Resume where the player left off
+                        seq.currentIndex = flag.currentIndex;
+                    }
+                    else
+                    {
+                        // Tutorial was not finished → restart from page 1
+                        seq.currentIndex = 0;
+                    }
+                }
             }
         }
 

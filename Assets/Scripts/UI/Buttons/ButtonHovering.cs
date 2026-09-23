@@ -34,7 +34,6 @@ public class ButtonHovering : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         {
             image.SetActive(false);
             // stop hovering image disappears
-            Debug.Log("Hover End");
         }
     }
 

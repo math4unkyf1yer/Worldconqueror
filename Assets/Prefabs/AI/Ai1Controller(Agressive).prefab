@@ -47,7 +47,7 @@ MonoBehaviour:
   aiOwner: 0
   aiPersonality:
     neutralBonus: 2
-    Range: 4
+    Range: 6
     inRangeButFar: 4
     playerTargetBonus: 3
     decisionInterval: 3

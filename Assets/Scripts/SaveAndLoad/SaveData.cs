@@ -26,6 +26,7 @@ public class SaveData
 public class TutorialFlag
 {
     public string id;
+    public int currentIndex;
     public bool completed;
 }
 

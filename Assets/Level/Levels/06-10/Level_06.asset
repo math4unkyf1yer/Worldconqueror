@@ -28,6 +28,7 @@ MonoBehaviour:
     radiusSize: 0
     productionRate: 1.7
     radiusEffect: 
+    effectDescription: 
   - TerretoryID: 1
     Type: 2
     Owner: 0
@@ -38,6 +39,7 @@ MonoBehaviour:
     radiusSize: 0
     productionRate: 1.2
     radiusEffect: 
+    effectDescription: 
   - TerretoryID: 2
     Type: 0
     Owner: 0
@@ -48,6 +50,7 @@ MonoBehaviour:
     radiusSize: 0
     productionRate: 1.7
     radiusEffect: 
+    effectDescription: 
   - TerretoryID: 3
     Type: 2
     Owner: 0
@@ -58,6 +61,7 @@ MonoBehaviour:
     radiusSize: 0
     productionRate: 1.2
     radiusEffect: 
+    effectDescription: 
   - TerretoryID: 4
     Type: 0
     Owner: 2
@@ -68,6 +72,7 @@ MonoBehaviour:
     radiusSize: 0
     productionRate: 1.7
     radiusEffect: 
+    effectDescription: 
   - TerretoryID: 5
     Type: 2
     Owner: 0
@@ -78,6 +83,7 @@ MonoBehaviour:
     radiusSize: 0
     productionRate: 1.2
     radiusEffect: 
+    effectDescription: 
   - TerretoryID: 6
     Type: 0
     Owner: 0
@@ -88,6 +94,7 @@ MonoBehaviour:
     radiusSize: 0
     productionRate: 1.7
     radiusEffect: 
+    effectDescription: 
   - TerretoryID: 7
     Type: 2
     Owner: 0
@@ -98,6 +105,7 @@ MonoBehaviour:
     radiusSize: 0
     productionRate: 1.2
     radiusEffect: 
+    effectDescription: 
   - TerretoryID: 8
     Type: 0
     Owner: 0
@@ -108,6 +116,7 @@ MonoBehaviour:
     radiusSize: 0
     productionRate: 1.7
     radiusEffect: 
+    effectDescription: 
   DifficultyConfiguration:
     setting: 1
     levelDifficulty: 1
@@ -139,3 +148,4 @@ MonoBehaviour:
     scaleY: 0.6
   coinReward: 10
   Cost: 1
+  ads: 1

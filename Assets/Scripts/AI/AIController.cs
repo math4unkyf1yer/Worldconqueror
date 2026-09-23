@@ -85,7 +85,7 @@ public class AIController : MonoBehaviour
         else if(from.terretoryData.Type == TerritoryType.AssassinProd) { ourTroops = from.amountOfTroops / 2; }
         else { ourTroops = from.amountOfTroops; }
 
-        if (target.terretoryData.Type == TerritoryType.DwarfProd || target.terretoryData.Type == TerritoryType.Fort)
+        if (target.terretoryData.Type == TerritoryType.DwarfProd)
         {
             troopDiff = ourTroops - target.amountOfTroops * 1.4f;
         }
@@ -100,7 +100,6 @@ public class AIController : MonoBehaviour
 
         switch (target.terretoryData.Type)
         {
-            case TerritoryType.Fort: score += 1f; break;
             case TerritoryType.DwarfProd: score += 1f; break;
             case TerritoryType.AssassinProd: score += 1f; break;
         }

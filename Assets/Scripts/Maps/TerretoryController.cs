@@ -33,6 +33,7 @@ public class TerretoryController : MonoBehaviour, IPointerDownHandler, IDragHand
     [SerializeField] SpriteRenderer terretoryImage;
     private SpriteRenderer middleOuterSprite;
     UnitType unitType = UnitType.Soldier;
+    TerritoryType territoryType;
 
     AssignLevel troopTiersScript;
 
@@ -70,6 +71,7 @@ public class TerretoryController : MonoBehaviour, IPointerDownHandler, IDragHand
         transform.localScale = new Vector3(data.scale, data.scale, data.scale);
 
         terretoryData = data;
+        territoryType = terretoryData.Type;
         Difficulty = difficulty;
         terretoryIndex = terretoryData.TerretoryID;
         owner = terretoryData.Owner;
@@ -133,15 +135,11 @@ public class TerretoryController : MonoBehaviour, IPointerDownHandler, IDragHand
     {
         float amount = amountGiven;
         //reduce the amounts of trrops
-        if (terretoryData.Type == TerritoryType.Fort)
-        {
-             amount = amountGiven / 3;
-        }
-        else if (terretoryData.Type == TerritoryType.DwarfProd)
+        if (territoryType == TerritoryType.DwarfProd)
         {
              amount = amountGiven / 2;
         }
-        else if (terretoryData.Type == TerritoryType.AssassinProd)
+        else if (territoryType == TerritoryType.AssassinProd)
         {
              amount = amountGiven * 2;
         }
@@ -161,13 +159,13 @@ public class TerretoryController : MonoBehaviour, IPointerDownHandler, IDragHand
         {
             //give its production rate == something different and its buff
             troopsStatsPlayer = troopsStatsPlayer.WithTier(troopTiersScript.GetMoveSpeed(unitType), troopTiersScript.GetAttack(unitType), troopTiersScript.GetSpecialBuff(unitType), unitType);
-            terretoryData = terretoryData.TerritoryTier(troopTiersScript.GetProduction(terretoryData.Type), troopTiersScript.GetCapacity(terretoryData.Type), troopTiersScript.GetRadius(terretoryData.Type), terretoryData.Type);
+            terretoryData = terretoryData.TerritoryTier(troopTiersScript.GetProduction(territoryType), troopTiersScript.GetCapacity(territoryType), troopTiersScript.GetRadius(territoryType), terretoryData.Type);
             StandardProductionRate = terretoryData.productionRate;
         }
         else if (owner != Owner.Neutral)
         {
        
-            EnemyTierSet enemyTier = Difficulty.GetEnemyTier(troopTiersScript.GetProduction(terretoryData.Type), troopTiersScript.GetCapacity(terretoryData.Type), troopTiersScript.GetRadius(terretoryData.Type), troopTiersScript.GetMoveSpeed(unitType),troopTiersScript.GetAttack(unitType), troopTiersScript.GetSpecialBuff(unitType));
+            EnemyTierSet enemyTier = Difficulty.GetEnemyTier(troopTiersScript.GetProduction(territoryType), troopTiersScript.GetCapacity(territoryType), troopTiersScript.GetRadius(territoryType), troopTiersScript.GetMoveSpeed(unitType),troopTiersScript.GetAttack(unitType), troopTiersScript.GetSpecialBuff(unitType));
             troopsStatsEnemy = troopsStatsEnemy.WithTier( enemyTier.moveSpeedTier, enemyTier.AttackPowerTier, enemyTier.healthTier, unitType);
             terretoryData = terretoryData.TerritoryTier(enemyTier.productionTier, enemyTier.capacityTier,enemyTier.buffTier, terretoryData.Type);
             StandardProductionRate = terretoryData.productionRate;
@@ -176,7 +174,7 @@ public class TerretoryController : MonoBehaviour, IPointerDownHandler, IDragHand
         {
             //needs a few fix take production rate ofneutral and different for each territory
             neutralStats = neutralStats.WithTier(-10,-10,-10, unitType);
-            terretoryData = terretoryData.TerritoryTier(-14, -5, -1, terretoryData.Type);
+            terretoryData = terretoryData.TerritoryTier(-14, -5, -1, territoryType);
             StandardProductionRate = terretoryData.productionRate;
         }
         auraField.SetRadius(terretoryData.radiusSize,owner,terretoryData.Type);
@@ -211,16 +209,11 @@ public class TerretoryController : MonoBehaviour, IPointerDownHandler, IDragHand
     }
     void SetTerretoryLook()
     {
-        switch (terretoryData.Type)
+        switch (territoryType)
         {
             case TerritoryType.SoldierProd:
                 sprites[0].SetActive(true);
                 troopsMiddleSprite = sprites[0].GetComponent<SpriteRenderer>();
-                break;
-
-            case TerritoryType.Fort:
-                sprites[1].SetActive(true);
-                troopsMiddleSprite = sprites[1].GetComponent<SpriteRenderer>();
                 break;
 
             case TerritoryType.AssassinProd:

@@ -43,6 +43,9 @@ public class MapGenerator : MonoBehaviour
 
 
     private AssignLevel gameManager;
+    private AdsManager adsManager;
+
+    private bool ads;
 
 
     void Start()
@@ -50,6 +53,7 @@ public class MapGenerator : MonoBehaviour
         if (AssignLevel.Instance != null)
         {
             gameManager = AssignLevel.Instance;
+            adsManager = gameManager.GetComponent<AdsManager>();
             levelData = gameManager.WhichLevel();
             SetUp();
         }  
@@ -57,6 +61,7 @@ public class MapGenerator : MonoBehaviour
 
     void SetUp()
     {
+        ads = levelData.ads;
         //Slider ui look for better eye
         
         foreach (TerretoryData data in levelData.terretories)
@@ -251,6 +256,19 @@ public class MapGenerator : MonoBehaviour
     }
 
     public void Continue()
+    {
+        //ON CLICK PLAY Unity add then do the rest of the code 
+        if (ads)
+        {
+            adsManager.ShowAd(() => GoToMenu());
+        }
+        else
+        {
+            GoToMenu();
+        }
+    }
+
+    void GoToMenu()
     {
         if (playerWin)
         {

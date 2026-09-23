@@ -27,9 +27,18 @@ public class TutorialGame : MonoBehaviour
         switch(type)
         {
             case TutorialType.handDrag:
-                if(tutorialRef.tutorialCompleted.ContainsKey("DragTroop") && tutorialRef.tutorialCompleted["DragTroop"]) { return; }
+                // Get the sequence
+                var seq = tutorialRef.tutorials["DragTroop"];
+
+                // If completed, stop
+                if (seq.completed)
+                    return;
+
+                // If we are not on the correct step, stop
+                if (seq.currentIndex != 0)
+                    return;
+
                 HandTutorial();
-                tutorialRef.tutorialCompleted["DragTroop"] = true;
                 break;
             case TutorialType.newAssassin:
                 break;
@@ -94,6 +103,15 @@ public class TutorialGame : MonoBehaviour
         }
 
         hand.SetActive(false);
+        // Mark step complete
+        var seq = tutorialRef.tutorials["DragTroop"];
+        seq.currentIndex++;
+
+        // If no more steps, mark completed
+        if (seq.currentIndex >= seq.pages.Count)
+        {
+            seq.completed = true;
+        }
     }
 
 }

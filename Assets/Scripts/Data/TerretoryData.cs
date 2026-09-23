@@ -78,11 +78,6 @@ public class TerretoryData
                 radiusEffect = "Sharpshot";
                 effectDescription = "Sharpshot: Enemy troops entering this territory’s radius trigger an automatic defense response, firing a precise arrow that strikes the intruder on impact.";
                 break;
-            case TerritoryType.Fort:
-                productionRate = 2.5f;
-                maxCapacity = 40;
-                radiusSize = 1.1f;
-                break;
             case TerritoryType.Fog:
                 break;
 

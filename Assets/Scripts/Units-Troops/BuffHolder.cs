@@ -71,10 +71,6 @@ public class BuffHolder : MonoBehaviour
                     moveSpeedBuff += baseBuff;
                     break;
 
-                case TerritoryType.Fort:
-                    healthBuff += baseBuff; // forts buff health strongly
-                    break;
-
                 case TerritoryType.Fog:
                     // maybe no buff?
                     break;
@@ -127,9 +123,6 @@ public class BuffHolder : MonoBehaviour
                 moveSpeedBuff -= baseBuff;
                 break;
 
-            case TerritoryType.Fort:
-                healthBuff -= baseBuff;
-                break;
 
             case TerritoryType.Fog:
                 break;

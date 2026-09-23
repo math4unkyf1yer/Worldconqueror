@@ -294,8 +294,7 @@ MonoBehaviour:
     m_Bits: 2048
   ourCollider: {fileID: 0}
   alreadyCollided: []
-  range: 1.75
-  push: 50
+  range: 1.9
 --- !u!114 &5481146680422195145
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -345,9 +344,9 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.002120018, y: 0}
+  m_Offset: {x: 0.0024268627, y: 0}
   serializedVersion: 2
-  m_Radius: 1.7566862
+  m_Radius: 1.8946073
 --- !u!50 &7645391631160801203
 Rigidbody2D:
   serializedVersion: 4
@@ -640,6 +639,8 @@ MonoBehaviour:
     maxCapacity: 50
     radiusSize: 0
     productionRate: 1
+    radiusEffect: 
+    effectDescription: 
   Difficulty:
     setting: 1
     levelDifficulty: 0
@@ -654,18 +655,33 @@ MonoBehaviour:
     strenght: 1
     vigor: 1
     attackRange: 1
+    abilityName: 
+    critChances: 0
+    noDeathChances: 0
+    fireRate: 0
+    specialFloat: 0
   troopsStatsEnemy:
     unitType: 0
     moveSpeed: 1
     strenght: 1
     vigor: 1
     attackRange: 1
+    abilityName: 
+    critChances: 0
+    noDeathChances: 0
+    fireRate: 0
+    specialFloat: 0
   neutralStats:
     unitType: 0
     moveSpeed: 1
     strenght: 1
     vigor: 1
     attackRange: 1
+    abilityName: 
+    critChances: 0
+    noDeathChances: 0
+    fireRate: 0
+    specialFloat: 0
   playerColor: {r: 0.30839062, g: 1, b: 0, a: 0.74509805}
   troopsMiddleSprite: {fileID: 0}
   terretoryImage: {fileID: 9028187656276930223}

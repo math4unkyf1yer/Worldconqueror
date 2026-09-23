@@ -39,6 +39,7 @@ public class Menu : MonoBehaviour
     private Button selectedButton;
     //game manager 
     AssignLevel gameManager;
+    AdsManager advertisementManager;
 
     int oldButtonId;
     public static Menu Instance { get; private set; }

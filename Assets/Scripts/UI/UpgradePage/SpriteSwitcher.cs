@@ -11,8 +11,6 @@ public class SpriteSwitcher : MonoBehaviour
     public Sprite[] sprites;
     [TextArea]
     public string[] infoName;
-
-
     
     public void ChangeInfo(int index)
     {

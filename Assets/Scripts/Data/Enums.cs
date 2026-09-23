@@ -5,11 +5,11 @@ using UnityEngine;
 public enum TerritoryType
 {
     SoldierProd,
-    Fort,
     AssassinProd,
     DwarfProd,
-    RangerProd,
     MageProd,
+    RangerProd,
+    Fort,
     Fog
 }
 public enum TroopState

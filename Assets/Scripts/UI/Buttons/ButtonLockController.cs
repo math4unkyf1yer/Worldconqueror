@@ -21,7 +21,9 @@ public class ButtonLockController : MonoBehaviour
 
     TutorialManager tutorial;
     [SerializeField] GameObject upgradeTroopTutorial;
+    [SerializeField] GameObject upgradeTroopTutorialpt2;
     [SerializeField] GameObject upgradeTerritoryTutorial;
+    [SerializeField] GameObject upgradeTerritoryTutorialpt2;
     [SerializeField] GameObject upgradeShopTutorial;
 
     string WhichTutorialOpen;
@@ -92,13 +94,21 @@ public class ButtonLockController : MonoBehaviour
     {
         WhichTutorialOpen = "UpgradeTroop";
         unlockTroopUpgrades = true;
-        tutorial.OpenTutorial(upgradeTroopTutorial, WhichTutorialOpen);
+
+        tutorial.RegisterPage(WhichTutorialOpen, upgradeTroopTutorial);
+        tutorial.RegisterPage(WhichTutorialOpen, upgradeTroopTutorialpt2);
+
+        tutorial.OpenTutorial(WhichTutorialOpen);
     }
     private void SetTerritoryUpgradesPage()
     {
         WhichTutorialOpen = "UpgradeTerritory";
         unlockTerritoryUpgrades = true;
-        tutorial.OpenTutorial(upgradeTerritoryTutorial, WhichTutorialOpen);
+
+        tutorial.RegisterPage(WhichTutorialOpen, upgradeTerritoryTutorial);
+        tutorial.RegisterPage(WhichTutorialOpen, upgradeTerritoryTutorialpt2);
+
+        tutorial.OpenTutorial( WhichTutorialOpen);
     }
     private void SetAssassinPage()
     {
@@ -126,7 +136,10 @@ public class ButtonLockController : MonoBehaviour
     {
         WhichTutorialOpen = "Shop";
         unlockShop = true;
-        tutorial.OpenTutorial(upgradeShopTutorial,WhichTutorialOpen);
+
+        tutorial.RegisterPage(WhichTutorialOpen, upgradeShopTutorial);
+
+        tutorial.OpenTutorial(WhichTutorialOpen);
     }
 
 }
