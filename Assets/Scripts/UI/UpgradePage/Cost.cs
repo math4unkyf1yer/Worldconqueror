@@ -10,30 +10,18 @@ using UnityEngine.UI;
 public class Cost : MonoBehaviour
 {
     //scripts
-    public AssignLevel assignLevelScript;
+    private AssignLevel assignLevelScript;
     private ButtonLockController buttonController;
     private SelectionHighlighter selectionHighlighter;
     private SpriteSwitcher spriteSwitcher;
 
-    [Header("Troops")]
+    [Header("UI")]
     [SerializeField] private TextMeshProUGUI[] costtext;
     [SerializeField] private TextMeshProUGUI buffTroopText;
     [SerializeField] private TextMeshProUGUI[] currentAmountText;
     [SerializeField] private TextMeshProUGUI[] newAmountText;
     [SerializeField] private TextMeshProUGUI[] topStatText;
     [SerializeField] private Button[] Buttons;
-
-    public bool troopUpgrade;
-
-
-    [SerializeField] private int whichUpgrade;
-    UnitType type = UnitType.Soldier;
-    TerritoryType territoryType = TerritoryType.SoldierProd;
-    public int whichType = 0;
-    private int currentIndex = 0;
-
-    UnitStats currentTroopStat;
-    TerretoryData currentTerStat;
 
     [Header("Stats")]
     //stats panel 
@@ -45,7 +33,34 @@ public class Cost : MonoBehaviour
     public string[] statsExplenation;
     private PreviewManager previewManager;
 
-    // Start is called before the first frame update
+
+    [SerializeField] private int whichUpgrade;
+    UnitType type = UnitType.Soldier;
+    TerritoryType territoryType = TerritoryType.SoldierProd;
+    public int whichType = 0;
+    public bool troopUpgrade;
+
+    UnitStats currentTroopStat;
+    TerretoryData currentTerStat;
+
+    TroopMode troopMode;
+    TerritoryMode territoryMode;
+    IUpgradeMode mode;
+
+    // Read-only access for the mode classes
+    public TextMeshProUGUI[] CostText => costtext;
+    public TextMeshProUGUI BuffTroopText => buffTroopText;
+    public TextMeshProUGUI[] CurrentAmountText => currentAmountText;
+    public TextMeshProUGUI[] NewAmountText => newAmountText;
+    public TextMeshProUGUI[] TopStatText => topStatText;
+    public TextMeshProUGUI StatName => statName;
+    public TextMeshProUGUI StatLevel => statLevel;
+    public TextMeshProUGUI ExplanationText => explanationText;
+    public string[] StatsExplanation => statsExplenation;
+    public SpriteSwitcher Sprites => spriteSwitcher;
+    public PreviewManager Preview => previewManager;
+    public int WhichType => whichType;
+
     void Start()
     {
         assignLevelScript = AssignLevel.Instance;
@@ -53,240 +68,73 @@ public class Cost : MonoBehaviour
         selectionHighlighter = GetComponent<SelectionHighlighter>();
         spriteSwitcher = GetComponent<SpriteSwitcher>();
 
-        ChangeText();
+        troopMode = new TroopMode(this, assignLevelScript);
+        territoryMode = new TerritoryMode(this, assignLevelScript);
+        SetMode(troopUpgrade);
+    }
+
+    // Hook this to your Troops / Territory tab buttons (pass true for troops).
+    public void SetMode(bool troops)
+    {
+        troopUpgrade = troops;
+        mode = troops ? (IUpgradeMode)troopMode : territoryMode;
+
+        whichType = 0;
+        mode.Select(0);
+        mode.RefreshTexts();
         selectionHighlighter.ChangeButtonColor(Buttons[whichType]);
     }
 
-
-    public void ClickTroopType(int typeInt)
+    // Replaces ClickTroopType and ClickTerritoryType
+    public void ClickType(int index)
     {
-        if (!IsTroopUnlocked(typeInt)) return;
+        if (!IsUnlocked(index)) return;
 
-        whichType = typeInt;
-        currentIndex = typeInt;
-        type = (UnitType)typeInt;
-        territoryType = (TerritoryType)typeInt;
-
-        ChangeText();
-        selectionHighlighter.ChangeButtonColor(Buttons[whichType]);
-        
-    }
-
-    public void ClickTerritoryType(int typeint)
-    {
-        if (!isTerritoryUnlocked(typeint)) return;
-
-        whichType = typeint;
-        currentIndex = typeint;
-        territoryType = (TerritoryType)typeint;
-
-        ChangeText();
-        //change last help button to take a different int
+        whichType = index;
+        mode.Select(index);
+        mode.RefreshTexts();
         selectionHighlighter.ChangeButtonColor(Buttons[whichType]);
     }
 
-    bool isTerritoryUnlocked(int index)
+    // Replaces IsTroopUnlocked and isTerritoryUnlocked (they were identical)
+    bool IsUnlocked(int index)
     {
-        if(index == 1) return buttonController.unlockAssassinUpgrades;
-        if (index == 2) return buttonController.unlockDwarfUpgrades;
-        if (index == 3) return buttonController.unlockMageUpgrades;
-        if (index == 4) return buttonController.unlockRangerUpgrades;
-        return true;
-    }
-    bool IsTroopUnlocked(int index)
-    {
-        if (index == 1) return buttonController.unlockAssassinUpgrades;
-        if (index == 2) return buttonController.unlockDwarfUpgrades;
-        if (index == 3) return buttonController.unlockMageUpgrades;
-        if (index == 4) return buttonController.unlockRangerUpgrades;
-        return true;
-    }
-
-    public void ClickUpgrade(int Upgrade)// 1 is Attack Power, 2 is move speed and 3 is Health
-    {
-        if (troopUpgrade)
+        switch (index)
         {
-            if (assignLevelScript.TryUpgradeTroop(Upgrade, type))
-            {
-                costtext[Upgrade].text = "Cost: " + assignLevelScript.troopUpgrades[type].cost[Upgrade].ToString();
-                Menu.Instance.SetText();
-                ChangeText();
-                assignLevelScript.audioManager.PlayButtonCoinSound();
-            }
-            else { Debug.Log("not enough coins"); }
+            case 1: return buttonController.unlockAssassinUpgrades;
+            case 2: return buttonController.unlockDwarfUpgrades;
+            case 3: return buttonController.unlockMageUpgrades;
+            case 4: return buttonController.unlockRangerUpgrades;
+            default: return true;
+        }
+    }
+
+    public void ClickUpgrade(int slot) // 0 = first upgrade, 1 = second, 2 = third
+    {
+        if (mode.TryUpgrade(slot))
+        {
+            Menu.Instance.SetText();
+            mode.RefreshTexts();
+            assignLevelScript.audioManager.PlayButtonCoinSound();
         }
         else
         {
-            if (assignLevelScript.TryUpgradeTerritory(Upgrade, territoryType))
-            {
-                costtext[Upgrade].text = "Cost: " + assignLevelScript.territoryUpgrades[territoryType].cost[Upgrade].ToString();
-                Menu.Instance.SetText();
-                ChangeText();
-                assignLevelScript.audioManager.PlayButtonCoinSound();
-            }
-            else { Debug.Log("not enough coins"); }
+            Debug.Log("not enough coins");
         }
     }
 
-    void ChangeText()
-    {
-        if (troopUpgrade)
-        {
-            currentTroopStat = assignLevelScript.GetCurrentStats(type);
+    public UnitStats GetCurrentTroopStats() => troopMode.Current;
+    public TerretoryData GetCurrentTerritoryData() => territoryMode.Current;
 
-            for (int i = 0; i < costtext.Length; i++)
-            {
-                costtext[i].text = "Cost: " + assignLevelScript.troopUpgrades[type].cost[i].ToString();
-            }
-            UpdateTopStats();
-        }
-        else
-        {
-            currentTerStat = assignLevelScript.GetCurrentTerStat(territoryType);
-
-            for (int i = 0; i < costtext.Length; i++)
-            {
-                costtext[i].text = "Cost: " + assignLevelScript.territoryUpgrades[territoryType].cost[i].ToString();
-            }
-
-            UpdateTerritoryStat();
-        }
-    }
-
-    void UpdateTerritoryStat()
-    {
-        topStatText[0].text = "Production speed: " + currentTerStat.productionRate.ToString("F2");
-        currentAmountText[0].text = currentTerStat.productionRate.ToString("F2");
-        topStatText[1].text = "Capacity: " + currentTerStat.maxCapacity.ToString("F1");
-        currentAmountText[1].text = currentTerStat.maxCapacity.ToString("F1");
-        topStatText[2].text = "Size Radius: " + currentTerStat.radiusSize.ToString("F2");
-        currentAmountText[2].text = currentTerStat.radiusSize.ToString("F2");
-
-        TerretoryData nextStats = new TerretoryData().TerritoryTier(assignLevelScript.GetProduction(territoryType) + 1,assignLevelScript.GetCapacity(territoryType) + 1,assignLevelScript.GetRadius(territoryType) + 1,territoryType);
-
-        newAmountText[0].text = nextStats.productionRate.ToString("F2");
-        newAmountText[1].text = nextStats.maxCapacity.ToString("F1");
-        newAmountText[2].text = nextStats.radiusSize.ToString("F2");
-
-        spriteSwitcher.ChangeInfo(whichType);
-    }
-
-    void UpdateTopStats()
-    {
-        topStatText[0].text = "Move Speed: " + currentTroopStat.moveSpeed.ToString("F2");
-        currentAmountText[0].text = currentTroopStat.moveSpeed.ToString("F2");
-
-        topStatText[1].text = "Vigor: " + currentTroopStat.vigor.ToString("F2");
-        currentAmountText[1].text = currentTroopStat.vigor.ToString("F2");
-
-        topStatText[2].text = assignLevelScript.troopUpgrades[type].specialBuffTroopName + ": " + currentTroopStat.specialFloat.ToString("F2");
-        currentAmountText[2].text = currentTroopStat.specialFloat.ToString("F2");
-
-        buffTroopText.text = assignLevelScript.troopUpgrades[type].specialBuffTroopName + "++".ToString();
-
-        UnitStats nextStats = assignLevelScript.GetCurrentStats(type).WithTier(assignLevelScript.GetMoveSpeed(type) + 1, assignLevelScript.GetAttack(type) + 1, assignLevelScript.GetSpecialBuff(type) + 1, type);
-
-        newAmountText[0].text = nextStats.moveSpeed.ToString("F2");
-        newAmountText[1].text = nextStats.vigor.ToString("F2");
-        newAmountText[2].text = nextStats.specialFloat.ToString("F2");
-
-        spriteSwitcher.ChangeInfo(whichType);
-    }
-
-    public UnitStats GetCurrentTroopStats()
-    {
-        return currentTroopStat;
-    }
-    public TerretoryData GetCurrentTerritoryData()
-    {
-        return currentTerStat;
-    }
-
-
-    //stats panels
-
+    // Stats panel
     public void ShowStats(int whichStats)
     {
         statObject.SetActive(true);
-        if(previewManager == null)
-        {
+        if (previewManager == null)
             previewManager = statObject.GetComponent<PreviewManager>();
-        }
 
-        previewManager.SetData(currentTroopStat, currentTerStat);
-        RefreshText(whichStats);
-    }
-
-    void RefreshText(int whichStats)
-    {
-        if (troopUpgrade)
-        {
-            int specialLevel = assignLevelScript.GetSpecialBuff(type) + 1;
-            if (whichStats == 2)
-            {
-                whichStats += whichType;
-            }
-            switch (whichStats)
-            {
-                case 0:
-                    int moveSpeedlevel = assignLevelScript.GetMoveSpeed(type) + 1;
-                    statName.text = "Speed";
-                    statLevel.text = "Level " + moveSpeedlevel.ToString();
-                    //preview manager set up
-                    previewManager.SpeedPreview(territoryType);
-                    break;
-                case 1:
-                    int vigorLevel = assignLevelScript.GetAttack(type) + 1;
-                    statName.text = "Vigor";
-                    statLevel.text = "Level " + vigorLevel.ToString();
-                    previewManager.VigorPreview(territoryType);
-                    break;
-                case 2:
-                    statName.text = "Sturdy";
-                    statLevel.text = "Level " + specialLevel.ToString();
-                    previewManager.SturdyPreview(territoryType);
-                    break;
-                case 3:
-                    statName.text = "Critical Chance";
-                    statLevel.text = "Level " + specialLevel.ToString();
-                    previewManager.CriticalPreview(territoryType);
-                    break;
-                case 4:
-                    statName.text = "Strength";
-                    statLevel.text = "Level " + specialLevel.ToString();
-                    previewManager.StrengthPreview(territoryType);
-                    break;
-                case 5:
-                    statName.text = "Attack Range";
-                    statLevel.text = "Level " + specialLevel.ToString();
-                    previewManager.AttackRangePreview();
-                    break;
-                case 6:
-                    statName.text = "Fire Rate";
-                    statLevel.text = "Level " + specialLevel.ToString();
-                    previewManager.FireRatePreview();
-                    break;
-            }
-            explanationText.text = statsExplenation[whichStats].ToString();
-        }
-        else
-        {
-            switch (whichStats)
-            {
-                case 0:
-                    int prodLevel = assignLevelScript.GetProduction(territoryType) + 1;
-                    statName.text = "Production";
-                    statLevel.text = "Level " + prodLevel.ToString();
-                    break;
-                case 1:
-                    break;
-                case 2:
-                    break;
-            }
-
-            previewManager.TerritoryPreview(territoryType);
-            explanationText.text = statsExplenation[whichStats].ToString();
-        }
+        previewManager.SetData(troopMode.Current, territoryMode.Current);
+        mode.ShowStat(whichStats);
     }
 
     public void HideStats()
@@ -295,3 +143,204 @@ public class Cost : MonoBehaviour
         previewManager.ClosePreview();
     }
 }
+
+
+
+
+
+/// <summary>
+/// troop modes
+/// </summary>
+
+public interface IUpgradeMode
+{
+    void Select(int index);          // which troop / territory type is selected
+    bool TryUpgrade(int slot);       // 0 = first upgrade, 1 = second, 2 = third
+    void RefreshTexts();             // cost text, top stats, current/new amounts, sprite
+    void ShowStat(int which);        // stat panel name, level, preview, explanation
+}
+
+public class TroopMode : IUpgradeMode
+{
+    readonly Cost ui;
+    readonly AssignLevel level;
+
+    UnitType type = UnitType.Soldier;
+    TerritoryType previewTerritory = TerritoryType.SoldierProd; // preview calls expect this
+    public UnitStats Current { get; private set; }
+
+    public TroopMode(Cost ui, AssignLevel level)
+    {
+        this.ui = ui;
+        this.level = level;
+    }
+
+    public void Select(int index)
+    {
+        type = (UnitType)index;
+        previewTerritory = (TerritoryType)index;
+    }
+
+    public bool TryUpgrade(int slot) => level.TryUpgradeTroop(slot, type);
+
+    public void RefreshTexts()
+    {
+        Current = level.GetCurrentStats(type);
+
+        for (int i = 0; i < ui.CostText.Length; i++)
+            ui.CostText[i].text = "Cost: " + level.troopUpgrades[type].cost[i];
+
+        var top = ui.TopStatText;
+        var cur = ui.CurrentAmountText;
+        var next = ui.NewAmountText;
+        string buffName = level.troopUpgrades[type].specialBuffTroopName;
+
+        top[0].text = "Move Speed: " + Current.moveSpeed.ToString("F2");
+        cur[0].text = Current.moveSpeed.ToString("F2");
+
+        top[1].text = "Vigor: " + Current.vigor.ToString("F2");
+        cur[1].text = Current.vigor.ToString("F2");
+
+        top[2].text = buffName + ": " + Current.specialFloat.ToString("F2");
+        cur[2].text = Current.specialFloat.ToString("F2");
+
+        ui.BuffTroopText.text = buffName + "++";
+
+        UnitStats nextStats = level.GetCurrentStats(type).WithTier(
+            level.GetMoveSpeed(type) + 1,
+            level.GetAttack(type) + 1,
+            level.GetSpecialBuff(type) + 1,
+            type);
+
+        next[0].text = nextStats.moveSpeed.ToString("F2");
+        next[1].text = nextStats.vigor.ToString("F2");
+        next[2].text = nextStats.specialFloat.ToString("F2");
+
+        ui.Sprites.ChangeInfo(ui.WhichType);
+    }
+
+    public void ShowStat(int which)
+    {
+        int specialLevel = level.GetSpecialBuff(type) + 1;
+        var preview = ui.Preview;
+
+        // 0 = speed, 1 = vigor, 2 = the special stat, which depends on the troop type
+        if (which == 2) which += ui.WhichType;
+
+        switch (which)
+        {
+            case 0:
+                ui.StatName.text = "Speed";
+                ui.StatLevel.text = "Level " + (level.GetMoveSpeed(type) + 1);
+                preview.SpeedPreview(previewTerritory);
+                break;
+            case 1:
+                ui.StatName.text = "Vigor";
+                ui.StatLevel.text = "Level " + (level.GetAttack(type) + 1);
+                preview.VigorPreview(previewTerritory);
+                break;
+            case 2:
+                ui.StatName.text = "Sturdy";
+                ui.StatLevel.text = "Level " + specialLevel;
+                preview.SturdyPreview(previewTerritory);
+                break;
+            case 3:
+                ui.StatName.text = "Critical Chance";
+                ui.StatLevel.text = "Level " + specialLevel;
+                preview.CriticalPreview(previewTerritory);
+                break;
+            case 4:
+                ui.StatName.text = "Strength";
+                ui.StatLevel.text = "Level " + specialLevel;
+                preview.StrengthPreview(previewTerritory);
+                break;
+            case 5:
+                ui.StatName.text = "Attack Range";
+                ui.StatLevel.text = "Level " + specialLevel;
+                preview.AttackRangePreview();
+                break;
+            case 6:
+                ui.StatName.text = "Fire Rate";
+                ui.StatLevel.text = "Level " + specialLevel;
+                preview.FireRatePreview();
+                break;
+        }
+
+        ui.ExplanationText.text = ui.StatsExplanation[which];
+    }
+}
+
+public class TerritoryMode : IUpgradeMode
+{
+    readonly Cost ui;
+    readonly AssignLevel level;
+
+    TerritoryType territoryType = TerritoryType.SoldierProd;
+    public TerretoryData Current { get; private set; }
+
+    public TerritoryMode(Cost ui, AssignLevel level)
+    {
+        this.ui = ui;
+        this.level = level;
+    }
+
+    public void Select(int index) => territoryType = (TerritoryType)index;
+
+    public bool TryUpgrade(int slot) => level.TryUpgradeTerritory(slot, territoryType);
+
+    public void RefreshTexts()
+    {
+        Current = level.GetCurrentTerStat(territoryType);
+
+        for (int i = 0; i < ui.CostText.Length; i++)
+            ui.CostText[i].text = "Cost: " + level.territoryUpgrades[territoryType].cost[i];
+
+        var top = ui.TopStatText;
+        var cur = ui.CurrentAmountText;
+        var next = ui.NewAmountText;
+
+        top[0].text = "Production speed: " + Current.productionRate.ToString("F2");
+        cur[0].text = Current.productionRate.ToString("F2");
+
+        top[1].text = "Capacity: " + Current.maxCapacity.ToString("F1");
+        cur[1].text = Current.maxCapacity.ToString("F1");
+
+        top[2].text = "Size Radius: " + Current.radiusSize.ToString("F2");
+        cur[2].text = Current.radiusSize.ToString("F2");
+
+        TerretoryData nextStats = new TerretoryData().TerritoryTier(
+            level.GetProduction(territoryType) + 1,
+            level.GetCapacity(territoryType) + 1,
+            level.GetRadius(territoryType) + 1,
+            territoryType);
+
+        next[0].text = nextStats.productionRate.ToString("F2");
+        next[1].text = nextStats.maxCapacity.ToString("F1");
+        next[2].text = nextStats.radiusSize.ToString("F2");
+
+        ui.Sprites.ChangeInfo(ui.WhichType);
+    }
+
+    public void ShowStat(int which)
+    {
+        switch (which)
+        {
+            case 0:
+                ui.StatName.text = "Production";
+                ui.StatLevel.text = "Level " + (level.GetProduction(territoryType) + 1);
+                break;
+            case 1: // TODO: Capacity
+                ui.StatName.text = "Capacity";
+                ui.StatLevel.text = "Level " + (level.GetCapacity(territoryType) + 1);
+                break;
+            case 2: // TODO: Size Radius
+                ui.StatName.text = "Size Radius";
+                ui.StatLevel.text = "Level " + (level.GetRadius(territoryType) + 1);
+                break;
+        }
+
+        ui.Preview.TerritoryPreview(territoryType);
+        ui.ExplanationText.text = ui.StatsExplanation[which];
+    }
+}
+

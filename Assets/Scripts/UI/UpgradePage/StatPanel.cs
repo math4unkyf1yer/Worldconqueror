@@ -61,7 +61,7 @@ public class StatPanel : MonoBehaviour
         {
             case 0:
                 statName.text = "Speed";
-                statLevel.text = upgradePageScript.assignLevelScript.GetMoveSpeed((UnitType)upgradePageScript.whichType).ToString();
+             //s   statLevel.text = upgradePageScript.assignLevelScript.GetMoveSpeed((UnitType)upgradePageScript.whichType).ToString();
                 break;
         }
     }
