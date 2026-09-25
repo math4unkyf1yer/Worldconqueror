@@ -25,13 +25,13 @@ public class Cost : MonoBehaviour
 
     [Header("Stats")]
     //stats panel 
-    [SerializeField] GameObject statObject;
     [SerializeField] TextMeshProUGUI statName;
     [SerializeField] TextMeshProUGUI statLevel;
     [SerializeField] TextMeshProUGUI explanationText;
 
     public string[] statsExplenation;
     private PreviewManager previewManager;
+
 
 
     [SerializeField] private int whichUpgrade;
@@ -58,7 +58,8 @@ public class Cost : MonoBehaviour
     public TextMeshProUGUI ExplanationText => explanationText;
     public string[] StatsExplanation => statsExplenation;
     public SpriteSwitcher Sprites => spriteSwitcher;
-    public PreviewManager Preview => previewManager;
+
+    public PreviewManager preview => previewManager;
     public int WhichType => whichType;
 
     void Start()
@@ -70,6 +71,7 @@ public class Cost : MonoBehaviour
 
         troopMode = new TroopMode(this, assignLevelScript);
         territoryMode = new TerritoryMode(this, assignLevelScript);
+        previewManager = StatPanalManager.Instance.Preview;
         SetMode(troopUpgrade);
     }
 
@@ -129,18 +131,15 @@ public class Cost : MonoBehaviour
     // Stats panel
     public void ShowStats(int whichStats)
     {
-        statObject.SetActive(true);
-        if (previewManager == null)
-            previewManager = statObject.GetComponent<PreviewManager>();
+        StatPanalManager.Instance.Show();
 
-        previewManager.SetData(troopMode.Current, territoryMode.Current);
+        preview.SetData(troopMode.Current, territoryMode.Current);
         mode.ShowStat(whichStats);
     }
 
     public void HideStats()
     {
-        statObject.SetActive(false);
-        previewManager.ClosePreview();
+        StatPanalManager.Instance.Hide();
     }
 }
 
@@ -221,8 +220,9 @@ public class TroopMode : IUpgradeMode
 
     public void ShowStat(int which)
     {
+        //ui button assign here 
         int specialLevel = level.GetSpecialBuff(type) + 1;
-        var preview = ui.Preview;
+        var preview = ui.preview;
 
         // 0 = speed, 1 = vigor, 2 = the special stat, which depends on the troop type
         if (which == 2) which += ui.WhichType;
@@ -232,37 +232,37 @@ public class TroopMode : IUpgradeMode
             case 0:
                 ui.StatName.text = "Speed";
                 ui.StatLevel.text = "Level " + (level.GetMoveSpeed(type) + 1);
-                preview.SpeedPreview(previewTerritory);
+                preview.Show(preview.speed,previewTerritory);
                 break;
             case 1:
                 ui.StatName.text = "Vigor";
                 ui.StatLevel.text = "Level " + (level.GetAttack(type) + 1);
-                preview.VigorPreview(previewTerritory);
+                preview.Show(preview.vigor,previewTerritory);
                 break;
             case 2:
                 ui.StatName.text = "Sturdy";
                 ui.StatLevel.text = "Level " + specialLevel;
-                preview.SturdyPreview(previewTerritory);
+                preview.Show(preview.sturdy, previewTerritory);
                 break;
             case 3:
                 ui.StatName.text = "Critical Chance";
                 ui.StatLevel.text = "Level " + specialLevel;
-                preview.CriticalPreview(previewTerritory);
+                preview.Show(preview.critical, previewTerritory);
                 break;
             case 4:
                 ui.StatName.text = "Strength";
                 ui.StatLevel.text = "Level " + specialLevel;
-                preview.StrengthPreview(previewTerritory);
+                preview.Show(preview.strength, previewTerritory);
                 break;
             case 5:
                 ui.StatName.text = "Attack Range";
                 ui.StatLevel.text = "Level " + specialLevel;
-                preview.AttackRangePreview();
+                preview.Show(preview.attackRange, previewTerritory);
                 break;
             case 6:
                 ui.StatName.text = "Fire Rate";
                 ui.StatLevel.text = "Level " + specialLevel;
-                preview.FireRatePreview();
+                preview.Show(preview.fireRate, previewTerritory);
                 break;
         }
 
@@ -323,24 +323,48 @@ public class TerritoryMode : IUpgradeMode
 
     public void ShowStat(int which)
     {
+        var preview = ui.preview;
         switch (which)
         {
             case 0:
                 ui.StatName.text = "Production";
                 ui.StatLevel.text = "Level " + (level.GetProduction(territoryType) + 1);
+                ui.preview.Show(preview.production, territoryType);
+                ui.ExplanationText.text = ui.StatsExplanation[which];
                 break;
             case 1: // TODO: Capacity
                 ui.StatName.text = "Capacity";
                 ui.StatLevel.text = "Level " + (level.GetCapacity(territoryType) + 1);
+                ui.preview.Show(preview.capacity, territoryType);
+                ui.ExplanationText.text = ui.StatsExplanation[which]; 
                 break;
             case 2: // TODO: Size Radius
                 ui.StatName.text = "Size Radius";
                 ui.StatLevel.text = "Level " + (level.GetRadius(territoryType) + 1);
+                ui.preview.Show(preview.radius, territoryType);
+                ui.ExplanationText.text = ui.StatsExplanation[SizeRadiusExplanation()];
                 break;
         }
 
-        ui.Preview.TerritoryPreview(territoryType);
-        ui.ExplanationText.text = ui.StatsExplanation[which];
+    }
+
+    //each radius have their own specialtys
+    int SizeRadiusExplanation()
+    {
+        int size = 2;
+        switch (territoryType)
+        {
+            case TerritoryType.SoldierProd:
+                size = 2;
+                break;
+            case TerritoryType.AssassinProd:
+                size = 3;
+                break;
+            case TerritoryType.DwarfProd:
+                size = 4;
+                break;
+        }
+        return size;
     }
 }
 
