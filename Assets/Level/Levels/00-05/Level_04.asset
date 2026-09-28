@@ -15,16 +15,16 @@ MonoBehaviour:
   levelIndex: 3
   enemyCount: 1
   hasHazard: 1
-  tutoType: 3
+  tutoType: 6
   Zones:
   - Type: 0
     Position: {x: 0, y: 0}
     intensity: 0.4
-    terretory: 2
+    terretory: 3
   - Type: 0
     Position: {x: 0, y: 0}
     intensity: 0.5
-    terretory: 6
+    terretory: 7
   terretories:
   - TerretoryID: 0
     Type: 0
@@ -161,4 +161,4 @@ MonoBehaviour:
     scaleY: 0.6
   coinReward: 11
   Cost: 1
-  ads: 1
+  ads: 0

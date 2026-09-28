@@ -25,21 +25,25 @@ MonoBehaviour:
     scale: 1
     position: {x: 0, y: 3}
     maxCapacity: 40
-    radiusSize: 0
+    radiusSize: 1.1
     productionRate: 1.7
-    radiusEffect: 
-    effectDescription: 
+    radiusEffect: Health Buff
+    effectDescription: "Health Buff: Within this territory\u2019s radius, troops
+      are infused with Vigor, bolstering their vitality and allowing them to withstand
+      far more damage."
   - TerretoryID: 1
-    Type: 2
+    Type: 1
     Owner: 0
     StartingUnits: 0
     scale: 1
     position: {x: 3, y: 1.5}
-    maxCapacity: 30
-    radiusSize: 0
-    productionRate: 1.2
-    radiusEffect: 
-    effectDescription: 
+    maxCapacity: 34
+    radiusSize: 1.1
+    productionRate: 2.4
+    radiusEffect: Burning Aura
+    effectDescription: "Burning Aura: Enemy troops inside this territory\u2019s radius
+      are continuously scorched, taking steady damage with a chance to be instantly
+      incinerated."
   - TerretoryID: 2
     Type: 0
     Owner: 0
@@ -47,21 +51,25 @@ MonoBehaviour:
     scale: 1
     position: {x: 5, y: 0}
     maxCapacity: 40
-    radiusSize: 0
+    radiusSize: 1.1
     productionRate: 1.7
-    radiusEffect: 
-    effectDescription: 
+    radiusEffect: Health Buff
+    effectDescription: "Health Buff: Within this territory\u2019s radius, troops
+      are infused with Vigor, bolstering their vitality and allowing them to withstand
+      far more damage."
   - TerretoryID: 3
-    Type: 2
+    Type: 1
     Owner: 0
     StartingUnits: 0
     scale: 1
     position: {x: 3, y: -1.5}
-    maxCapacity: 30
-    radiusSize: 0
-    productionRate: 1.2
-    radiusEffect: 
-    effectDescription: 
+    maxCapacity: 34
+    radiusSize: 1.1
+    productionRate: 2.4
+    radiusEffect: Burning Aura
+    effectDescription: "Burning Aura: Enemy troops inside this territory\u2019s radius
+      are continuously scorched, taking steady damage with a chance to be instantly
+      incinerated."
   - TerretoryID: 4
     Type: 0
     Owner: 2
@@ -69,21 +77,25 @@ MonoBehaviour:
     scale: 1
     position: {x: 0, y: -3}
     maxCapacity: 40
-    radiusSize: 0
+    radiusSize: 1.1
     productionRate: 1.7
-    radiusEffect: 
-    effectDescription: 
+    radiusEffect: Health Buff
+    effectDescription: "Health Buff: Within this territory\u2019s radius, troops
+      are infused with Vigor, bolstering their vitality and allowing them to withstand
+      far more damage."
   - TerretoryID: 5
-    Type: 2
+    Type: 1
     Owner: 0
     StartingUnits: 0
     scale: 1
     position: {x: -3, y: -1.5}
-    maxCapacity: 30
-    radiusSize: 0
-    productionRate: 1.2
-    radiusEffect: 
-    effectDescription: 
+    maxCapacity: 34
+    radiusSize: 1.1
+    productionRate: 2.4
+    radiusEffect: Burning Aura
+    effectDescription: "Burning Aura: Enemy troops inside this territory\u2019s radius
+      are continuously scorched, taking steady damage with a chance to be instantly
+      incinerated."
   - TerretoryID: 6
     Type: 0
     Owner: 0
@@ -91,21 +103,25 @@ MonoBehaviour:
     scale: 1
     position: {x: -5, y: 0}
     maxCapacity: 40
-    radiusSize: 0
+    radiusSize: 1.1
     productionRate: 1.7
-    radiusEffect: 
-    effectDescription: 
+    radiusEffect: Health Buff
+    effectDescription: "Health Buff: Within this territory\u2019s radius, troops
+      are infused with Vigor, bolstering their vitality and allowing them to withstand
+      far more damage."
   - TerretoryID: 7
-    Type: 2
+    Type: 1
     Owner: 0
     StartingUnits: 0
     scale: 1
     position: {x: -3, y: 1.5}
-    maxCapacity: 30
-    radiusSize: 0
-    productionRate: 1.2
-    radiusEffect: 
-    effectDescription: 
+    maxCapacity: 34
+    radiusSize: 1.1
+    productionRate: 2.4
+    radiusEffect: Burning Aura
+    effectDescription: "Burning Aura: Enemy troops inside this territory\u2019s radius
+      are continuously scorched, taking steady damage with a chance to be instantly
+      incinerated."
   - TerretoryID: 8
     Type: 0
     Owner: 0
@@ -113,10 +129,12 @@ MonoBehaviour:
     scale: 1
     position: {x: 0, y: 0}
     maxCapacity: 40
-    radiusSize: 0
+    radiusSize: 1.1
     productionRate: 1.7
-    radiusEffect: 
-    effectDescription: 
+    radiusEffect: Health Buff
+    effectDescription: "Health Buff: Within this territory\u2019s radius, troops
+      are infused with Vigor, bolstering their vitality and allowing them to withstand
+      far more damage."
   DifficultyConfiguration:
     setting: 1
     levelDifficulty: 1
@@ -148,4 +166,4 @@ MonoBehaviour:
     scaleY: 0.6
   coinReward: 10
   Cost: 1
-  ads: 1
+  ads: 0

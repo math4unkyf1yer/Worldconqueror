@@ -30,7 +30,7 @@ MonoBehaviour:
     radiusEffect: 
     effectDescription: 
   - TerretoryID: 1
-    Type: 5
+    Type: 3
     Owner: 0
     StartingUnits: 0
     scale: 1
@@ -52,7 +52,7 @@ MonoBehaviour:
     radiusEffect: 
     effectDescription: 
   - TerretoryID: 3
-    Type: 5
+    Type: 3
     Owner: 0
     StartingUnits: 0
     scale: 1
@@ -74,7 +74,7 @@ MonoBehaviour:
     radiusEffect: 
     effectDescription: 
   - TerretoryID: 5
-    Type: 5
+    Type: 3
     Owner: 0
     StartingUnits: 0
     scale: 1
@@ -96,7 +96,7 @@ MonoBehaviour:
     radiusEffect: 
     effectDescription: 
   - TerretoryID: 7
-    Type: 5
+    Type: 3
     Owner: 0
     StartingUnits: 0
     scale: 1
@@ -148,4 +148,4 @@ MonoBehaviour:
     scaleY: 0.6
   coinReward: 20
   Cost: 1
-  ads: 1
+  ads: 0

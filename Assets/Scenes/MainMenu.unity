@@ -20919,7 +20919,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lockImage: {fileID: 1257311578}
   controller: {fileID: 419349729}
-  unlockedLevel: 3
+  unlockedLevel: 6
   whichButton: AssassinTroops
   butHovering: {fileID: 830263578}
   isUnlocked: 0
@@ -27739,7 +27739,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 62f99f94058b6f547a6a0e4a020c29bd, type: 2}
   - {fileID: 11400000, guid: 72a78d66824957d4e83370750641304e, type: 2}
   - {fileID: 11400000, guid: 626de857e0a4b404493ed7a0a5d9d62c, type: 2}
-  - {fileID: 11400000, guid: cd21b42a7bbdee848ad855a2ffb0d8b4, type: 2}
+  - {fileID: 11400000, guid: cfc115d969faf4b45b1bba7cb448ad54, type: 2}
   - {fileID: 11400000, guid: 1e111a22e462c3743beee223c70f9269, type: 2}
   - {fileID: 11400000, guid: c967595ed09e2574597bc759a9d6271a, type: 2}
   - {fileID: 11400000, guid: d110fda51265e7a49bcbc4bf0fcb1a41, type: 2}
@@ -44395,7 +44395,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lockImage: {fileID: 1369548139}
   controller: {fileID: 419349729}
-  unlockedLevel: 3
+  unlockedLevel: 6
   whichButton: AssassinTroops
   butHovering: {fileID: 1818840540}
   isUnlocked: 0

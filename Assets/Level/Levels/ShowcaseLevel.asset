@@ -1,0 +1,106 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ee972ba3cfb08e48a58e3b0b5f586d6, type: 3}
+  m_Name: ShowcaseLevel
+  m_EditorClassIdentifier: 
+  levelIndex: 11
+  enemyCount: 2
+  hasHazard: 1
+  tutoType: 0
+  Zones:
+  - Type: 2
+    Position: {x: 0, y: 0}
+    intensity: 0.5
+    terretory: 3
+  terretories:
+  - TerretoryID: 0
+    Type: 0
+    Owner: 1
+    StartingUnits: 0
+    scale: 1
+    position: {x: -4, y: 0}
+    maxCapacity: 40
+    radiusSize: 1.1
+    productionRate: 1.7
+    radiusEffect: Health Buff
+    effectDescription: "Health Buff: Within this territory\u2019s radius, troops
+      are infused with Vigor, bolstering their vitality and allowing them to withstand
+      far more damage."
+  - TerretoryID: 1
+    Type: 2
+    Owner: 0
+    StartingUnits: 0
+    scale: 1
+    position: {x: -2, y: 2}
+    maxCapacity: 34
+    radiusSize: 1.1
+    productionRate: 2.4
+    radiusEffect: Burning Aura
+    effectDescription: "Burning Aura: Enemy troops inside this territory\u2019s radius
+      are continuously scorched, taking steady damage with a chance to be instantly
+      incinerated."
+  - TerretoryID: 2
+    Type: 3
+    Owner: 2
+    StartingUnits: 0
+    scale: 1
+    position: {x: -2, y: -2}
+    maxCapacity: 30
+    radiusSize: 1.1
+    productionRate: 2
+    radiusEffect: Flame Shot
+    effectDescription: "Flame Shot: Any enemy that steps into the radius awakens
+      the territory\u2019s fiery ward, hurling a blazing projectile that scorches
+      the target."
+  - TerretoryID: 3
+    Type: 4
+    Owner: 3
+    StartingUnits: 0
+    scale: 1
+    position: {x: 3, y: 3}
+    maxCapacity: 40
+    radiusSize: 1.1
+    productionRate: 1.7
+    radiusEffect: Sharpshot
+    effectDescription: "Sharpshot: Enemy troops entering this territory\u2019s radius
+      trigger an automatic defense response, firing a precise arrow that strikes
+      the intruder on impact."
+  - TerretoryID: 3
+    Type: 0
+    Owner: 4
+    StartingUnits: 0
+    scale: 1
+    position: {x: 3, y: -3}
+    maxCapacity: 40
+    radiusSize: 1.1
+    productionRate: 1.7
+    radiusEffect: Health Buff
+    effectDescription: "Health Buff: Within this territory\u2019s radius, troops
+      are infused with Vigor, bolstering their vitality and allowing them to withstand
+      far more damage."
+  DifficultyConfiguration:
+    setting: 1
+    levelDifficulty: 2
+  populatedItem:
+  - sprite: {fileID: 21300000, guid: 561f782e9c0cbd74696455a8e90d9d5b, type: 3}
+    radius: 0.5
+    maxCount: 30
+    scaleX: 0.4
+    scaleY: 0.3
+  - sprite: {fileID: 21300000, guid: e68da782bb8e5994d9504c69a7a63e52, type: 3}
+    radius: 0.5
+    maxCount: 40
+    scaleX: 0.4
+    scaleY: 0.3
+  coinReward: 10
+  Cost: 1
+  ads: 0

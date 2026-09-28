@@ -19,37 +19,24 @@ MonoBehaviour:
   Zones: []
   terretories:
   - TerretoryID: 0
-    Type: 2
+    Type: 4
     Owner: 1
     StartingUnits: 0
     scale: 1
     position: {x: 0, y: 1}
-    maxCapacity: 34
-    radiusSize: 1.1
-    productionRate: 2.4
-    radiusEffect: Burning Aura
-    effectDescription: "Burning Aura: Enemy troops inside this territory\u2019s radius
-      are continuously scorched, taking steady damage with a chance to be instantly
-      incinerated."
-  - TerretoryID: 1
-    Type: 0
-    Owner: 0
-    StartingUnits: 0
-    scale: 1
-    position: {x: 0, y: -1}
     maxCapacity: 40
     radiusSize: 1.1
     productionRate: 1.7
-    radiusEffect: Health Buff
-    effectDescription: "Health Buff: Within this territory\u2019s radius, troops
-      are infused with Vigor, bolstering their vitality and allowing them to withstand
-      far more damage."
-  - TerretoryID: 2
+    radiusEffect: Sharpshot
+    effectDescription: "Sharpshot: Enemy troops entering this territory\u2019s radius
+      trigger an automatic defense response, firing a precise arrow that strikes
+      the intruder on impact."
+  - TerretoryID: 1
     Type: 0
     Owner: 2
     StartingUnits: 0
     scale: 1
-    position: {x: 3, y: -1}
+    position: {x: 0, y: -2}
     maxCapacity: 40
     radiusSize: 1.1
     productionRate: 1.7
@@ -57,19 +44,6 @@ MonoBehaviour:
     effectDescription: "Health Buff: Within this territory\u2019s radius, troops
       are infused with Vigor, bolstering their vitality and allowing them to withstand
       far more damage."
-  - TerretoryID: 3
-    Type: 2
-    Owner: 0
-    StartingUnits: 0
-    scale: 1
-    position: {x: 0, y: -3.5}
-    maxCapacity: 34
-    radiusSize: 1.1
-    productionRate: 2.4
-    radiusEffect: Burning Aura
-    effectDescription: "Burning Aura: Enemy troops inside this territory\u2019s radius
-      are continuously scorched, taking steady damage with a chance to be instantly
-      incinerated."
   DifficultyConfiguration:
     setting: 1
     levelDifficulty: 0
