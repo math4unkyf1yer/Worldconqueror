@@ -294,7 +294,7 @@ MonoBehaviour:
     m_Bits: 2048
   ourCollider: {fileID: 0}
   alreadyCollided: []
-  range: 1.9
+  range: 1.73
 --- !u!114 &5481146680422195145
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -344,9 +344,9 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.0024268627, y: 0}
+  m_Offset: {x: 0.0030555725, y: 0}
   serializedVersion: 2
-  m_Radius: 1.8946073
+  m_Radius: 1.7270179
 --- !u!50 &7645391631160801203
 Rigidbody2D:
   serializedVersion: 4

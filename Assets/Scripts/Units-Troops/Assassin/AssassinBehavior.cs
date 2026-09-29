@@ -55,6 +55,7 @@ public class AssassinBehavior : IUnitBehavior
             troop.State = TroopState.Objective;
             return;
         }
+        troop.chasingEnemy = true;
         troop.location = enemy.transform;
     }
     void HandleObjective(UnitTroop troop, UnitTroop enemy)

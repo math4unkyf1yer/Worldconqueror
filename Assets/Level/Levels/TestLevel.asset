@@ -19,24 +19,23 @@ MonoBehaviour:
   Zones: []
   terretories:
   - TerretoryID: 0
-    Type: 4
+    Type: 1
     Owner: 1
     StartingUnits: 0
     scale: 1
-    position: {x: 0, y: 1}
-    maxCapacity: 40
+    position: {x: -1, y: 1}
+    maxCapacity: 30
     radiusSize: 1.1
-    productionRate: 1.7
-    radiusEffect: Sharpshot
-    effectDescription: "Sharpshot: Enemy troops entering this territory\u2019s radius
-      trigger an automatic defense response, firing a precise arrow that strikes
-      the intruder on impact."
+    productionRate: 1.2
+    radiusEffect: Cripple Radius
+    effectDescription: 'Cripple Radius: Enemies caught within the radius suffer severe
+      movement reduction, allowing your territory to dominate the battlefield.'
   - TerretoryID: 1
     Type: 0
     Owner: 2
     StartingUnits: 0
     scale: 1
-    position: {x: 0, y: -2}
+    position: {x: 3, y: 0}
     maxCapacity: 40
     radiusSize: 1.1
     productionRate: 1.7
@@ -50,14 +49,16 @@ MonoBehaviour:
   populatedItem:
   - sprite: {fileID: 21300000, guid: a366836862f65e04da25deec629d3348, type: 3}
     radius: 0.25
-    maxCount: 80
+    maxCount: 60
     scaleX: 0.35
     scaleY: 0.6
+    block: 1
   - sprite: {fileID: 21300000, guid: 35892777aca14f2498962d3c2a99b4ae, type: 3}
     radius: 0.26
     maxCount: 40
     scaleX: 0.35
     scaleY: 0.6
+    block: 1
   coinReward: 10
   Cost: 1
   ads: 1

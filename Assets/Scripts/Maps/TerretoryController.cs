@@ -339,12 +339,12 @@ public class TerretoryController : MonoBehaviour, IPointerDownHandler, IDragHand
                     if (CombatOwner == Owner.Player) 
                     { 
                         countingTroopScript.RegisterTroop(true);
-                        unitScript.SetUp(troopsStatsPlayer, targetPosition, targetIndex, CombatOwner);                    
+                        unitScript.SetUp(troopsStatsPlayer, targetPosition, targetIndex,terretoryIndex, CombatOwner);                    
                     }
                     else 
                     {
                         countingTroopScript.RegisterTroop(false);
-                        unitScript.SetUp(troopsStatsEnemy, targetPosition, targetIndex, CombatOwner);
+                        unitScript.SetUp(troopsStatsEnemy, targetPosition, targetIndex,terretoryIndex, CombatOwner);
                     }
                 }
                 spawned++;

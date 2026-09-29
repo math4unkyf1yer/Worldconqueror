@@ -16,6 +16,7 @@ public class LevelData : ScriptableObject
         public int maxCount = 100;      // cap for this prefab type
         public float scaleX;
         public float scaleY;
+        public BlockType block;
 
         [System.NonSerialized] public Material runtimeMaterial;
         [System.NonSerialized] public List<Matrix4x4> matrices = new List<Matrix4x4>();
