@@ -15,6 +15,7 @@ public class Cost : MonoBehaviour
     private SelectionHighlighter selectionHighlighter;
     private SpriteSwitcher spriteSwitcher;
 
+
     [Header("UI")]
     [SerializeField] private TextMeshProUGUI[] costtext;
     [SerializeField] private TextMeshProUGUI buffTroopText;
@@ -131,6 +132,7 @@ public class Cost : MonoBehaviour
     // Stats panel
     public void ShowStats(int whichStats)
     {
+        buttonController.CloseTutorial();
         StatPanalManager.Instance.Show();
 
         preview.SetData(troopMode.Current, territoryMode.Current);
