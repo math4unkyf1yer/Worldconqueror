@@ -148,7 +148,6 @@ public class UnitTroop : MonoBehaviour
         }
         else if (hasPath && pathIndex < path.Length)
         {
-            Debug.Log("Move away");
             // Follow waypoint path
             target = path[pathIndex];
 
@@ -157,7 +156,6 @@ public class UnitTroop : MonoBehaviour
         }
         else
         {
-            Debug.Log("Territory");
             // No more waypoints → go to territory
             target = territoryLocation.position;
         }

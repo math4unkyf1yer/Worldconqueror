@@ -24,25 +24,24 @@ MonoBehaviour:
     StartingUnits: 0
     scale: 1
     position: {x: -1, y: 1}
-    maxCapacity: 30
+    maxCapacity: 25
     radiusSize: 1.1
     productionRate: 1.2
     radiusEffect: Cripple Radius
     effectDescription: 'Cripple Radius: Enemies caught within the radius suffer severe
       movement reduction, allowing your territory to dominate the battlefield.'
   - TerretoryID: 1
-    Type: 0
+    Type: 1
     Owner: 2
     StartingUnits: 0
     scale: 1
     position: {x: 3, y: 0}
-    maxCapacity: 40
+    maxCapacity: 25
     radiusSize: 1.1
-    productionRate: 1.7
-    radiusEffect: Health Buff
-    effectDescription: "Health Buff: Within this territory\u2019s radius, troops
-      are infused with Vigor, bolstering their vitality and allowing them to withstand
-      far more damage."
+    productionRate: 1.2
+    radiusEffect: Cripple Radius
+    effectDescription: 'Cripple Radius: Enemies caught within the radius suffer severe
+      movement reduction, allowing your territory to dominate the battlefield.'
   DifficultyConfiguration:
     setting: 1
     levelDifficulty: 0

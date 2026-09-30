@@ -23,23 +23,27 @@ MonoBehaviour:
     Owner: 0
     StartingUnits: 0
     scale: 1
-    position: {x: -2, y: 2}
+    position: {x: -4, y: 2.3}
     maxCapacity: 40
     radiusSize: 1.1
     productionRate: 1.7
-    radiusEffect: 
-    effectDescription: 
+    radiusEffect: Health Buff
+    effectDescription: "Health Buff: Within this territory\u2019s radius, troops
+      are infused with Vigor, bolstering their vitality and allowing them to withstand
+      far more damage."
   - TerretoryID: 1
     Type: 0
     Owner: 1
     StartingUnits: 0
     scale: 1
-    position: {x: -3, y: 0}
+    position: {x: -2.7, y: 0}
     maxCapacity: 40
     radiusSize: 1.1
     productionRate: 1.7
-    radiusEffect: 
-    effectDescription: 
+    radiusEffect: Health Buff
+    effectDescription: "Health Buff: Within this territory\u2019s radius, troops
+      are infused with Vigor, bolstering their vitality and allowing them to withstand
+      far more damage."
   - TerretoryID: 2
     Type: 0
     Owner: 0
@@ -49,8 +53,10 @@ MonoBehaviour:
     maxCapacity: 40
     radiusSize: 1.1
     productionRate: 1.7
-    radiusEffect: 
-    effectDescription: 
+    radiusEffect: Health Buff
+    effectDescription: "Health Buff: Within this territory\u2019s radius, troops
+      are infused with Vigor, bolstering their vitality and allowing them to withstand
+      far more damage."
   - TerretoryID: 3
     Type: 0
     Owner: 0
@@ -60,8 +66,10 @@ MonoBehaviour:
     maxCapacity: 40
     radiusSize: 1.1
     productionRate: 1.7
-    radiusEffect: 
-    effectDescription: 
+    radiusEffect: Health Buff
+    effectDescription: "Health Buff: Within this territory\u2019s radius, troops
+      are infused with Vigor, bolstering their vitality and allowing them to withstand
+      far more damage."
   - TerretoryID: 4
     Type: 0
     Owner: 0
@@ -71,30 +79,36 @@ MonoBehaviour:
     maxCapacity: 40
     radiusSize: 1.1
     productionRate: 1.7
-    radiusEffect: 
-    effectDescription: 
+    radiusEffect: Health Buff
+    effectDescription: "Health Buff: Within this territory\u2019s radius, troops
+      are infused with Vigor, bolstering their vitality and allowing them to withstand
+      far more damage."
   - TerretoryID: 5
     Type: 0
     Owner: 3
     StartingUnits: 0
     scale: 1
-    position: {x: 3, y: 0}
+    position: {x: 2.8, y: 0}
     maxCapacity: 40
     radiusSize: 1.1
     productionRate: 1.7
-    radiusEffect: 
-    effectDescription: 
+    radiusEffect: Health Buff
+    effectDescription: "Health Buff: Within this territory\u2019s radius, troops
+      are infused with Vigor, bolstering their vitality and allowing them to withstand
+      far more damage."
   - TerretoryID: 6
     Type: 0
     Owner: 0
     StartingUnits: 0
     scale: 1
-    position: {x: 2, y: -2}
+    position: {x: 4, y: -2.3}
     maxCapacity: 40
     radiusSize: 1.1
     productionRate: 1.7
-    radiusEffect: 
-    effectDescription: 
+    radiusEffect: Health Buff
+    effectDescription: "Health Buff: Within this territory\u2019s radius, troops
+      are infused with Vigor, bolstering their vitality and allowing them to withstand
+      far more damage."
   DifficultyConfiguration:
     setting: 3
     levelDifficulty: 0
@@ -134,7 +148,7 @@ MonoBehaviour:
     maxCount: 1
     scaleX: 2.6
     scaleY: 2
-    block: -1
+    block: 2
   coinReward: 11
   Cost: 1
   ads: 0

@@ -24,55 +24,65 @@ MonoBehaviour:
     StartingUnits: 0
     scale: 1
     position: {x: -2.5, y: 1.5}
-    maxCapacity: 40
+    maxCapacity: 25
     radiusSize: 1.1
     productionRate: 1.7
-    radiusEffect: 
-    effectDescription: 
+    radiusEffect: Health Buff
+    effectDescription: "Health Buff: Within this territory\u2019s radius, troops
+      are infused with Vigor, bolstering their vitality and allowing them to withstand
+      far more damage."
   - TerretoryID: 1
     Type: 0
     Owner: 0
     StartingUnits: 0
     scale: 1
     position: {x: 0, y: 1.5}
-    maxCapacity: 40
+    maxCapacity: 25
     radiusSize: 1.1
     productionRate: 1.7
-    radiusEffect: 
-    effectDescription: 
+    radiusEffect: Health Buff
+    effectDescription: "Health Buff: Within this territory\u2019s radius, troops
+      are infused with Vigor, bolstering their vitality and allowing them to withstand
+      far more damage."
   - TerretoryID: 2
     Type: 0
     Owner: 3
     StartingUnits: 0
     scale: 1
     position: {x: 2.5, y: 1.5}
-    maxCapacity: 40
+    maxCapacity: 25
     radiusSize: 1.1
     productionRate: 1.7
-    radiusEffect: 
-    effectDescription: 
+    radiusEffect: Health Buff
+    effectDescription: "Health Buff: Within this territory\u2019s radius, troops
+      are infused with Vigor, bolstering their vitality and allowing them to withstand
+      far more damage."
   - TerretoryID: 3
     Type: 0
     Owner: 1
     StartingUnits: 0
     scale: 1
     position: {x: -1.5, y: -1.5}
-    maxCapacity: 40
+    maxCapacity: 25
     radiusSize: 1.1
     productionRate: 1.7
-    radiusEffect: 
-    effectDescription: 
+    radiusEffect: Health Buff
+    effectDescription: "Health Buff: Within this territory\u2019s radius, troops
+      are infused with Vigor, bolstering their vitality and allowing them to withstand
+      far more damage."
   - TerretoryID: 4
     Type: 0
     Owner: 0
     StartingUnits: 0
     scale: 1
     position: {x: 1.5, y: -1.5}
-    maxCapacity: 40
+    maxCapacity: 25
     radiusSize: 1.1
     productionRate: 1.7
-    radiusEffect: 
-    effectDescription: 
+    radiusEffect: Health Buff
+    effectDescription: "Health Buff: Within this territory\u2019s radius, troops
+      are infused with Vigor, bolstering their vitality and allowing them to withstand
+      far more damage."
   DifficultyConfiguration:
     setting: 3
     levelDifficulty: 0
@@ -112,7 +122,13 @@ MonoBehaviour:
     maxCount: 1
     scaleX: 2.6
     scaleY: 2
-    block: 1
+    block: -1
+  - sprite: {fileID: 21300000, guid: 7087c12dd4c92f041952128258d7da40, type: 3}
+    radius: 2.4
+    maxCount: 1
+    scaleX: 2.5
+    scaleY: 2.5
+    block: 2
   coinReward: 11
   Cost: 1
   ads: 0

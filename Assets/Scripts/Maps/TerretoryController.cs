@@ -46,6 +46,7 @@ public class TerretoryController : MonoBehaviour, IPointerDownHandler, IDragHand
     [SerializeField] private Transform circleTransform;
     [SerializeField] private GameObject[] sprites;
     public event System.Action OnDragEvent;
+    private float arrowZ = -1f;
 
     //MapGenerator
     MapGenerator mapGenerator;
@@ -285,7 +286,7 @@ public class TerretoryController : MonoBehaviour, IPointerDownHandler, IDragHand
         activeArrow.transform.rotation = Quaternion.Euler(0, 0, angle);
 
         // Keep the base locked at the start
-        activeArrow.transform.position = startPos;
+        activeArrow.transform.position = new Vector3(startPos.x, startPos.y, arrowZ);
 
         // Stretch the arrow forward only
         activeArrow.transform.localScale = new Vector3(distance, 1f, 1f);
