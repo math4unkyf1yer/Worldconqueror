@@ -8,6 +8,9 @@ public class UnitStats
     [Tooltip("Which unit type these stats apply to.")]
     public UnitType unitType;
 
+    [Tooltip("Chosing whcih territories block which")]
+    public BlockType blockType;
+
     [Tooltip("Movement speed along a path.")]
     public float moveSpeed = 1;
 
@@ -51,6 +54,9 @@ public class UnitStats
                 // Soldier special: % chance to not die
                 noDeathChance = 0.05f + (tSpecial * 0.02f); // scales with tier
                 specialFloat = noDeathChance;
+
+                //block type 
+                blockType = BlockType.Tree | BlockType.Water | BlockType.Rock;
                 break;
 
             case UnitType.Dwarf:
@@ -61,6 +67,7 @@ public class UnitStats
 
                 baseStrength = baseStrength * (1f + tierSpecial * 0.1f);
                 specialFloat = baseStrength;
+                blockType = BlockType.Tree | BlockType.Water | BlockType.Rock;
                 break;
 
             case UnitType.Assassin:
@@ -72,6 +79,7 @@ public class UnitStats
                 // Assassin special: crit chance
                 critChance = 0.05f + (tSpecial * 0.02f);
                 specialFloat = critChance;
+                blockType = BlockType.Water | BlockType.Rock;
                 break;
 
             case UnitType.Mage:
@@ -84,6 +92,7 @@ public class UnitStats
                 baseRange = baseRange * (1f + tSpecial * 0.05f);
                 baseFireRate = 1.3f;
                 specialFloat = baseRange;
+                blockType = BlockType.Tree | BlockType.Rock;
                 break;
 
             case UnitType.Ranger:
@@ -96,6 +105,7 @@ public class UnitStats
                 // Ranger special: fire rate && increase the 5 percent of the dire rate 
                 baseFireRate = baseFireRate * (1f - (tSpecial * 0.05f)); ;
                 specialFloat = baseFireRate;
+                blockType = BlockType.Water | BlockType.Rock;
                 break;
         }
 
@@ -111,6 +121,7 @@ public class UnitStats
             noDeathChances = noDeathChance,
             specialFloat = specialFloat,
             abilityName = abilityName,
+            blockType = blockType,
         };
     }
 

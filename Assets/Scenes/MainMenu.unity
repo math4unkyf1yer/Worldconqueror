@@ -1535,6 +1535,7 @@ MonoBehaviour:
   testReady: 0
   shadertest: {fileID: 4800000, guid: 60e8173d89ee1254185d5e71d8c3c0bb, type: 3}
   menuTerritory: 1
+  backgroundRenderer: {fileID: 0}
 --- !u!1 &74037944
 GameObject:
   m_ObjectHideFlags: 0
@@ -25831,6 +25832,81 @@ Transform:
   - {fileID: 70148081}
   m_Father: {fileID: 1491245153}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1028069335
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1028069336}
+  - component: {fileID: 1028069338}
+  - component: {fileID: 1028069337}
+  m_Layer: 5
+  m_Name: Close
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1028069336
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1028069335}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.82357234, y: 0.80079716, z: 0.88161474}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1211262949}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -399.4}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1028069337
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1028069335}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.63529414}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 734baebf51ffb754f9ac1348a9b68d79, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1028069338
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1028069335}
+  m_CullTransparentMesh: 1
 --- !u!1 &1028914955
 GameObject:
   m_ObjectHideFlags: 0
@@ -27741,7 +27817,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 626de857e0a4b404493ed7a0a5d9d62c, type: 2}
   - {fileID: 11400000, guid: cfc115d969faf4b45b1bba7cb448ad54, type: 2}
   - {fileID: 11400000, guid: 1e111a22e462c3743beee223c70f9269, type: 2}
-  - {fileID: 11400000, guid: c967595ed09e2574597bc759a9d6271a, type: 2}
+  - {fileID: 11400000, guid: cd21b42a7bbdee848ad855a2ffb0d8b4, type: 2}
   - {fileID: 11400000, guid: d110fda51265e7a49bcbc4bf0fcb1a41, type: 2}
   - {fileID: 11400000, guid: c184c3bedebf1dd4ab019519d9b867a7, type: 2}
   - {fileID: 11400000, guid: 625f3365c98eabb4e856cc090c3efc5e, type: 2}
@@ -27753,6 +27829,7 @@ MonoBehaviour:
   levelCount: 0
   currentTroopStats:
     unitType: 0
+    blockType: 0
     moveSpeed: 1
     strenght: 1
     vigor: 1
@@ -30003,6 +30080,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1028069336}
   - {fileID: 1590518505}
   - {fileID: 282049935}
   m_Father: {fileID: 419349727}
@@ -42556,26 +42634,31 @@ MonoBehaviour:
     maxCount: 2
     scaleX: 2.5
     scaleY: 1.7
+    block: 0
   - sprite: {fileID: 21300000, guid: fdf03739d9669b845b3fcc6c931d00a2, type: 3}
     radius: 0.7
     maxCount: 3
     scaleX: 1.2
     scaleY: 0.7
+    block: 0
   - sprite: {fileID: 21300000, guid: f7f00fb5f2af3e54ab585fc313c48a74, type: 3}
     radius: 1
     maxCount: 2
     scaleX: 1.2
     scaleY: 1
+    block: 0
   - sprite: {fileID: 21300000, guid: 7087c12dd4c92f041952128258d7da40, type: 3}
     radius: 1
     maxCount: 1
     scaleX: 1.2
     scaleY: 1
+    block: 0
   - sprite: {fileID: 21300000, guid: 52bbf0a27e4120d4a969f7df99174fea, type: 3}
     radius: 1.6
     maxCount: 1
     scaleX: 2
     scaleY: 1.4
+    block: 0
   parentToObjects: {fileID: 1027817669}
 --- !u!114 &1715768198
 MonoBehaviour:

@@ -94,8 +94,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3955002161674237003}
   - component: {fileID: 6023214731252674183}
-  - component: {fileID: 2276809503247034746}
   - component: {fileID: 8879306819508234359}
+  - component: {fileID: 6422057343730005304}
   m_Layer: 7
   m_Name: Hazard
   m_TagString: Untagged
@@ -113,7 +113,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.3994452, y: 0.073074326, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2.1448355, y: 2.1284587, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4392577711616185121}
@@ -160,19 +160,37 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -5177388603050735206, guid: 8884154dfe85442a3a3578be807dbcdf, type: 3}
+  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 0.21079044, g: 1, b: 0.07861614, a: 0.47843137}
   m_FlipX: 0
   m_FlipY: 0
-  m_DrawMode: 2
+  m_DrawMode: 0
   m_Size: {x: 2.1448355, y: 1.8085297}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &2276809503247034746
-BoxCollider2D:
+--- !u!114 &8879306819508234359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6840743546077665726}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd3f1a78d33cf50448ac5ed2e57c58a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hazardImage: {fileID: 6023214731252674183}
+  slowColor: {r: 0.5106928, g: 0.2117647, b: 0.7411765, a: 0.4509804}
+  speedColor: {r: 0.32156864, g: 0.69803923, b: 0.3019608, a: 0.4509804}
+  damageColor: {r: 0.9056604, g: 0.19081506, b: 0.22561327, a: 0.4509804}
+  FogColor: {r: 1, g: 1, b: 1, a: 1}
+  imageSprite: {fileID: 3995996649835111086}
+--- !u!58 &6422057343730005304
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -200,41 +218,9 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.0049303174}
-  m_SpriteTilingProperty:
-    border: {x: 0.25, y: 0.25, z: 0.25, w: 0.25}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 2.1448355, y: 1.8085297}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 2
-    adaptiveTiling: 0
-  m_AutoTiling: 0
+  m_Offset: {x: 0, y: -0.004314139}
   serializedVersion: 2
-  m_Size: {x: 2.1621795, y: 1.7986702}
-  m_EdgeRadius: 0
---- !u!114 &8879306819508234359
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6840743546077665726}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd3f1a78d33cf50448ac5ed2e57c58a2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hazardImage: {fileID: 6023214731252674183}
-  slowColor: {r: 0.5106928, g: 0.2117647, b: 0.7411765, a: 0.4509804}
-  speedColor: {r: 0.32156864, g: 0.69803923, b: 0.3019608, a: 0.4509804}
-  damageColor: {r: 0.9056604, g: 0.19081506, b: 0.22561327, a: 0.4509804}
-  FogColor: {r: 1, g: 1, b: 1, a: 1}
-  imageSprite: {fileID: 3995996649835111086}
-  hazardSprites:
-  - {fileID: 21300000, guid: 6c7250a698d29384db19a936b2b56250, type: 3}
-  - {fileID: 21300000, guid: ddd0f5795048148489b901a169e153d4, type: 3}
-  - {fileID: 21300000, guid: a8af1ce53c4c7524a86273d7adbdf178, type: 3}
+  m_Radius: 0.4963623

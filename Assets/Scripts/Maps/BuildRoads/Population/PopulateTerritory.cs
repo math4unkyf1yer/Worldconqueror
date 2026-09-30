@@ -29,6 +29,9 @@ public class PopulateTerritory : MonoBehaviour
 
     public bool menuTerritory;
 
+    public RectTransform backgroundRenderer;
+    private Rect mapBound;
+
     struct PlacedPoint
     {
         public Vector2 pos;
@@ -38,7 +41,12 @@ public class PopulateTerritory : MonoBehaviour
 
     public void Setup(List<LevelData.VegetationData> populatedArea)
     {
-
+        if (backgroundRenderer)
+        {
+            Vector3[] c = new Vector3[4];
+            backgroundRenderer.GetWorldCorners(c);               // 0 = bottom-left, 2 = top-right
+            mapBound = Rect.MinMaxRect(c[0].x, c[0].y, c[2].x, c[2].y);
+        }
         vegetationData = populatedArea;
 
         currentCounts = vegetationData.ToDictionary(v => v.sprite, v => 0);
@@ -121,6 +129,11 @@ public class PopulateTerritory : MonoBehaviour
     IEnumerator WaiABit(float time)
     {
         yield return new WaitForSeconds(time);
+
+        if (backgroundRenderer)
+        {
+            PathGrid.Instance.Build(mapBound);
+        }
         PopulateTerritories();
         IsReady = true;
     }
@@ -135,7 +148,7 @@ public class PopulateTerritory : MonoBehaviour
 
         foreach (var veg in sortedVeg)
         {
-
+            
             veg.matrices.Clear();
             // generate a candidate set using THIS prefab's own radius
             List<Vector2> candidates = PoissonDisk.GeneratePoints(veg.radius, size, number);
@@ -175,6 +188,21 @@ public class PopulateTerritory : MonoBehaviour
                 });
 
                 allPoints.Add(p);
+
+                //add obstacle to grid 
+                if (PathGrid.Instance != null)
+                {
+                    float obstacleRadius = Mathf.Max(veg.scaleX, veg.scaleY) * 0.5f;
+                    obstacleRadius = obstacleRadius * 0.7f;
+                    PathObstacle obstacle = new PathObstacle
+                    {
+                        worldPos = worldPos,
+                        worldRadius = obstacleRadius,   // use Poisson spacing radius / 2
+                        type = veg.block              // for now everything is a tree
+                    };
+
+                    PathGrid.Instance.AddObstacle(obstacle);
+                }
             }
 
             // M42 = matrix.y position
