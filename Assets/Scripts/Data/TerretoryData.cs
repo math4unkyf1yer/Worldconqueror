@@ -41,7 +41,7 @@ public class TerretoryData
         {
             case TerritoryType.SoldierProd:
                 productionRate = 1.7f;
-                maxCapacity = 40;
+                maxCapacity = 25;
                 radiusSize = 1.1f;
                 radiusEffect = "Health Buff";
                 effectDescription = "Health Buff: Within this territory’s radius, troops are infused with Vigor, bolstering their vitality and allowing them to withstand far more damage.";
@@ -49,7 +49,7 @@ public class TerretoryData
             case TerritoryType.DwarfProd:
                 //half the production rate and lower capacity for it 
                 productionRate = 2.4f;
-                maxCapacity = 34;
+                maxCapacity = 12;
                 radiusSize = 1.1f;
                 radiusEffect = "Burning Aura";
                 effectDescription = "Burning Aura: Enemy troops inside this territory’s radius are continuously scorched, taking steady damage with a chance to be instantly incinerated.";
@@ -57,7 +57,7 @@ public class TerretoryData
             case TerritoryType.AssassinProd:
                 // increase the production rate and lower    capacity for it 
                 productionRate = 1.2f;
-                maxCapacity = 30;
+                maxCapacity = 25;
                 radiusSize = 1.1f;
                 radiusEffect = "Cripple Radius";
                 effectDescription = "Cripple Radius: Enemies caught within the radius suffer severe movement reduction, allowing your territory to dominate the battlefield.";
@@ -65,7 +65,7 @@ public class TerretoryData
             case TerritoryType.MageProd:
                 //similar prod rate much lower capacity
                 productionRate = 2f;
-                maxCapacity = 30;
+                maxCapacity = 25;
                 radiusSize = 1.1f;
                 radiusEffect = "Flame Shot";
                 effectDescription = "Flame Shot: Any enemy that steps into the radius awakens the territory’s fiery ward, hurling a blazing projectile that scorches the target.";
@@ -73,7 +73,7 @@ public class TerretoryData
             case TerritoryType.RangerProd:
                 // for now same as the others
                 productionRate = 1.7f;
-                maxCapacity = 40;
+                maxCapacity = 25;
                 radiusSize = 1.1f;
                 radiusEffect = "Sharpshot";
                 effectDescription = "Sharpshot: Enemy troops entering this territory’s radius trigger an automatic defense response, firing a precise arrow that strikes the intruder on impact.";

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -44,7 +45,20 @@ public class UnitTroop : MonoBehaviour
     [SerializeField] Sprite[] troopSprites;
     private Sprite unitSprite;
 
-    public void SetUp(UnitStats stats,Transform targetLocation,int ID,Owner owner)
+    [Header("Manual Grid Path Finding")]
+    //multiple position need to go to each for blocking population 
+    private Vector2[] path;
+    private int pathIndex;
+    private bool hasPath;
+    private BlockType blockType;
+
+    //Finding enemy troop
+    Vector2[] chasePath;
+    int chasePathIndex;
+    float nextChaseRepath;
+    const float chaseRepathInterval = 0.3f;
+
+    public void SetUp(UnitStats stats,Transform targetLocation,int EnemyID,int ID,Owner owner)
     {
         buffs = GetComponent<UnitBuffs>();
         if(troopAudio == null) { troopAudio = gameObject.GetComponent<AudioSource>(); }
@@ -56,7 +70,6 @@ public class UnitTroop : MonoBehaviour
             TroopPlayAudio(audioManager.SpawnSound,0.8f);
         } 
 
-        //get buff without changing the actuals stats of the troops
         isReturned = false;
         hasFought = false;
         StopAllCoroutines();
@@ -72,8 +85,17 @@ public class UnitTroop : MonoBehaviour
         releasedRadius = range + 0.5f;
         location = targetLocation;
         territoryLocation = location;
-        index = ID;
+        index = EnemyID;
         ownercl = owner;
+        //block 
+        blockType = stats.blockType;
+
+        //movement set up 
+        path = PathGrid.Instance.GetWaypoints(ID, EnemyID, transform.position,targetLocation.position, blockType);
+
+        pathIndex = 0;
+        hasPath = path.Length > 0;
+        territoryLocation = targetLocation;
 
         UnitBuffs troopBuff = GetComponent<UnitBuffs>();
         troopBuff.SetUp();
@@ -117,7 +139,52 @@ public class UnitTroop : MonoBehaviour
 
     public void MoveTroop()
     {
-        transform.position = Vector3.MoveTowards(transform.position, location.position, speed * Time.deltaTime);
+        Vector3 target;
+
+        // If chasing an enemy, ignore pathfinding for now
+        if (chasingEnemy && CurrentEnemy != null)
+        {
+            target = GetChaseTarget();
+        }
+        else if (hasPath && pathIndex < path.Length)
+        {
+            // Follow waypoint path
+            target = path[pathIndex];
+
+            if (Vector2.Distance(transform.position, target) < 0.1f)
+                pathIndex++;
+        }
+        else
+        {
+            // No more waypoints → go to territory
+            target = territoryLocation.position;
+        }
+
+        transform.position = Vector3.MoveTowards( transform.position,target, speed * Time.deltaTime);
+    }
+
+    Vector3 GetChaseTarget()
+    {
+        Vector2 myPos = transform.position;
+        Vector2 enemyPos = CurrentEnemy.transform.position;
+
+        if (Time.time >= nextChaseRepath && PathGrid.Instance != null)
+        {
+            chasePath = PathGrid.Instance.GetPathTo(myPos, enemyPos, blockType);
+            chasePathIndex = 0;
+            nextChaseRepath = Time.time + chaseRepathInterval;
+        }
+
+        if (chasePath != null && chasePathIndex < chasePath.Length)
+        {
+            if (Vector2.Distance(myPos, chasePath[chasePathIndex]) < 0.1f)
+                chasePathIndex++;
+
+            if (chasePathIndex < chasePath.Length)
+                return chasePath[chasePathIndex];
+        }
+
+        return enemyPos; // clear line, or reached the end of the detour
     }
 
     public void TakeDamage(float damage,bool lastStandActivate)

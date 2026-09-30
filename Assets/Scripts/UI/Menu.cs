@@ -37,11 +37,12 @@ public class Menu : MonoBehaviour
     private List<Button> buttonsInHolder = new List<Button>();
     //selected Button
     private Button selectedButton;
+    //transition
+    private bool isTransitioning = false;
     //game manager 
     AssignLevel gameManager;
     AdsManager advertisementManager;
 
-    int oldButtonId;
     public static Menu Instance { get; private set; }
 
 
@@ -159,6 +160,8 @@ public class Menu : MonoBehaviour
         {
             return;
         }
+        if (isTransitioning)
+            return;
         currentPage = null;
 
         if (playPage.activeInHierarchy) currentPage = playPage;
@@ -180,6 +183,7 @@ public class Menu : MonoBehaviour
         int currentIndex = buttonsInHolder.IndexOf(selectedButton);
         bool slideRight = targetButtonIndex > currentIndex;
 
+        isTransitioning = true;
         StartCoroutine(SlideTransition(currentPage, targetPage, slideRight, 0.25f));
 
         selectedButton = buttonsInHolder[targetButtonIndex];
@@ -236,6 +240,7 @@ public class Menu : MonoBehaviour
         else
             holderTransform.position = holderEnd;
         toRect.anchoredPosition = Vector2.zero;
+        isTransitioning = false;
     }
 
     private void PreventSelection()

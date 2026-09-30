@@ -69,13 +69,21 @@ public class UnitBuffs : MonoBehaviour
 
     public void CritEffect()
     {
-        //for show
-        particleBurst.Play();
+        var fx = ParticlePool.Instance.GetParticle("CritBurst");
+        fx.transform.position = transform.position;
+        fx.gameObject.SetActive(true);
+
+        var ps = fx.GetComponent<ParticleSystem>();
+        ps.Play();
     }
     public void SturdyEffect()
     {
-        //change color for show 
-        particleBurst.Play();
+        var fx = ParticlePool.Instance.GetParticle("SturdyBurst");
+        fx.transform.position = transform.position;
+        fx.gameObject.SetActive(true);
+
+        var ps = fx.GetComponent<ParticleSystem>();
+        ps.Play();
     }
     public void AddGlobalSpeed(float mult)
     {
