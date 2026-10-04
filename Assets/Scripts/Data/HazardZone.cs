@@ -7,12 +7,11 @@ public class HazardZone
 {
     public HazardType Type;
 
+    [Tooltip("position of the terretory for the hazard ")]
     public Vector2 Position;
 
     public float intensity = 1f;
 
-    [Tooltip("position of the terretory")]
-    public int terretory;
 
     public void Damage(UnitTroop troop)
     {

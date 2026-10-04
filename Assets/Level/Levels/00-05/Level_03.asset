@@ -20,11 +20,12 @@ MonoBehaviour:
   terretories:
   - TerretoryID: 0
     Type: 0
-    Owner: 0
+    Owner: 1
     StartingUnits: 0
     scale: 1
-    position: {x: -4, y: 2.3}
-    maxCapacity: 40
+    populationRange: 1.73
+    position: {x: -3, y: -1.5}
+    maxCapacity: 25
     radiusSize: 1.1
     productionRate: 1.7
     radiusEffect: Health Buff
@@ -33,11 +34,12 @@ MonoBehaviour:
       far more damage."
   - TerretoryID: 1
     Type: 0
-    Owner: 1
+    Owner: 0
     StartingUnits: 0
     scale: 1
-    position: {x: -2.7, y: 0}
-    maxCapacity: 40
+    populationRange: 1.73
+    position: {x: -3, y: 1.5}
+    maxCapacity: 25
     radiusSize: 1.1
     productionRate: 1.7
     radiusEffect: Health Buff
@@ -46,11 +48,12 @@ MonoBehaviour:
       far more damage."
   - TerretoryID: 2
     Type: 0
-    Owner: 0
+    Owner: 2
     StartingUnits: 0
     scale: 1
-    position: {x: -2, y: -2}
-    maxCapacity: 40
+    populationRange: 1.73
+    position: {x: 0, y: 3}
+    maxCapacity: 25
     radiusSize: 1.1
     productionRate: 1.7
     radiusEffect: Health Buff
@@ -62,8 +65,9 @@ MonoBehaviour:
     Owner: 0
     StartingUnits: 0
     scale: 1
-    position: {x: 0, y: 0}
-    maxCapacity: 40
+    populationRange: 1.73
+    position: {x: 3, y: 1.5}
+    maxCapacity: 25
     radiusSize: 1.1
     productionRate: 1.7
     radiusEffect: Health Buff
@@ -72,11 +76,12 @@ MonoBehaviour:
       far more damage."
   - TerretoryID: 4
     Type: 0
-    Owner: 0
+    Owner: 3
     StartingUnits: 0
     scale: 1
-    position: {x: 2, y: 2}
-    maxCapacity: 40
+    populationRange: 1.73
+    position: {x: 3, y: -1.5}
+    maxCapacity: 25
     radiusSize: 1.1
     productionRate: 1.7
     radiusEffect: Health Buff
@@ -85,11 +90,12 @@ MonoBehaviour:
       far more damage."
   - TerretoryID: 5
     Type: 0
-    Owner: 3
+    Owner: 0
     StartingUnits: 0
     scale: 1
-    position: {x: 2.8, y: 0}
-    maxCapacity: 40
+    populationRange: 2
+    position: {x: 0, y: -3.7}
+    maxCapacity: 25
     radiusSize: 1.1
     productionRate: 1.7
     radiusEffect: Health Buff
@@ -101,8 +107,9 @@ MonoBehaviour:
     Owner: 0
     StartingUnits: 0
     scale: 1
-    position: {x: 4, y: -2.3}
-    maxCapacity: 40
+    populationRange: 1.73
+    position: {x: 0, y: 0}
+    maxCapacity: 25
     radiusSize: 1.1
     productionRate: 1.7
     radiusEffect: Health Buff

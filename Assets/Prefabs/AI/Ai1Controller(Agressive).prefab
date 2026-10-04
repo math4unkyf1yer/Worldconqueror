@@ -45,16 +45,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aiOwner: 0
-  aiPersonality:
-    neutralBonus: 2
-    Range: 6
+  type: 0
+  p:
+    neutralBonus: 1
+    Range: 5.5
     inRangeButFar: 4
-    playerTargetBonus: 3
-    decisionInterval: 3
-    minimumToAdvantage: 2
-    rivalAiBonus: 3
+    playerTargetBonus: 1.5
+    decisionInterval: 2.5
+    minimumToAdvantage: 1
+    rivalAiBonus: 1
     defensiveTroopThreshold: 5
-    threatProximityRange: 15
-    desperationThreshold: 0
-  aipersonalityType: 0
+    threatProximityRange: 3
+    desperationThreshold: 5
   ownedTerritories: []
+  maxBehavior: 4

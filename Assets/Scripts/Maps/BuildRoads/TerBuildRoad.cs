@@ -13,15 +13,25 @@ public class TerBuildRoad : MonoBehaviour
         
     public float range = 1.5f; 
 
-    public void SetUp()
+    public void SetUp(float ranges)
     {
         roadManager = RoadManager.Instance;
         ourCollider = GetComponent<Collider2D>();
+        //set collider 
+        range = ranges;
+
+        CircleCollider2D circle = GetComponent<CircleCollider2D>();
+        if (circle != null)
+        {
+            circle.radius = range;
+        }
+
         terAura = GetComponent<TerAura>();
 
         StartCoroutine(CloseCollider());
     }
 
+    //need this to tell population to no go in 
     IEnumerator CloseCollider()
     {
         yield return new WaitForSeconds(0.4f);
@@ -36,6 +46,7 @@ public class TerBuildRoad : MonoBehaviour
 
     }
 
+    //for roads
     private void OnTriggerEnter2D(Collider2D collision)
     {
         // Only collide with border layer

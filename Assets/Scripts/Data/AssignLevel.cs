@@ -363,7 +363,6 @@ public class AssignLevel : MonoBehaviour
                 while (usedTerritories.Contains(index));
 
                 usedTerritories.Add(index);
-                zone.terretory = index;
                 zone.intensity = 0.5f;
                 // Randomize hazard type
                 zone.Type = (HazardType)Random.Range(0, System.Enum.GetValues(typeof(HazardType)).Length);

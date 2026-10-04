@@ -97,17 +97,20 @@ public class LevelUI : MonoBehaviour
                 level.transform.position = pos;
                 holdLevelObj.Add(level);
 
-                if (levelScript.LevelData[i].hasHazard == true) { GameObject hazardCl = Instantiate(hazardImage, parentToObjects.transform); hazardCl.transform.position = pos; holdHazard.Add(hazardCl); }
             }
 
             if (i < localLevelIndex)
             {
-                 Transform child = holdLevelObj[i].transform.Find("Flag");
+                Transform child = holdLevelObj[i].transform.Find("Flag");
+                Transform selected = holdLevelObj[i].transform.Find("CircleSelect");
+                selected.gameObject.SetActive(false);
                 child.GetComponent<SpriteRenderer>().color = Color.blue;
             }
             else if (i == localLevelIndex)
             {
                 Transform child = holdLevelObj[i].transform.Find("Flag");
+                Transform selected = holdLevelObj[i].transform.Find("CircleSelect");
+                selected.gameObject.SetActive(true);
                 child.GetComponent<SpriteRenderer>().color = Color.red;
             }
 

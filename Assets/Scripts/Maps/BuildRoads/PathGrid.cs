@@ -6,9 +6,9 @@ using UnityEngine;
 public enum BlockType
 {
     None = 0,
-    Tree = 1, // only thing needed for now 
-    Water = 2,
-    Rock = 3
+    Tree = 1 << 0, // 1
+    Water = 1 << 1, // 2
+    Rock = 1 << 2  // 4
 }
 
 public struct PathObstacle
@@ -277,6 +277,29 @@ public class PathGrid : MonoBehaviour
         return false;
     }
 
+    //for ai 
+    public float GetPathDistance(Vector2 from, Vector2 to, BlockType mask)
+    {
+        Vector2[] waypoints = GetPathTo(from, to, mask);
+
+        // Straight path
+        if (waypoints.Length == 0)
+            return Vector2.Distance(from, to);
+
+        float distance = 0f;
+        Vector2 current = from;
+
+        foreach (Vector2 point in waypoints)
+        {
+            distance += Vector2.Distance(current, point);
+            current = point;
+        }
+
+        distance += Vector2.Distance(current, to);
+
+        return distance;
+    }
+
     // ---------- debug ----------
 
     void OnDrawGizmosSelected()
@@ -348,4 +371,6 @@ public class PathGrid : MonoBehaviour
             float tp = prios[a]; prios[a] = prios[b]; prios[b] = tp;
         }
     }
+
+
 }

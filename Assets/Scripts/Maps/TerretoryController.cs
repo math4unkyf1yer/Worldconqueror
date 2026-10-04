@@ -21,7 +21,7 @@ public class TerretoryController : MonoBehaviour, IPointerDownHandler, IDragHand
    [SerializeField] private int goldRecieved;
     [SerializeField] private TextMeshProUGUI amountText;
     [SerializeField] private UnitStats troopsStatsPlayer;
-    [SerializeField] private UnitStats troopsStatsEnemy;
+    [SerializeField] public UnitStats troopsStatsEnemy;
     [SerializeField] private UnitStats neutralStats;
 
     //Colors
@@ -68,7 +68,7 @@ public class TerretoryController : MonoBehaviour, IPointerDownHandler, IDragHand
         troopTiersScript = AssignLevel.Instance;
         buildRoad = GetComponentInChildren<TerBuildRoad>();
         auraField = GetComponentInChildren<TerAura>();
-        buildRoad.SetUp();
+        buildRoad.SetUp(data.populationRange);
         transform.localScale = new Vector3(data.scale, data.scale, data.scale);
 
         terretoryData = data;
@@ -175,7 +175,7 @@ public class TerretoryController : MonoBehaviour, IPointerDownHandler, IDragHand
         {
             //needs a few fix take production rate ofneutral and different for each territory
             neutralStats = neutralStats.WithTier(-10,-10,-10, unitType);
-            terretoryData = terretoryData.TerritoryTier(-14, -10, -1, territoryType);
+            terretoryData = terretoryData.TerritoryTier(-19, -10, -1, territoryType);
             StandardProductionRate = terretoryData.productionRate;
         }
         auraField.SetRadius(terretoryData.radiusSize,owner,terretoryData.Type);

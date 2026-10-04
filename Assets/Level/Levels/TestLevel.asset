@@ -23,6 +23,7 @@ MonoBehaviour:
     Owner: 1
     StartingUnits: 0
     scale: 1
+    populationRange: 1.73
     position: {x: -1, y: 1}
     maxCapacity: 25
     radiusSize: 1.1
@@ -32,9 +33,10 @@ MonoBehaviour:
       movement reduction, allowing your territory to dominate the battlefield.'
   - TerretoryID: 1
     Type: 1
-    Owner: 2
+    Owner: 0
     StartingUnits: 0
     scale: 1
+    populationRange: 1.73
     position: {x: 3, y: 0}
     maxCapacity: 25
     radiusSize: 1.1

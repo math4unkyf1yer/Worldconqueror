@@ -27845,6 +27845,7 @@ MonoBehaviour:
     Owner: 0
     StartingUnits: 0
     scale: 0
+    populationRange: 1.73
     position: {x: 0, y: 0}
     maxCapacity: 50
     radiusSize: 0

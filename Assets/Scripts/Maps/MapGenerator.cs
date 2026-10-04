@@ -113,7 +113,10 @@ public class MapGenerator : MonoBehaviour
         //need to place hazards 
         if (levelData.hasHazard)
         {
-            PlaceHazards(spawnedTerretories);
+            foreach (var hazard in levelData.Zones)
+            {
+                PlaceHazards(spawnedTerretories, hazard);
+            }
         }
 
 
@@ -159,31 +162,22 @@ public class MapGenerator : MonoBehaviour
             tutoRef.SetTutorialType(levelData.tutoType,spawnedTerretories);
         }
     }
-    void PlaceHazards(List<TerretoryController> territories)
+    void PlaceHazards(List<TerretoryController> territories, HazardZone zone)
     {
-        List<TerretoryController> shuffled = new List<TerretoryController>(territories);
+        Vector3 hazardPosition = zone.Position; // or zone.hazardPosition
 
-        int hazardCount = Mathf.Min(levelData.Zones.Count, shuffled.Count);
-
-        for(int i = 0; i < hazardCount; i++)
-        {
-            HazardZone zone = levelData.Zones[i];
-            SpawnHazardInTerretories(shuffled[zone.terretory], levelData.Zones[i]);
-        }
-
-    }
-
-    void SpawnHazardInTerretories(TerretoryController territory, HazardZone zone)
-    {
-        Vector2 randomOffset = Random.insideUnitCircle * hazardSpreadRadius;
-        Vector3 hazardPosition = territory.transform.position + new Vector3(randomOffset.x, randomOffset.y, 0);
-
-        GameObject hazardClone = Instantiate(hazardPrefab, hazardPosition, Quaternion.identity, hazardHolder.transform);
+        GameObject hazardClone = Instantiate(
+            hazardPrefab,
+            hazardPosition,
+            Quaternion.identity,
+            hazardHolder.transform
+        );
 
         HazardController hazardCtrl = hazardClone.GetComponent<HazardController>();
-
         hazardCtrl.SetUp(zone);
+
     }
+
 
     bool PlayerAsAll()
     {
