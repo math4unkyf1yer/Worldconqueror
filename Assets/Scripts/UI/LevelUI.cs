@@ -40,6 +40,10 @@ public class LevelUI : MonoBehaviour
     [SerializeField] GameObject parentToObjects;
     public static LevelUI Instance { get; private set; }
 
+    //Color for the map levels
+    public Color finishLevel;
+    public Color onLevel;
+
     private void Awake()
     {
         // 1. If an instance already exists and it isn't this one, destroy this duplicate
@@ -89,7 +93,7 @@ public class LevelUI : MonoBehaviour
                 }
                 else
                 {
-                    positionY = Random.Range(-2.3f, 3.2f);
+                    positionY = Random.Range(-2.3f, 2.6f);
                     levelPositionY.Add(positionY);
                 }
                 pos.y = positionY;
@@ -97,24 +101,35 @@ public class LevelUI : MonoBehaviour
                 level.transform.position = pos;
                 holdLevelObj.Add(level);
 
+                if (levelScript.LevelData[i].hasHazard)
+                {
+                   /* GameObject hazard = Instantiate(hazardImage, parentToObjects.transform);
+                    hazard.transform.position = level.transform.position;
+                    holdHazard.Add(hazard);*/
+                }
+
             }
 
             if (i < localLevelIndex)
             {
                 Transform child = holdLevelObj[i].transform.Find("Flag");
                 Transform selected = holdLevelObj[i].transform.Find("CircleSelect");
+                Transform outline = holdLevelObj[i].transform.Find("Outline");
                 selected.gameObject.SetActive(false);
                 child.GetComponent<SpriteRenderer>().color = Color.blue;
+                outline.GetComponent<SpriteRenderer>().color = finishLevel;
             }
             else if (i == localLevelIndex)
             {
                 Transform child = holdLevelObj[i].transform.Find("Flag");
                 Transform selected = holdLevelObj[i].transform.Find("CircleSelect");
+                Transform outline = holdLevelObj[i].transform.Find("Outline");
                 selected.gameObject.SetActive(true);
-                child.GetComponent<SpriteRenderer>().color = Color.red;
+                child.GetComponent<SpriteRenderer>().color = Color.white;
+                outline.GetComponent<SpriteRenderer>().color = onLevel;
             }
 
-            RefreshLine(oldPos, imageNew: newPos, i, firsttime);
+                RefreshLine(oldPos, imageNew: newPos, i, firsttime);
         }
         foreach (GameObject level in holdLevelObj)
         {
