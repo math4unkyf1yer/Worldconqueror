@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ee972ba3cfb08e48a58e3b0b5f586d6, type: 3}
   m_Name: Level_09
   m_EditorClassIdentifier: 
-  levelIndex: 0
+  levelIndex: 9
   enemyCount: 1
   hasHazard: 0
   tutoType: 0
@@ -23,6 +23,7 @@ MonoBehaviour:
     Owner: 1
     StartingUnits: 0
     scale: 1
+    populationRange: 1.73
     position: {x: 0, y: 3}
     maxCapacity: 40
     radiusSize: 0
@@ -34,6 +35,7 @@ MonoBehaviour:
     Owner: 0
     StartingUnits: 0
     scale: 1
+    populationRange: 1.73
     position: {x: 3, y: 1.5}
     maxCapacity: 30
     radiusSize: 0
@@ -45,6 +47,7 @@ MonoBehaviour:
     Owner: 0
     StartingUnits: 0
     scale: 1
+    populationRange: 1.73
     position: {x: 5, y: 0}
     maxCapacity: 40
     radiusSize: 0
@@ -56,6 +59,7 @@ MonoBehaviour:
     Owner: 0
     StartingUnits: 0
     scale: 1
+    populationRange: 1.73
     position: {x: 3, y: -1.5}
     maxCapacity: 30
     radiusSize: 0
@@ -67,6 +71,7 @@ MonoBehaviour:
     Owner: 2
     StartingUnits: 0
     scale: 1
+    populationRange: 1.73
     position: {x: 0, y: -3}
     maxCapacity: 40
     radiusSize: 0
@@ -78,6 +83,7 @@ MonoBehaviour:
     Owner: 0
     StartingUnits: 0
     scale: 1
+    populationRange: 1.73
     position: {x: -3, y: -1.5}
     maxCapacity: 30
     radiusSize: 0
@@ -89,6 +95,7 @@ MonoBehaviour:
     Owner: 0
     StartingUnits: 0
     scale: 1
+    populationRange: 1.73
     position: {x: -5, y: 0}
     maxCapacity: 40
     radiusSize: 0
@@ -100,6 +107,7 @@ MonoBehaviour:
     Owner: 0
     StartingUnits: 0
     scale: 1
+    populationRange: 1.73
     position: {x: -3, y: 1.5}
     maxCapacity: 30
     radiusSize: 0
@@ -111,6 +119,7 @@ MonoBehaviour:
     Owner: 0
     StartingUnits: 0
     scale: 1
+    populationRange: 1.73
     position: {x: 0, y: 0}
     maxCapacity: 40
     radiusSize: 0

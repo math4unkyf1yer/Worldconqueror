@@ -19,6 +19,7 @@ public class AIController : MonoBehaviour
     //beahvior Time
     public int maxBehavior;
     int behaviorCount;
+    float scoreDistance;
     
 
     private List<TerretoryController> allTerritories;
@@ -56,7 +57,13 @@ public class AIController : MonoBehaviour
     float ScoreTarget(TerretoryController from, TerretoryController target)
     {
         float score = 0;
-        float dist = PathGrid.Instance.GetPathDistance(from.transform.position,target.transform.position, from.troopsStatsEnemy.blockType);
+
+        BlockType mask = from.troopsStatsEnemy.blockType;
+
+        if (!from.CanSendTo(target)) return -1f;   
+
+        float dist = PathGrid.Instance.GetPathDistance(from.terretoryIndex, target.terretoryIndex,from.transform.position, target.transform.position, mask);
+        scoreDistance = dist;
         if (dist > p.Range) return -1f;
         if (dist > p.inRangeButFar) score -= 1f;
 
@@ -77,7 +84,7 @@ public class AIController : MonoBehaviour
         // Enemy troop power
         float enemyTroops = target.terretoryData.Type switch
         {
-            TerritoryType.DwarfProd => futureTroops * 1.4f,
+            TerritoryType.DwarfProd => futureTroops * 2f,
             TerritoryType.AssassinProd => futureTroops * 0.5f,
             _ => futureTroops
         };
@@ -118,6 +125,7 @@ public class AIController : MonoBehaviour
         TerretoryController bestFrom = null;
         TerretoryController bestTarget = null;
         float bestScore = -1f;
+        float testScoreDist = 0f;
 
         foreach (var from in ownedTerritories)
         {
@@ -129,11 +137,23 @@ public class AIController : MonoBehaviour
                 if (score > bestScore)
                 {
                     bestScore = score;
+                    testScoreDist = scoreDistance;
                     bestFrom = from;
                     bestTarget = target;
                 }
+                else if (Mathf.Approximately(score, bestScore))
+                {
+                    if (scoreDistance < testScoreDist)
+                    {
+                        testScoreDist = scoreDistance;
+                        bestFrom = from;
+                        bestTarget = target;
+                    }
+                }
             }
         }
+        //reset it 
+        scoreDistance = 0;
 
         if (bestTarget != null && bestScore > 0)
         {
@@ -231,7 +251,6 @@ public class AIController : MonoBehaviour
                 float dist = Vector3.Distance(own.transform.position, enemy.transform.position);
                 if (dist < closestEnemyDist)
                 {
-                    Debug.Log(dist);
                     closestEnemyDist = dist;
                     closestEnemy = enemy;
                 }

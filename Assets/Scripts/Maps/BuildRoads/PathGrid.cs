@@ -22,6 +22,8 @@ public struct PathObstacle
 /// Coarse grid + A* built straight from the population points.
 /// Build once per level, after every PopulateTerritory.IsReady, then feed it obstacles.
 /// Paths are cached per (from territory, to territory, troop block mask).
+/// Reachability is cached per block mask as connected-region labels (flood fill),
+/// so CanReach is an array lookup and is cheap enough to call every frame while dragging.
 /// </summary>
 public class PathGrid : MonoBehaviour
 {
@@ -44,6 +46,10 @@ public class PathGrid : MonoBehaviour
     readonly Dictionary<long, Vector2[]> cache = new Dictionary<long, Vector2[]>();
     static readonly Vector2[] NoWaypoints = new Vector2[0];
 
+    // Connected-region labels per block mask. Same label = reachable from each other.
+    readonly Dictionary<BlockType, int[]> regionCache = new Dictionary<BlockType, int[]>();
+    readonly Stack<int> floodStack = new Stack<int>();
+
     static readonly Vector2Int[] Dirs =
     {
         new Vector2Int( 1, 0), new Vector2Int(-1, 0), new Vector2Int(0,  1), new Vector2Int(0, -1),
@@ -64,6 +70,7 @@ public class PathGrid : MonoBehaviour
         cameFrom = new int[cells.Length];
         closed = new bool[cells.Length];
         cache.Clear();
+        regionCache.Clear();
     }
 
     public void AddObstacle(PathObstacle o)
@@ -82,7 +89,22 @@ public class PathGrid : MonoBehaviour
                     cells[y * width + x] |= o.type;
             }
         }
-        cache.Clear(); // obstacles changed, old paths may be invalid
+        cache.Clear();       // obstacles changed, old paths may be invalid
+        regionCache.Clear(); // ...and so are the region labels
+    }
+
+    public float GetPathDistance(int fromId, int toId, Vector2 from, Vector2 to, BlockType mask)
+    {
+        Vector2[] waypoints = GetWaypoints(fromId, toId, from, to, mask);
+
+        float distance = 0f;
+        Vector2 current = from;
+        foreach (Vector2 point in waypoints)
+        {
+            distance += Vector2.Distance(current, point);
+            current = point;
+        }
+        return distance + Vector2.Distance(current, to);
     }
 
     // ---------- query ----------
@@ -105,10 +127,89 @@ public class PathGrid : MonoBehaviour
         return result;
     }
 
-    public Vector2[] GetPathTo(Vector2 from, Vector2 to,BlockType mask)
+    public Vector2[] GetPathTo(Vector2 from, Vector2 to, BlockType mask)
     {
-        if(cells == null) return NoWaypoints;
+        if (cells == null) return NoWaypoints;
         return LineClear(from, to, mask) ? NoWaypoints : FindPath(from, to, mask);
+    }
+
+    // ---------- reachability ----------
+
+    /// <summary>
+    /// True if troops with this block mask can get from 'from' to 'to'.
+    /// Uses cached region labels, so it is an array lookup after the first call per mask.
+    /// </summary>
+    public bool CanReach(Vector2 from, Vector2 to, BlockType mask)
+    {
+        if (cells == null)
+            return true;
+
+        // Straight line works (this is also what troops do when GetWaypoints returns empty)
+        if (LineClear(from, to, mask))
+            return true;
+
+        Vector2Int startCell, goalCell;
+
+        if (!TryGetOpenCell(from, mask, out startCell))
+            return false;
+
+        if (!TryGetOpenCell(to, mask, out goalCell))
+            return false;
+
+        int[] regions = GetRegions(mask);
+        return regions[startCell.y * width + startCell.x] == regions[goalCell.y * width + goalCell.x];
+    }
+
+    // Flood fill the whole grid once per mask. Uses the same neighbour rules as A*
+    // (including no diagonal squeezing), so CanReach and FindPath always agree.
+    int[] GetRegions(BlockType mask)
+    {
+        int[] regions;
+        if (regionCache.TryGetValue(mask, out regions)) return regions;
+
+        regions = new int[cells.Length];
+        for (int i = 0; i < regions.Length; i++) regions[i] = -1;
+
+        int nextId = 0;
+        for (int i = 0; i < regions.Length; i++)
+        {
+            if (regions[i] != -1) continue;
+            if (Blocked(i % width, i / width, mask)) continue;
+
+            regions[i] = nextId;
+            floodStack.Clear();
+            floodStack.Push(i);
+
+            while (floodStack.Count > 0)
+            {
+                int cur = floodStack.Pop();
+                int cx = cur % width;
+                int cy = cur / width;
+
+                for (int d = 0; d < Dirs.Length; d++)
+                {
+                    int dx = Dirs[d].x;
+                    int dy = Dirs[d].y;
+                    int nx = cx + dx;
+                    int ny = cy + dy;
+
+                    if (Blocked(nx, ny, mask)) continue;
+
+                    bool diagonal = dx != 0 && dy != 0;
+                    if (diagonal && (Blocked(cx + dx, cy, mask) || Blocked(cx, cy + dy, mask))) continue;
+
+                    int n = ny * width + nx;
+                    if (regions[n] != -1) continue;
+
+                    regions[n] = nextId;
+                    floodStack.Push(n);
+                }
+            }
+            nextId++;
+        }
+
+        regionCache[mask] = regions;
+        return regions;
     }
 
     // ---------- A* ----------
@@ -371,6 +472,4 @@ public class PathGrid : MonoBehaviour
             float tp = prios[a]; prios[a] = prios[b]; prios[b] = tp;
         }
     }
-
-
 }

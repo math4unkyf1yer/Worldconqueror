@@ -49,10 +49,10 @@ MonoBehaviour:
   p:
     neutralBonus: 1
     Range: 5.5
-    inRangeButFar: 4
+    inRangeButFar: 2.5
     playerTargetBonus: 1.5
     decisionInterval: 2.5
-    minimumToAdvantage: 1
+    minimumToAdvantage: 2
     rivalAiBonus: 1
     defensiveTroopThreshold: 5
     threatProximityRange: 3

@@ -18,7 +18,7 @@ public class TerretoryController : MonoBehaviour, IPointerDownHandler, IDragHand
     public Owner owner;
     private Owner CombatOwner;
     Owner previousOwner;
-   [SerializeField] private int goldRecieved;
+    [SerializeField] private int goldRecieved;
     [SerializeField] private TextMeshProUGUI amountText;
     [SerializeField] private UnitStats troopsStatsPlayer;
     [SerializeField] public UnitStats troopsStatsEnemy;
@@ -37,7 +37,7 @@ public class TerretoryController : MonoBehaviour, IPointerDownHandler, IDragHand
 
     AssignLevel troopTiersScript;
 
-   [Header("UI/Dragging")]
+    [Header("UI/Dragging")]
     //Dragging
     bool isDragging;
     [SerializeField] private GameObject arrowPrefab;
@@ -48,11 +48,18 @@ public class TerretoryController : MonoBehaviour, IPointerDownHandler, IDragHand
     public event System.Action OnDragEvent;
     private float arrowZ = -1f;
 
+    // Hover feedback while dragging
+    [SerializeField] private Color unreachableArrowColor = new Color(1f, 0.25f, 0.25f, 1f);
+    SpriteRenderer arrowRenderer;
+    Color arrowDefaultColor = Color.white;
+    TerretoryController hoverTarget;
+    bool hoverReachable = true;
+
     //MapGenerator
     MapGenerator mapGenerator;
     TroopConter countingTroopScript;
     public Dictionary<Owner, AIController> aiControllers;
-    [SerializeField]private List<TerritorySlider> sliderList = new List<TerritorySlider>();
+    [SerializeField] private List<TerritorySlider> sliderList = new List<TerritorySlider>();
 
     TerBuildRoad buildRoad;
 
@@ -84,11 +91,11 @@ public class TerretoryController : MonoBehaviour, IPointerDownHandler, IDragHand
 
         SetTerretoryLook();
         StandardProductionRate = ProductionRate();
-       //Invoke reapeate the function for the production rate 
+        //Invoke reapeate the function for the production rate 
         InvokeRepeating("OnUnitCountUp", 0, StandardProductionRate);
     }
     void OnUnitCountUp()
-    {                                                                      
+    {
         int cap = terretoryData.maxCapacity;
 
         if (amountOfTroops >= cap) return;
@@ -97,7 +104,7 @@ public class TerretoryController : MonoBehaviour, IPointerDownHandler, IDragHand
         UpdateTroopDisplay();
     }
 
-    public void TakeDamage(float damage,Owner ownercl)
+    public void TakeDamage(float damage, Owner ownercl)
     {
         amountOfTroops -= CalculateTroops(damage);
 
@@ -115,7 +122,7 @@ public class TerretoryController : MonoBehaviour, IPointerDownHandler, IDragHand
                 aiControllers[owner].OnTerritoryGain(this, owner);
             }
             //Slider Update
-            foreach(TerritorySlider data in sliderList)
+            foreach (TerritorySlider data in sliderList)
             {
                 data.SetOwnerTerritories(owner, previousOwner);
             }
@@ -138,11 +145,11 @@ public class TerretoryController : MonoBehaviour, IPointerDownHandler, IDragHand
         //reduce the amounts of trrops
         if (territoryType == TerritoryType.DwarfProd)
         {
-             amount = amountGiven / 2;
+            amount = amountGiven / 2;
         }
         else if (territoryType == TerritoryType.AssassinProd)
         {
-             amount = amountGiven * 2;
+            amount = amountGiven * 2;
         }
         return amount;
     }
@@ -156,7 +163,7 @@ public class TerretoryController : MonoBehaviour, IPointerDownHandler, IDragHand
     float ProductionRate()
     {
         ChangeOwnershipColor();
-        if (owner== Owner.Player)
+        if (owner == Owner.Player)
         {
             //give its production rate == something different and its buff
             troopsStatsPlayer = troopsStatsPlayer.WithTier(troopTiersScript.GetMoveSpeed(unitType), troopTiersScript.GetAttack(unitType), troopTiersScript.GetSpecialBuff(unitType), unitType);
@@ -165,20 +172,20 @@ public class TerretoryController : MonoBehaviour, IPointerDownHandler, IDragHand
         }
         else if (owner != Owner.Neutral)
         {
-       
-            EnemyTierSet enemyTier = Difficulty.GetEnemyTier(troopTiersScript.GetProduction(territoryType), troopTiersScript.GetCapacity(territoryType), troopTiersScript.GetRadius(territoryType), troopTiersScript.GetMoveSpeed(unitType),troopTiersScript.GetAttack(unitType), troopTiersScript.GetSpecialBuff(unitType));
-            troopsStatsEnemy = troopsStatsEnemy.WithTier( enemyTier.moveSpeedTier, enemyTier.AttackPowerTier, enemyTier.healthTier, unitType);
-            terretoryData = terretoryData.TerritoryTier(enemyTier.productionTier, enemyTier.capacityTier,enemyTier.buffTier, terretoryData.Type);
+
+            EnemyTierSet enemyTier = Difficulty.GetEnemyTier(troopTiersScript.GetProduction(territoryType), troopTiersScript.GetCapacity(territoryType), troopTiersScript.GetRadius(territoryType), troopTiersScript.GetMoveSpeed(unitType), troopTiersScript.GetAttack(unitType), troopTiersScript.GetSpecialBuff(unitType));
+            troopsStatsEnemy = troopsStatsEnemy.WithTier(enemyTier.moveSpeedTier, enemyTier.AttackPowerTier, enemyTier.healthTier, unitType);
+            terretoryData = terretoryData.TerritoryTier(enemyTier.productionTier, enemyTier.capacityTier, enemyTier.buffTier, terretoryData.Type);
             StandardProductionRate = terretoryData.productionRate;
         }
         else
         {
             //needs a few fix take production rate ofneutral and different for each territory
-            neutralStats = neutralStats.WithTier(-10,-10,-10, unitType);
+            neutralStats = neutralStats.WithTier(-10, -10, -10, unitType);
             terretoryData = terretoryData.TerritoryTier(-19, -10, -1, territoryType);
             StandardProductionRate = terretoryData.productionRate;
         }
-        auraField.SetRadius(terretoryData.radiusSize,owner,terretoryData.Type);
+        auraField.SetRadius(terretoryData.radiusSize, owner, terretoryData.Type);
         return StandardProductionRate;
     }
 
@@ -246,22 +253,79 @@ public class TerretoryController : MonoBehaviour, IPointerDownHandler, IDragHand
         middleOuterSprite = troopsMiddleSprite.GetComponentInChildren<SpriteRenderer>();
     }
 
+    // ---------- reachability ----------
+
+    // Block mask for the troops this territory sends out (same rule StartSpawn always used).
+    BlockType GetBlockMask()
+    {
+        return owner == Owner.Player ? troopsStatsPlayer.blockType : troopsStatsEnemy.blockType;
+    }
+
+    /// <summary>
+    /// Can troops from this territory reach 'target'? Cheap (cached region lookup),
+    /// so it is safe to call every frame while dragging and from the AI.
+    /// </summary>
+    public bool CanSendTo(TerretoryController target)
+    {
+        if (target == null || target == this) return false;
+        if (PathGrid.Instance == null) return true;
+
+        return PathGrid.Instance.CanReach(transform.position, target.transform.position, GetBlockMask());
+    }
+
+    // Finds the territory under the pointer (null if none, or if it's this one).
+    TerretoryController GetHoveredTerritory(PointerEventData eventData)
+    {
+        GameObject hit = eventData.pointerCurrentRaycast.gameObject;
+        if (hit == null || hit.transform == circleTransform || hit.tag != "Terretory") return null;
+
+        TerretoryController t = hit.GetComponentInParent<TerretoryController>();
+        return (t == null || t == this) ? null : t;
+    }
+
+    void UpdateHover(TerretoryController target)
+    {
+        // Only react when the hovered territory changes, so the console isn't spammed every frame.
+        if (target == hoverTarget) return;
+
+        hoverTarget = target;
+        hoverReachable = target == null || CanSendTo(target);
+
+        if (target != null && !hoverReachable)
+            Debug.Log("Can't send troops there: no path to territory " + target.terretoryIndex);
+
+        if (arrowRenderer != null)
+            arrowRenderer.color = hoverReachable ? arrowDefaultColor : unreachableArrowColor;
+    }
+
+    void ResetHover()
+    {
+        hoverTarget = null;
+        hoverReachable = true;
+        arrowRenderer = null;
+    }
+
     //on mouse down 
     public void OnPointerDown(PointerEventData eventData)
     {
         GameObject hit = eventData.pointerCurrentRaycast.gameObject;
-        
-        if(hit != null && hit.tag == "Terretory")
+
+        if (hit != null && hit.tag == "Terretory")
         {
-            if(owner == Owner.Player && amountOfTroops > 0)
+            if (owner == Owner.Player && amountOfTroops > 0)
             {
                 //is dragging
                 isDragging = true;
-                activeArrow = Instantiate(arrowPrefab,transform.position, Quaternion.identity);
+                activeArrow = Instantiate(arrowPrefab, transform.position, Quaternion.identity);
 
-                SpriteRenderer arrowRenderer = activeArrow.GetComponentInChildren<SpriteRenderer>();
+                arrowRenderer = activeArrow.GetComponentInChildren<SpriteRenderer>();
                 if (arrowRenderer != null)
+                {
                     arrowRenderer.sortingOrder = 997;
+                    arrowDefaultColor = arrowRenderer.color;
+                }
+                hoverTarget = null;
+                hoverReachable = true;
             }
         }
     }
@@ -290,19 +354,23 @@ public class TerretoryController : MonoBehaviour, IPointerDownHandler, IDragHand
 
         // Stretch the arrow forward only
         activeArrow.transform.localScale = new Vector3(distance, 1f, 1f);
+
+        // Tint the arrow red / log when hovering a territory we can't path to
+        UpdateHover(GetHoveredTerritory(eventData));
     }
     //on mouse release
     public void OnPointerUp(PointerEventData eventData)
     {
-        if(isDragging)
+        if (isDragging)
         {
             isDragging = false;
             Destroy(activeArrow);
+            ResetHover();
             GameObject hit = eventData.pointerCurrentRaycast.gameObject;
             if (hit != null && hit.transform != circleTransform && hit.tag == "Terretory")
             {
-                TerretoryController terretoryScript = hit.GetComponentInParent< TerretoryController>();
-                if( terretoryScript == null) { return; }
+                TerretoryController terretoryScript = hit.GetComponentInParent<TerretoryController>();
+                if (terretoryScript == null) { return; }
 
                 StartSpawn(hit.transform, terretoryScript.terretoryIndex);
             }
@@ -311,10 +379,20 @@ public class TerretoryController : MonoBehaviour, IPointerDownHandler, IDragHand
 
     public void StartSpawn(Transform targetPosition, int targetIndex)
     {
+        if (targetIndex == terretoryIndex) { return; }
+
+        // Safety net: the hover check already warns the player, but the AI and anything
+        // else that calls StartSpawn goes through here too.
+        if (PathGrid.Instance != null && !PathGrid.Instance.CanReach(transform.position, targetPosition.position, GetBlockMask()))
+        {
+            Debug.Log("Target territory cannot be reached.");
+            return;
+        }
+
         CombatOwner = owner;
         StartCoroutine(SpawnTroops(targetPosition, targetIndex));
     }
-     IEnumerator SpawnTroops(Transform targetPosition, int targetIndex)
+    IEnumerator SpawnTroops(Transform targetPosition, int targetIndex)
     {
         float troopsSave = amountOfTroops;
         amountOfTroops = 0;
@@ -322,7 +400,7 @@ public class TerretoryController : MonoBehaviour, IPointerDownHandler, IDragHand
         int spawned = 0;
         while (spawned < troopsSave)
         {
-            float canSpawnNb = Mathf.Min(5,troopsSave-spawned);
+            float canSpawnNb = Mathf.Min(5, troopsSave - spawned);
             Vector2 dir = ((Vector2)targetPosition.position - (Vector2)transform.position).normalized;
             Vector2 perpendicular = new Vector2(-dir.y, dir.x);
             //spawn all the troops and remove the amount of troops 
@@ -337,22 +415,22 @@ public class TerretoryController : MonoBehaviour, IPointerDownHandler, IDragHand
 
                 if (unitScript != null)
                 {
-                    if (CombatOwner == Owner.Player) 
-                    { 
+                    if (CombatOwner == Owner.Player)
+                    {
                         countingTroopScript.RegisterTroop(true);
-                        unitScript.SetUp(troopsStatsPlayer, targetPosition, targetIndex,terretoryIndex, CombatOwner);                    
+                        unitScript.SetUp(troopsStatsPlayer, targetPosition, targetIndex, terretoryIndex, CombatOwner);
                     }
-                    else 
+                    else
                     {
                         countingTroopScript.RegisterTroop(false);
-                        unitScript.SetUp(troopsStatsEnemy, targetPosition, targetIndex,terretoryIndex, CombatOwner);
+                        unitScript.SetUp(troopsStatsEnemy, targetPosition, targetIndex, terretoryIndex, CombatOwner);
                     }
                 }
                 spawned++;
                 yield return new WaitForSeconds(0.05f);
             }
             yield return new WaitForSeconds(0.3f);
-        }     
+        }
     }
 
 }
