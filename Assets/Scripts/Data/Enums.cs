@@ -68,9 +68,11 @@ public enum TutorialType
 {
     none,
     handDrag,
+    slow,
+    speed,
+    damage,
     newAssassin,
     newDwarf,
     newMage,
     newRanger,
-    newHazard
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using Unity.VisualScripting;
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,6 +9,7 @@ public class PreviewTroop : MonoBehaviour
     [SerializeField] Sprite[] troopSprite;
 
     public float speed;
+    private float originalSpeed;
     public float stopDistance = 0.1f;
     public float waitTime = 0.5f;
     private Image troopLook;
@@ -52,10 +54,28 @@ public class PreviewTroop : MonoBehaviour
 
         troopLook.color = c;
     }
+
+    public void speedBuff(float multiplyer)
+    {
+        speed *= multiplyer;
+        //activates particle system 
+        ParticlePlay();
+    }
+    public void ParticlePlay()
+    {
+        particle.gameObject.SetActive(true);
+    }
+    public void ResetSpeed()
+    {
+        speed = originalSpeed;
+        //remove particle system 
+        particle.gameObject.SetActive(false);
+    }
     public void SpeedPreview(Transform target, Transform start, float speedT)
     {
         StopAllCoroutines();
         speed = speedT;
+        originalSpeed = speed;
         Debug.Log("Troop is ready to move");
         //move to target 
         StartCoroutine(SpeedRoutine(target,start));

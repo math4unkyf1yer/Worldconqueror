@@ -15,7 +15,7 @@ MonoBehaviour:
   levelIndex: 8
   enemyCount: 1
   hasHazard: 0
-  tutoType: 4
+  tutoType: 0
   Zones: []
   terretories:
   - TerretoryID: 0

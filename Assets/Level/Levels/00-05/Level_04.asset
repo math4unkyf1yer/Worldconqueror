@@ -15,7 +15,7 @@ MonoBehaviour:
   levelIndex: 3
   enemyCount: 1
   hasHazard: 1
-  tutoType: 6
+  tutoType: 3
   Zones:
   - Type: 0
     Position: {x: -3, y: 0}

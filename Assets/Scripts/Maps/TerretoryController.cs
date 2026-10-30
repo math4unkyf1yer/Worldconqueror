@@ -98,7 +98,7 @@ public class TerretoryController : MonoBehaviour, IPointerDownHandler, IDragHand
     {
         int cap = terretoryData.maxCapacity;
 
-        if (amountOfTroops >= cap) return;
+        if (amountOfTroops >= cap || GameState.TutorialActive) return;
         //increase the number of troops
         amountOfTroops += 1;
         UpdateTroopDisplay();

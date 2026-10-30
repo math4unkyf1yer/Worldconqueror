@@ -15,20 +15,20 @@ MonoBehaviour:
   levelIndex: 6
   enemyCount: 3
   hasHazard: 1
-  tutoType: 2
+  tutoType: 0
   Zones:
   - Type: 0
     Position: {x: 0, y: 0}
     intensity: 0.4
-    terretory: 1
   terretories:
   - TerretoryID: 0
     Type: 0
     Owner: 1
     StartingUnits: 0
     scale: 1
+    populationRange: 1.73
     position: {x: 0, y: 3}
-    maxCapacity: 40
+    maxCapacity: 25
     radiusSize: 1.1
     productionRate: 1.7
     radiusEffect: Health Buff
@@ -40,8 +40,9 @@ MonoBehaviour:
     Owner: 0
     StartingUnits: 0
     scale: 1
+    populationRange: 1.73
     position: {x: 3, y: 1.5}
-    maxCapacity: 30
+    maxCapacity: 25
     radiusSize: 1.1
     productionRate: 1.2
     radiusEffect: Cripple Radius
@@ -52,8 +53,9 @@ MonoBehaviour:
     Owner: 0
     StartingUnits: 0
     scale: 1
+    populationRange: 1.73
     position: {x: 5, y: 0}
-    maxCapacity: 40
+    maxCapacity: 25
     radiusSize: 1.1
     productionRate: 1.7
     radiusEffect: Health Buff
@@ -65,8 +67,9 @@ MonoBehaviour:
     Owner: 0
     StartingUnits: 0
     scale: 1
+    populationRange: 1.73
     position: {x: 3, y: -1.5}
-    maxCapacity: 30
+    maxCapacity: 25
     radiusSize: 1.1
     productionRate: 1.2
     radiusEffect: Cripple Radius
@@ -77,8 +80,9 @@ MonoBehaviour:
     Owner: 2
     StartingUnits: 0
     scale: 1
+    populationRange: 1.73
     position: {x: 0, y: -3}
-    maxCapacity: 40
+    maxCapacity: 25
     radiusSize: 1.1
     productionRate: 1.7
     radiusEffect: Health Buff
@@ -90,8 +94,9 @@ MonoBehaviour:
     Owner: 0
     StartingUnits: 0
     scale: 1
+    populationRange: 1.73
     position: {x: -3, y: -1.5}
-    maxCapacity: 30
+    maxCapacity: 25
     radiusSize: 1.1
     productionRate: 1.2
     radiusEffect: Cripple Radius
@@ -102,8 +107,9 @@ MonoBehaviour:
     Owner: 0
     StartingUnits: 0
     scale: 1
+    populationRange: 1.73
     position: {x: -5, y: 0}
-    maxCapacity: 40
+    maxCapacity: 25
     radiusSize: 1.1
     productionRate: 1.7
     radiusEffect: Health Buff
@@ -115,8 +121,9 @@ MonoBehaviour:
     Owner: 0
     StartingUnits: 0
     scale: 1
+    populationRange: 1.73
     position: {x: -3, y: 1.5}
-    maxCapacity: 30
+    maxCapacity: 25
     radiusSize: 1.1
     productionRate: 1.2
     radiusEffect: Cripple Radius
@@ -127,8 +134,9 @@ MonoBehaviour:
     Owner: 0
     StartingUnits: 0
     scale: 1
+    populationRange: 1.73
     position: {x: 0, y: 0}
-    maxCapacity: 40
+    maxCapacity: 25
     radiusSize: 1.1
     productionRate: 1.7
     radiusEffect: Health Buff

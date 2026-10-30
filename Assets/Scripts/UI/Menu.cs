@@ -156,12 +156,10 @@ public class Menu : MonoBehaviour
     //Only for pages that will transition
     private void ShowPageSlide(GameObject targetPage, int targetButtonIndex)
     {
-        if(targetPage == behindSettingPage)
-        {
+        // Never start another transition while one is running.
+        if (isTransitioning || targetPage == null)
             return;
-        }
-        if (isTransitioning)
-            return;
+
         currentPage = null;
 
         if (playPage.activeInHierarchy) currentPage = playPage;
@@ -170,13 +168,18 @@ public class Menu : MonoBehaviour
         else if (customGamePage.activeInHierarchy) currentPage = customGamePage;
         else if (terUpgradePage.activeInHierarchy) currentPage = terUpgradePage;
 
+        // Already on this page: do not slide it into itself.
+        if (currentPage == targetPage)
+            return;
+
         behindSettingPage = targetPage;
 
-
-        // First time opening menu
+        // First time opening menu: activate without a transition.
         if (currentPage == null)
         {
             targetPage.SetActive(true);
+            selectedButton = buttonsInHolder[targetButtonIndex];
+            EventSystem.current.SetSelectedGameObject(selectedButton.gameObject);
             return;
         }
 
@@ -184,10 +187,12 @@ public class Menu : MonoBehaviour
         bool slideRight = targetButtonIndex > currentIndex;
 
         isTransitioning = true;
-        StartCoroutine(SlideTransition(currentPage, targetPage, slideRight, 0.25f));
 
+        // Update selection only when the transition actually starts.
         selectedButton = buttonsInHolder[targetButtonIndex];
         EventSystem.current.SetSelectedGameObject(selectedButton.gameObject);
+
+        StartCoroutine(SlideTransition(currentPage, targetPage, slideRight, 0.25f));
     }
 
     private IEnumerator SlideTransition(GameObject fromPage, GameObject toPage, bool slideRight, float duration)

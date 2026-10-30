@@ -62,8 +62,14 @@ public class MapGenerator : MonoBehaviour
     void SetUp()
     {
         ads = levelData.ads;
+
+        //tutorial for the previews
+        if (levelData.tutoType != TutorialType.none && levelData.tutoType != TutorialType.handDrag)
+        {
+            tutoRef.SetTutorialType(levelData.tutoType, spawnedTerretories);
+        }
+
         //Slider ui look for better eye
-        
         foreach (TerretoryData data in levelData.terretories)
         {
             if (data.Owner != Owner.Neutral)
@@ -108,6 +114,12 @@ public class MapGenerator : MonoBehaviour
                     ArrowPool.Instance.AddArrow(arrowProjectile);
                 }
             }
+        }
+
+        //hand drag tutorial 
+        if (levelData.tutoType == TutorialType.handDrag)
+        {
+            tutoRef.SetTutorialType(levelData.tutoType, spawnedTerretories);
         }
 
         //need to place hazards 
@@ -155,11 +167,6 @@ public class MapGenerator : MonoBehaviour
         {
             levelData.terretories.Clear();
             levelData.Zones.Clear();
-        }
-        //tutorial 
-        if(levelData.tutoType != TutorialType.none)
-        {
-            tutoRef.SetTutorialType(levelData.tutoType,spawnedTerretories);
         }
     }
     void PlaceHazards(List<TerretoryController> territories, HazardZone zone)
