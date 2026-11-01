@@ -156,7 +156,6 @@ public class PreviewTroop : MonoBehaviour
                     if (particle)
                     {
                        particle.Play();
-                       Debug.Log("Play");
                         
                     }
                     EnemyTroop.Lose();

@@ -69,8 +69,8 @@ public class ButtonLockController : MonoBehaviour
             case "troopUpgrade": 
                 SetTroopUpgradesPage();   
                 break;
-            case "territoryUpgrade":
-                SetTerritoryUpgradesPage(); break;
+            case "ItemUpgrade":
+                SetItemPage(); break;
             case "AssassinTroops":
                 SetAssassinPage(); break;
             case "DwarfTroops":
@@ -100,13 +100,12 @@ public class ButtonLockController : MonoBehaviour
 
         tutorial.OpenTutorial(WhichTutorialOpen);
     }
-    private void SetTerritoryUpgradesPage()
+    private void SetItemPage()
     {
-        WhichTutorialOpen = "UpgradeTerritory";
+        WhichTutorialOpen = "ItemUpgrade";
         unlockTerritoryUpgrades = true;
 
         tutorial.RegisterPage(WhichTutorialOpen, upgradeTerritoryTutorial);
-        tutorial.RegisterPage(WhichTutorialOpen, upgradeTerritoryTutorialpt2);
 
         tutorial.OpenTutorial( WhichTutorialOpen);
     }

@@ -27,7 +27,7 @@ public class TutorialManager : MonoBehaviour
         // Add your tutorial IDs here
         tutorials["DragTroop"] = new TutorialSequence();
         tutorials["UpgradeTroop"] = new TutorialSequence();
-        tutorials["UpgradeTerritory"] = new TutorialSequence();
+        tutorials["ItemUpgrade"] = new TutorialSequence();
         tutorials["Shop"] = new TutorialSequence();
     }
 

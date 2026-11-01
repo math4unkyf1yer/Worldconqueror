@@ -294,6 +294,20 @@ public class Menu : MonoBehaviour
         selectedButton = buttonsInHolder[0];
     }
 
+    public void ItemPage()
+    {
+        if (!buttonLock.unlockTerritoryUpgrades)
+        {
+            PreventSelection();
+            return;
+        }
+
+        buttonLock.CloseTutorial();
+        ShowPageSlide(upgradePage,3);
+
+        selectedButton = buttonsInHolder[3];
+    }
+
     public void UpgradePage()
     {
         if (!buttonLock.unlockTroopUpgrades)
@@ -301,24 +315,10 @@ public class Menu : MonoBehaviour
             PreventSelection();
             return;
         }
-
         buttonLock.CloseTutorial();
-        ShowPageSlide(upgradePage,2);
+        ShowPageSlide(terUpgradePage, 2);
 
         selectedButton = buttonsInHolder[2];
-    }
-
-    public void TerUpgradePage()
-    {
-        if (!buttonLock.unlockTerritoryUpgrades)
-        {
-            PreventSelection();
-            return;
-        }
-        buttonLock.CloseTutorial();
-        ShowPageSlide(terUpgradePage, 3);
-
-        selectedButton = buttonsInHolder[3];
     }
 
     public void CustomGamePageOpen()
