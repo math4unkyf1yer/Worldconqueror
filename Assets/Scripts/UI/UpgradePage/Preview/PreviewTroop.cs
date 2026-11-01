@@ -1,6 +1,4 @@
 using System.Collections;
-using Unity.VisualScripting;
-using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -106,6 +104,7 @@ public class PreviewTroop : MonoBehaviour
         vigorStart = start;
 
         if (enemyTroop != null) { EnemyTroop = enemyTroop.GetComponent<PreviewTroop>(); }
+
 
         StartCoroutine(VigorRoutine(target, start));
     }

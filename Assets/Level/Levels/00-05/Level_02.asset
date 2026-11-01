@@ -156,4 +156,4 @@ MonoBehaviour:
     block: 2
   coinReward: 11
   Cost: 1
-  ads: 0
+  ads: 1

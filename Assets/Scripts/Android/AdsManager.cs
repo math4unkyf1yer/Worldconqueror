@@ -25,17 +25,13 @@ public class AdsManager : MonoBehaviour , IUnityAdsInitializationListener, IUnit
     public void OnInitializationComplete()
     {
         Debug.Log("Unity Ads initialized successfully.");
-
         LoadAd();
     }
 
     // Called if Unity Ads initialization fails
-    public void OnInitializationFailed(
-        UnityAdsInitializationError error,
-        string message)
+    public void OnInitializationFailed(UnityAdsInitializationError error,string message)
     {
-        Debug.LogError(
-            $"Unity Ads initialization failed: {error} - {message}");
+        Debug.LogError($"Unity Ads initialization failed: {error} - {message}");
     }
 
     // Load an ad
@@ -54,13 +50,9 @@ public class AdsManager : MonoBehaviour , IUnityAdsInitializationListener, IUnit
     }
 
     // Called if the ad fails to load
-    public void OnUnityAdsFailedToLoad(
-        string failedAdUnitId,
-        UnityAdsLoadError error,
-        string message)
+    public void OnUnityAdsFailedToLoad(string failedAdUnitId,UnityAdsLoadError error,string message)
     {
-        Debug.LogError(
-            $"Failed to load ad: {failedAdUnitId} - {error} - {message}");
+        Debug.LogError($"Failed to load ad: {failedAdUnitId} - {error} - {message}");
     }
 
     // Show an ad
@@ -74,10 +66,7 @@ public class AdsManager : MonoBehaviour , IUnityAdsInitializationListener, IUnit
     }
 
     // Called when the ad fails to show
-    public void OnUnityAdsShowFailure(
-        string failedAdUnitId,
-        UnityAdsShowError error,
-        string message)
+    public void OnUnityAdsShowFailure(string failedAdUnitId,UnityAdsShowError error,string message)
     {
         Debug.LogError(
             $"Failed to show ad: {failedAdUnitId} - {error} - {message}");
@@ -101,9 +90,7 @@ public class AdsManager : MonoBehaviour , IUnityAdsInitializationListener, IUnit
     }
 
     // Called when the ad finishes
-    public void OnUnityAdsShowComplete(
-        string completedAdUnitId,
-        UnityAdsShowCompletionState showCompletionState)
+    public void OnUnityAdsShowComplete(string completedAdUnitId,UnityAdsShowCompletionState showCompletionState)
     {
         Debug.Log("Ad completed: " + completedAdUnitId);
 

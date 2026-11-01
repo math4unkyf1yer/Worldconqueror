@@ -101,6 +101,7 @@ public class Menu : MonoBehaviour
         customLevelConfig.CheckIfUnlocked();
         buttonLock.CheckAllButtons(gameManager.levelCount);
 
+        TopUiMenu.Instance.gameObject.SetActive(true);
         gameObject.SetActive(true);
         holderTer.SetActive(true);
 
@@ -142,6 +143,7 @@ public class Menu : MonoBehaviour
     private void ShowPage(GameObject targetPage)
     {
         playPage.SetActive(false);
+        TopUiMenu.Instance.CloseInfoPage();
         holderTer.SetActive(false);
         targetPage.SetActive(true);
     }
@@ -149,6 +151,7 @@ public class Menu : MonoBehaviour
     {
         targetPage.SetActive(false);
         playPage.SetActive(true);
+        TopUiMenu.Instance.OpenInfoPage();
         holderTer.SetActive(true);  
     }
     
@@ -171,6 +174,10 @@ public class Menu : MonoBehaviour
         // Already on this page: do not slide it into itself.
         if (currentPage == targetPage)
             return;
+
+        // Close level information when navigating away from Play
+        if (currentPage == playPage && targetPage != playPage)
+            TopUiMenu.Instance.CloseInfoPage();
 
         behindSettingPage = targetPage;
 
@@ -270,6 +277,7 @@ public class Menu : MonoBehaviour
         gameManager.customGame = false;
 
         gameObject.SetActive(false);
+        TopUiMenu.Instance.gameObject.SetActive(false);
         LoadScreen.Instance.LoadScene(1);
     }
 
@@ -277,6 +285,7 @@ public class Menu : MonoBehaviour
     {
         ShowPageSlide(playPage,1);
         holderTer.SetActive(true);
+        TopUiMenu.Instance.OpenInfoPage();
 
         selectedButton = buttonsInHolder[1];
     }

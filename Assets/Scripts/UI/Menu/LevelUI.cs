@@ -12,6 +12,7 @@ public class LevelUI : MonoBehaviour
     [SerializeField] private GameObject levelImage;
     [SerializeField] private GameObject lineImage;
     [SerializeField] private GameObject hazardImage;
+    [SerializeField] private GameObject levelInfoImage;
 
     public int howManyLevelHolder = 5;
     public int mapCount;
@@ -30,6 +31,7 @@ public class LevelUI : MonoBehaviour
     public List<float> levelPositionY = new List<float>();
     public List<GameObject> holdLevelObj = new List<GameObject>();
     public List<GameObject> holdHazard = new List<GameObject>();
+       
 
     int levelIndex;
     int localLevelIndex;
@@ -43,6 +45,11 @@ public class LevelUI : MonoBehaviour
     //Color for the map levels
     public Color finishLevel;
     public Color onLevel;
+
+    // for the level data UI being shown 
+    [SerializeField] private Camera levelCamera;      
+    private RectTransform infoRect;
+    private Canvas infoCanvas;
 
     private void Awake()
     {
@@ -71,13 +78,11 @@ public class LevelUI : MonoBehaviour
 
         int subtract = mapCurrentCount * howManyLevelHolder;
 
-
         localLevelIndex -= subtract;
 
         for (int i = 0; i < howManyLevelHolder; i++)
         {
             if (mapCurrentCount == mapCount) { break; }
-
 
             if (firsttime || changePage)
             {
@@ -139,6 +144,8 @@ public class LevelUI : MonoBehaviour
         if (firsttime) { populationScript.Setup(populatedItem); }
         if (changePage) { populationScript.ClearTerritory(); populationScript.Setup(populatedItem); }
         if (changePage) { changePage = false; }
+
+        ShowLevelData();
     }
     public void RefreshLine(Transform imageOld, Transform imageNew, int lineIndex, bool firsttime)
     {
@@ -189,11 +196,81 @@ public class LevelUI : MonoBehaviour
         int subtract = mapCurrentCount * howManyLevelHolder;
         localLevelIndex = levelScript.levelCount;
         localLevelIndex -= subtract;
+
         if (localLevelIndex == howManyLevelHolder)
         {
             ClearMap();
             mapCurrentCount++;
             changePage = true;
         }
+    }
+
+    void PlaceInfoImage(Vector3 worldPosition)
+    {
+
+        if (infoRect == null)
+        {
+            infoRect = levelInfoImage.GetComponent<RectTransform>();
+            infoCanvas = levelInfoImage.GetComponentInParent<Canvas>();
+        }
+
+        Vector3 screenPoint = levelCamera.WorldToScreenPoint(worldPosition + new Vector3(2.5f, 0f, 0f));
+
+        Camera canvasCam = infoCanvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : infoCanvas.worldCamera;
+
+        RectTransform canvasRect = infoCanvas.transform as RectTransform;
+        if (RectTransformUtility.ScreenPointToWorldPointInRectangle(canvasRect, screenPoint, canvasCam, out Vector3 worldPoint))
+        {
+            infoRect.position = worldPoint;
+        }
+    }
+
+    void ShowLevelData()
+    {
+        LevelData currentLevel = levelScript.LevelData[levelIndex];
+
+        Dictionary<TerritoryType,int> typeDictionary = new Dictionary<TerritoryType,int>();
+        
+        HashSet<HazardType> typeHazard = new HashSet<HazardType>();
+
+        if(currentLevel != null)
+        {
+            foreach(TerretoryData data in currentLevel.terretories)
+            {
+                if (typeDictionary.ContainsKey(data.Type))
+                {
+                    typeDictionary[data.Type]++;
+                }
+                else
+                {
+                    typeDictionary.Add(data.Type, 1);
+                }
+            }
+        }
+        if (currentLevel.hasHazard)
+        {
+            foreach (HazardZone data in currentLevel.Zones)
+            {
+                typeHazard.Add(data.Type);
+            }
+        }
+        else
+        {
+            Debug.Log("No Hazard");
+        }
+
+        foreach (KeyValuePair<TerritoryType, int> item in typeDictionary)
+        {
+            Debug.Log(item.Key + " : " + item.Value);
+        }
+
+        foreach(HazardType type in typeHazard)
+        {
+            Debug.Log(type);
+        }
+
+        Debug.Log("Coin amount " + currentLevel.coinReward);
+
+        PlaceInfoImage(holdLevelObj[localLevelIndex].transform.position);
     }
 }
