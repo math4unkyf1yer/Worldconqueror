@@ -143,7 +143,6 @@ public class Menu : MonoBehaviour
     private void ShowPage(GameObject targetPage)
     {
         playPage.SetActive(false);
-        TopUiMenu.Instance.CloseInfoPage();
         holderTer.SetActive(false);
         targetPage.SetActive(true);
     }
@@ -151,7 +150,6 @@ public class Menu : MonoBehaviour
     {
         targetPage.SetActive(false);
         playPage.SetActive(true);
-        TopUiMenu.Instance.OpenInfoPage();
         holderTer.SetActive(true);  
     }
     
@@ -175,9 +173,12 @@ public class Menu : MonoBehaviour
         if (currentPage == targetPage)
             return;
 
-        // Close level information when navigating away from Play
-        if (currentPage == playPage && targetPage != playPage)
+        if(currentPage == playPage)
+        {
+            TopUiMenu.Instance.CloseInfoButton();
             TopUiMenu.Instance.CloseInfoPage();
+        }
+
 
         behindSettingPage = targetPage;
 
@@ -248,11 +249,17 @@ public class Menu : MonoBehaviour
 
         fromPage.SetActive(false);
         if (toPage == playPage)
+        {
             holderTransform.position = terCameraPos;
+            TopUiMenu.Instance.OpenInfoButton();
+        }
         else
+        {
             holderTransform.position = holderEnd;
+        }
         toRect.anchoredPosition = Vector2.zero;
         isTransitioning = false;
+
     }
 
     private void PreventSelection()
@@ -267,6 +274,7 @@ public class Menu : MonoBehaviour
     public void PlayButton()
     {
         //wait for sound to play 
+        TopUiMenu.Instance.CloseInfoPage();
         StartCoroutine(DelayedPlay(gameManager.audioManager.ButtonSound.length));
     }
 
@@ -285,7 +293,6 @@ public class Menu : MonoBehaviour
     {
         ShowPageSlide(playPage,1);
         holderTer.SetActive(true);
-        TopUiMenu.Instance.OpenInfoPage();
 
         selectedButton = buttonsInHolder[1];
     }
@@ -347,6 +354,7 @@ public class Menu : MonoBehaviour
     public void CloseSettingPage()
     {
         settingPage.SetActive(false);
+
         if (playPage.activeInHierarchy)
         {
             HidePage(settingPage);

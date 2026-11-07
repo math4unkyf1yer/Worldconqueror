@@ -38,8 +38,6 @@ public class Cost : MonoBehaviour
 
 
     [SerializeField] private int whichUpgrade;
-    UnitType type = UnitType.Soldier;
-    TerritoryType territoryType = TerritoryType.SoldierProd;
     public int whichType = 0;
     public bool troopUpgrade;
 

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Level_03
   m_EditorClassIdentifier: 
   levelIndex: 2
-  enemyCount: 1
+  enemyCount: 2
   hasHazard: 0
   tutoType: 0
   Zones: []
