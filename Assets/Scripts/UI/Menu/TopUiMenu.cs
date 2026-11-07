@@ -1,10 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using static Unity.Collections.AllocatorManager;
 
 public class TopUiMenu : MonoBehaviour
 {
     [SerializeField] private GameObject levelInfoPage;
+    [SerializeField] private Button levelInfoButton;
+    [SerializeField] private Button levelInfoCloseButton;
     public static TopUiMenu Instance { get; private set; }
     private void Awake()
     {
@@ -16,14 +20,45 @@ public class TopUiMenu : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
+
+        levelInfoButton.onClick.AddListener(OpenInfoPage);
+        levelInfoCloseButton.onClick.AddListener(CloseInfoPage);
     }
 
-    public void CloseInfoPage()
+    public void OpenInfoButton()
     {
-        levelInfoPage.SetActive(false);
+        if (!levelInfoButton.gameObject.activeInHierarchy)
+        {
+            levelInfoButton.gameObject.SetActive(true);
+        }
     }
+    public void CloseInfoButton()
+    {
+        if (levelInfoButton.gameObject.activeInHierarchy)
+        {
+            levelInfoButton.gameObject.SetActive(false);
+        }
+    }
+
     public void OpenInfoPage()
     {
-        levelInfoPage.SetActive(true);
+        if (!levelInfoPage.activeInHierarchy)
+        {
+            levelInfoPage.SetActive(true);
+            CloseInfoButton();
+        }
+    }
+    public void CloseInfoPage()
+    {
+        if (levelInfoPage.activeInHierarchy)
+        {
+            levelInfoPage.SetActive(false);
+            OpenInfoButton();
+        }
+    }
+
+    public GameObject GetLevelInfo()
+    {
+        return levelInfoPage;
     }
 }

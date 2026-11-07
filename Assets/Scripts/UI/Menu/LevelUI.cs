@@ -13,6 +13,7 @@ public class LevelUI : MonoBehaviour
     [SerializeField] private GameObject lineImage;
     [SerializeField] private GameObject hazardImage;
     [SerializeField] private GameObject levelInfoImage;
+    [SerializeField] private GameObject playButton;
 
     public int howManyLevelHolder = 5;
     public int mapCount;
@@ -47,9 +48,11 @@ public class LevelUI : MonoBehaviour
     public Color onLevel;
 
     // for the level data UI being shown 
-    [SerializeField] private Camera levelCamera;      
+    [SerializeField] private Camera levelCamera;
+    [SerializeField] private Transform infoButton;
     private RectTransform infoRect;
     private Canvas infoCanvas;
+    private LevelInfoUI levelInfoUI;
 
     private void Awake()
     {
@@ -205,72 +208,42 @@ public class LevelUI : MonoBehaviour
         }
     }
 
-    void PlaceInfoImage(Vector3 worldPosition)
+    void PlaceInfoImage(Vector3 worldPosition, Vector3 offset, RectTransform targetRect)
     {
+        infoCanvas = targetRect.GetComponentInParent<Canvas>();
 
-        if (infoRect == null)
-        {
-            infoRect = levelInfoImage.GetComponent<RectTransform>();
-            infoCanvas = levelInfoImage.GetComponentInParent<Canvas>();
-        }
+        Vector3 screenPoint = levelCamera.WorldToScreenPoint(worldPosition + offset);
 
-        Vector3 screenPoint = levelCamera.WorldToScreenPoint(worldPosition + new Vector3(2.5f, 0f, 0f));
-
-        Camera canvasCam = infoCanvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : infoCanvas.worldCamera;
+        Camera canvasCam = infoCanvas.renderMode == RenderMode.ScreenSpaceOverlay
+            ? null
+            : infoCanvas.worldCamera;
 
         RectTransform canvasRect = infoCanvas.transform as RectTransform;
-        if (RectTransformUtility.ScreenPointToWorldPointInRectangle(canvasRect, screenPoint, canvasCam, out Vector3 worldPoint))
+
+        if (RectTransformUtility.ScreenPointToWorldPointInRectangle(
+            canvasRect, screenPoint, canvasCam, out Vector3 worldPoint))
         {
-            infoRect.position = worldPoint;
+            targetRect.position = worldPoint;
         }
     }
 
     void ShowLevelData()
     {
+
+        if (!levelInfoUI)
+        {
+            levelInfoUI = levelInfoImage.GetComponent<LevelInfoUI>();
+        }
+
         LevelData currentLevel = levelScript.LevelData[levelIndex];
 
-        Dictionary<TerritoryType,int> typeDictionary = new Dictionary<TerritoryType,int>();
-        
-        HashSet<HazardType> typeHazard = new HashSet<HazardType>();
 
-        if(currentLevel != null)
-        {
-            foreach(TerretoryData data in currentLevel.terretories)
-            {
-                if (typeDictionary.ContainsKey(data.Type))
-                {
-                    typeDictionary[data.Type]++;
-                }
-                else
-                {
-                    typeDictionary.Add(data.Type, 1);
-                }
-            }
-        }
-        if (currentLevel.hasHazard)
-        {
-            foreach (HazardZone data in currentLevel.Zones)
-            {
-                typeHazard.Add(data.Type);
-            }
-        }
-        else
-        {
-            Debug.Log("No Hazard");
-        }
+        //place position
+        PlaceInfoImage(holdLevelObj[localLevelIndex].transform.position, new Vector3(2.5f, 0f, 0f), levelInfoImage.GetComponent<RectTransform>());
 
-        foreach (KeyValuePair<TerritoryType, int> item in typeDictionary)
-        {
-            Debug.Log(item.Key + " : " + item.Value);
-        }
-
-        foreach(HazardType type in typeHazard)
-        {
-            Debug.Log(type);
-        }
-
-        Debug.Log("Coin amount " + currentLevel.coinReward);
-
-        PlaceInfoImage(holdLevelObj[localLevelIndex].transform.position);
+        PlaceInfoImage(holdLevelObj[localLevelIndex].transform.position, new Vector3(0.6f, 0.7f, 0f), infoButton.GetComponent<RectTransform>());
+        //get data and show data
+        levelInfoUI.ShowData(currentLevel);
     }
+
 }
