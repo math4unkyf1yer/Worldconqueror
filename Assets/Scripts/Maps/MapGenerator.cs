@@ -21,7 +21,6 @@ public class MapGenerator : MonoBehaviour
 
     GameObject aiClone;
     [SerializeField] private GameObject hazardPrefab;
-    [SerializeField] private float hazardSpreadRadius = 0.7f;
     List<TerretoryController> spawnedTerretories = new List<TerretoryController>();
     Owner firstOwner;
 

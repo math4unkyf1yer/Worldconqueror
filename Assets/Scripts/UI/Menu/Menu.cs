@@ -176,7 +176,7 @@ public class Menu : MonoBehaviour
         if(currentPage == playPage)
         {
             TopUiMenu.Instance.CloseInfoButton();
-            TopUiMenu.Instance.CloseInfoPage();
+            TopUiMenu.Instance.CloseInfoPage(true);
         }
 
 
@@ -274,7 +274,7 @@ public class Menu : MonoBehaviour
     public void PlayButton()
     {
         //wait for sound to play 
-        TopUiMenu.Instance.CloseInfoPage();
+        TopUiMenu.Instance.CloseInfoPage(true);
         StartCoroutine(DelayedPlay(gameManager.audioManager.ButtonSound.length));
     }
 
@@ -349,6 +349,7 @@ public class Menu : MonoBehaviour
     public void SettingPage()
     {
         holderTer.SetActive(false);
+        TopUiMenu.Instance.CloseBoth();
         settingPage.SetActive(true);
     }
     public void CloseSettingPage()
@@ -358,6 +359,7 @@ public class Menu : MonoBehaviour
         if (playPage.activeInHierarchy)
         {
             HidePage(settingPage);
+            TopUiMenu.Instance.OpenInfoButton();
         }
         else
         {

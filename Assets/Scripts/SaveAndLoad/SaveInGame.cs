@@ -81,6 +81,16 @@ public class SaveInGame : MonoBehaviour
             });
         }
 
+        //Assign Items
+        ItemManager itemsManager = asssignLevelScript.GetComponent<ItemManager>();
+        if (itemsManager != null)
+        {
+            data.slowItems = itemsManager.slowAmount;
+            data.fastItems = itemsManager.speedAmount;
+            data.fireItems = itemsManager.fireAmount;
+            data.duplicationItems = itemsManager.duplicationAmount;
+        }
+
         SaveSystem.Save(data);
     }
 
@@ -95,8 +105,6 @@ public class SaveInGame : MonoBehaviour
 
         levelUiScript.mapCurrentCount = data.mapCurrentCount;
         levelUiScript.levelPositionY = data.positionYLevel;
-
-        //wont have need for this in the furure but for now
 
 
         // Load troop upgrades
@@ -148,6 +156,17 @@ public class SaveInGame : MonoBehaviour
                 }
             }
         }
+
+        //set up the items
+        ItemManager itemsManager = asssignLevelScript.GetComponent<ItemManager>();
+        if (itemsManager != null)
+        {
+            itemsManager.SetSpeed(data.fastItems);
+            itemsManager.SetSlow(data.slowItems);
+            itemsManager.SetFire(data.fireItems);
+            itemsManager.SetDuplication(data.duplicationItems);
+        }
+
 
         Menu.Instance.SetText();
         Menu.Instance.SetUp();

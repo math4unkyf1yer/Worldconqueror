@@ -21,8 +21,8 @@ public class TopUiMenu : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
-        levelInfoButton.onClick.AddListener(OpenInfoPage);
-        levelInfoCloseButton.onClick.AddListener(CloseInfoPage);
+        levelInfoButton.onClick.AddListener(PageClick);
+        levelInfoCloseButton.onClick.AddListener(ButtonClick);
     }
 
     public void OpenInfoButton()
@@ -40,23 +40,44 @@ public class TopUiMenu : MonoBehaviour
         }
     }
 
-    public void OpenInfoPage()
+    public void CloseBoth()
+    {
+        CloseInfoButton();
+        CloseInfoPage(false);
+    }
+    public void OpenBoth()
+    {
+        OpenInfoPage(false);
+        OpenInfoButton();
+    }
+
+    public void OpenInfoPage(bool keepButton)
     {
         if (!levelInfoPage.activeInHierarchy)
         {
             levelInfoPage.SetActive(true);
-            CloseInfoButton();
+            if(keepButton)
+                CloseInfoButton();
         }
     }
-    public void CloseInfoPage()
+    public void CloseInfoPage(bool keepButton)
     {
         if (levelInfoPage.activeInHierarchy)
         {
             levelInfoPage.SetActive(false);
-            OpenInfoButton();
+            if (keepButton)
+                OpenInfoButton();
         }
     }
 
+    void ButtonClick()
+    {
+        CloseInfoPage(true);
+    } 
+    void PageClick()
+    {
+        OpenInfoPage(true);
+    }
     public GameObject GetLevelInfo()
     {
         return levelInfoPage;

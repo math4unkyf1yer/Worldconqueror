@@ -635,6 +635,7 @@ MonoBehaviour:
     Owner: 0
     StartingUnits: 0
     scale: 0
+    populationRange: 1.73
     position: {x: 0, y: 0}
     maxCapacity: 50
     radiusSize: 0
@@ -651,6 +652,7 @@ MonoBehaviour:
   amountText: {fileID: 195780648942673661}
   troopsStatsPlayer:
     unitType: 0
+    blockType: 0
     moveSpeed: 1
     strenght: 1
     vigor: 1
@@ -662,6 +664,7 @@ MonoBehaviour:
     specialFloat: 0
   troopsStatsEnemy:
     unitType: 0
+    blockType: 0
     moveSpeed: 1
     strenght: 1
     vigor: 1
@@ -673,6 +676,7 @@ MonoBehaviour:
     specialFloat: 0
   neutralStats:
     unitType: 0
+    blockType: 0
     moveSpeed: 1
     strenght: 1
     vigor: 1
@@ -694,6 +698,7 @@ MonoBehaviour:
   - {fileID: 9202140163691257613}
   - {fileID: 4013243048653494322}
   - {fileID: 5280240211084477125}
+  unreachableArrowColor: {r: 1, g: 0.25, b: 0.25, a: 1}
   sliderList: []
 --- !u!1 &3283799802688310861
 GameObject:
@@ -1725,8 +1730,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -0.058}
-  m_SizeDelta: {x: 13.1512, y: 5.6199}
+  m_AnchoredPosition: {x: -0.000024557, y: 0.00001514}
+  m_SizeDelta: {x: 2.0155, y: 1.9046}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5913110424590846197
 CanvasRenderer:
@@ -1819,7 +1824,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 5.52396, y: 1.8357067, z: 5.5408, w: 1.8693893}
+  m_margin: {x: -0.008057594, y: 0.0064206123, z: 0.017910004, w: 0.016255736}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0

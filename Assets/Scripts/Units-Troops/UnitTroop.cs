@@ -16,6 +16,10 @@ public class UnitTroop : MonoBehaviour
     public float fireRate;
     public float critRate;
     public float noDeathChange;
+    private UnitStats originalStats;
+    private int originalEnemyID;
+    private int originalID;
+
     int index;
     UnitType unitType;
     public Owner ownercl;
@@ -25,6 +29,7 @@ public class UnitTroop : MonoBehaviour
     UnitBuffs buffs;
     public Transform location;
     public Transform territoryLocation;
+    public bool duplicated = false;
     public bool chasingEnemy;// for attackers enemy in range
     public TroopState State = TroopState.Objective;
     public bool isAlive => gameObject.activeInHierarchy;
@@ -87,6 +92,11 @@ public class UnitTroop : MonoBehaviour
         territoryLocation = location;
         index = EnemyID;
         ownercl = owner;
+
+        originalStats = stats;
+        originalEnemyID = EnemyID;
+        originalID = ID;
+
         //block 
         blockType = stats.blockType;
 
@@ -368,6 +378,21 @@ public class UnitTroop : MonoBehaviour
         {
             troopAudio.PlayOneShot(clip, strenght);
         }
+    }
+
+    public void DuplicateTroop()
+    {
+        if (duplicated)
+            return;
+
+        GameObject troopClone = BulletPool.Instance.GetTroop();
+        troopClone.transform.position = transform.position;
+
+        UnitTroop duplicate = troopClone.GetComponent<UnitTroop>();
+
+        duplicate.duplicated = true;
+
+        duplicate.SetUp(originalStats, territoryLocation,originalEnemyID,originalID,ownercl);
     }
 
 }

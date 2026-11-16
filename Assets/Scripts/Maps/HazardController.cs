@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class HazardController : MonoBehaviour
 {
-    private HazardZone zone;
+    [SerializeField]private HazardZone zone;
 
     //images 
     [SerializeField] SpriteRenderer hazardImage;
@@ -20,12 +20,9 @@ public class HazardController : MonoBehaviour
     private List<UnitBuffs> troopsInDamage = new List<UnitBuffs>();
     bool isrepeating;
 
-    float oldSpeed;
     public void SetUp(HazardZone hazardZone)
     {
         zone = hazardZone;
-
-
         HazardType type = zone.Type;
         switch (type)
         {
@@ -43,7 +40,7 @@ public class HazardController : MonoBehaviour
         
         // Optionally scale the visual size based on intensity
         transform.localScale = Vector3.one * Mathf.Lerp(0.3f, 2f, zone.intensity);
-        imageSprite.size = new Vector2(1, 1);
+        imageSprite.size = new Vector2(x: 1, 1);
     }
 
     public void DamageHazardActivated()
@@ -79,7 +76,7 @@ public class HazardController : MonoBehaviour
                 case HazardType.Damage:
                     //chance to damage
                     troopsInDamage.Add(troopBuff);
-                    troopBuff.DamageEffect(true);
+                    troopBuff.DamageEffect(active: true);
                     if (!isrepeating) { InvokeRepeating("DamageHazardActivated", 0.8f, 1); isrepeating = true; }
                     break;
 

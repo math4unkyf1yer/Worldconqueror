@@ -11,6 +11,8 @@ TagManager:
   - wall
   - Overlay
   - HandSpot
+  - Item
+  - Map
   layers:
   - Default
   - TransparentFX

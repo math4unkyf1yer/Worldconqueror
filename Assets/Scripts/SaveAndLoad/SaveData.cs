@@ -8,6 +8,13 @@ public class SaveData
     public int coins;
     public int level;
     public int mapCurrentCount;
+
+    //will be for the items 
+    public int slowItems;
+    public int fastItems;
+    public int fireItems;
+    public int duplicationItems;
+
     public List<float> positionYLevel = new List<float>();
 
     public bool unlockedAssassin;
